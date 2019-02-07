@@ -1,6 +1,5 @@
 package com.example.eatfast.Model;
 
-
 /*
  A class to create orders.
  */

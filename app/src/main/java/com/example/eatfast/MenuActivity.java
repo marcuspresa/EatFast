@@ -6,12 +6,51 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 
 public class MenuActivity extends AppCompatActivity {
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+
+        final ListView list = (ListView) findViewById(R.id.listView);
+
+        ArrayList<String> category = new ArrayList<>(); //lägger till saker till listan
+        //bara att lägga till fler om det behövs
+        //Om man scrollar ner snabbt så går listan upp igen, vet inte varför.
+        category.add("Nuggets");
+        category.add("Burgers");
+        category.add("Alcoholic Drinks");
+        category.add("Sodas");
+
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, category);
+        list.setAdapter(adapter);
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //kollar vad man
+            // trycker på och skickar det vidare
+            // vet inte riktigt om detta är helt rätt för jag kan bara få antigen String eller postion id att
+            //skickas med men inte båda. Om någon ser felet så får ni fixa det.
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Object category = (list.getItemAtPosition(position).toString());
+                System.out.println(category);
+
+
+                Intent intent = new Intent(MenuActivity.this, CategoryDetail.class);
+                intent.putExtra("id", list.getItemAtPosition(position).toString());
+                startActivity(intent);
+            }
+        });
 
     }
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -34,7 +73,7 @@ public class MenuActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    //hgfhgfhgfhfhgfh
 
 
 }
+
