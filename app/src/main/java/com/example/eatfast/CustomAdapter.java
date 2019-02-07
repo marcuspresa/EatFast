@@ -1,5 +1,5 @@
 package com.example.eatfast;
-import com.example.eatfast.Database.Database;
+import com.example.eatfast.Database.myHelper;
 import com.example.eatfast.Model.Order;
 
 import android.content.Context;
@@ -10,19 +10,21 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 
 public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
-    Database db;
+
+    myHelper db;
 
     private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
     public CustomAdapter(ArrayList<Order> list, Context context){
-        db = new Database(context);
+        db = new myHelper(context, "Eatit.db",null, 1 );
         this.list = list;
         this.context = context;
     }
@@ -42,9 +44,11 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
         return 0;
 
     }
+
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
         View view = convertView;
+
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.activity_categorydetail, null);
@@ -62,11 +66,20 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
                 System.out.println("CLICKED:" + getItem(position));
                 Order testOrder = getItem(position);
                 System.out.println(testOrder.getProductName());
+                boolean isInserted = db.insertData(testOrder.getProductName().toString(), testOrder.getPrice().toString());
+                if(isInserted == true)
+                    Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
 
             }
         });
         return view;
     }
+
+
+
+
 }
 
 
