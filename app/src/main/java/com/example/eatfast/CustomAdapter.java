@@ -1,5 +1,5 @@
 package com.example.eatfast;
-import com.example.eatfast.Database.myHelper;
+import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.Order;
 
 import android.content.Context;
@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
 
-    myHelper db;
+    Database db;
 
     private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
     public CustomAdapter(ArrayList<Order> list, Context context){
-        db = new myHelper(context, "Eatit.db",null, 1 );
+        db = new Database(context, "Eatit.db",null, 1 );
         this.list = list;
         this.context = context;
     }
@@ -71,6 +71,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
                     Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
                 else
                     Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
+
 
             }
         });
