@@ -12,14 +12,8 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.eatfast.CategoryDetail;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
-
-
 
 public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
@@ -78,26 +72,12 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
                 else
                     Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
 
-               // neworder("0", "Burger", "40", "Burgers");
-               // neworder("1", "Veggie burger", "40", "Burgers");
-
-
             }
         });
         return view;
     }
 
-    //skapa order som skickas till firebase
-    public void neworder(String id, String n, String p, String category){
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Category");
-
-        Order o = new Order(n, p);
-
-        myRef.child(category).child(id).setValue(o);
-
-    }
 
 
 }

@@ -8,14 +8,14 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 
-public class myHelper extends SQLiteOpenHelper {
+public class Database extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Eatit.db";
     public static final String TABLE_NAME = "orderDetail";
     public static final String COL_1 = "ID";
     public static final String COL_2 = "PRODUCTNAME";
     public static final String COL_3 = "PRICE";
 
-    public myHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public Database(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, 1);
 
     }
@@ -45,6 +45,20 @@ public class myHelper extends SQLiteOpenHelper {
         else
             return true;
     }
+
+    public Cursor fetchData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
+        return data;
+    }
+
+    public Cursor getItemID(String name){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "SELECT" + COL_1 + "FROM" + TABLE_NAME + "WHERE" + COL_2 + "=" + name;
+        Cursor data = db.rawQuery(query, null);
+        return data;
+    }
+
 
 
 }
