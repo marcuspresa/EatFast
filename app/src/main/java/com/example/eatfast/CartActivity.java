@@ -72,8 +72,9 @@ public class CartActivity extends AppCompatActivity {
         else{
             while(data.moveToNext()){
                 orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
-                ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,orderDetail );
-                listView.setAdapter(listAdapter);
+                CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
+                //ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,orderDetail );
+                listView.setAdapter(a);
             }
         }
     }

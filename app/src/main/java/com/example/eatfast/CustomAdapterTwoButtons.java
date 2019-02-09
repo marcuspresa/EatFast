@@ -15,16 +15,16 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends BaseAdapter implements ListAdapter {
+public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter {
 
 
     Database db;
 
-    private ArrayList<Order> list = new ArrayList<Order>();
+    private ArrayList<String> list = new ArrayList<String>();
     private Context context;
 
-    public CustomAdapter(ArrayList<Order> list, Context context){
-        db = new Database(context);
+    public CustomAdapterTwoButtons(ArrayList<String> list, Context context){
+        db = new Database(context, "Eatit.db",null, 1 );
         this.list = list;
         this.context = context;
     }
@@ -35,7 +35,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public Order getItem(int pos){
+    public String getItem(int pos){
         return list.get(pos);
     }
 
@@ -51,29 +51,32 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.activity_categorydetail, null);
+            view = inflater.inflate(R.layout.activity_cart_layout, null);
         }
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
-        listItemText.setText(list.get(position).toString()); //ändra
+        listItemText.setText(list.get(position));
 
         Button addBtn = (Button)view.findViewById(R.id.addBtn);
-
+        Button deleteBtn = (Button)view.findViewById(R.id.deleteBtn);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                System.out.println("CLICKED:" + getItem(position));
-                Order testOrder = getItem(position);
-                System.out.println(testOrder.getProductName());
-                boolean isInserted = db.insertData(testOrder.getProductName().toString(), testOrder.getPrice().toString());
-                if(isInserted == true)
-                    Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
+
 
             }
         });
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+            }
+        });
+
+
         return view;
     }
 
