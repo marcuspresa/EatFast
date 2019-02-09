@@ -45,7 +45,7 @@ public class MenuActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Object category = (list.getItemAtPosition(position).toString());
-                System.out.println(category);
+
 
 
                 Intent intent = new Intent(MenuActivity.this, CategoryDetail.class);
