@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+
     <ListView
         android:id="@+id/list"
         android:layout_width="wrap_content"
@@ -18,12 +19,22 @@
         android:textStyle="bold" />
 
     <Button
-    android:id="@+id/addBtn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toRightOf="@+id/orderItem"
-    android:text="+" />
+        android:id="@+id/addBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/deleteBtn"
+        android:text="+" />
 
+    <Button
+
+        android:id="@+id/deleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="-"
+
+        />
 
 
 </RelativeLayout>
+

@@ -24,7 +24,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.ValueEventListener;
 
 public class CategoryDetail extends AppCompatActivity {
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,6 +100,7 @@ public class CategoryDetail extends AppCompatActivity {
 
                 for(DataSnapshot uniqueKeySnapshot : dataSnapshot.getChildren()) {
                     //System.out.println("TESTING" + uniqueKeySnapshot.getValue());
+                    //orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
                     Order o = uniqueKeySnapshot.getValue(Order.class);
                     list.add(o);
                 }
