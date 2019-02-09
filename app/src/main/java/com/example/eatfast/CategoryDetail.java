@@ -28,7 +28,7 @@ public class CategoryDetail extends AppCompatActivity {
         setTitle(i.getStringExtra("id")); //Sätter titel på sidan beroende på vad man klicka på sidan innan.
         // kommer nog använda denna för att hämta från firebase.
 
-        Order o = new Order("Nuggets", "60"); //lokal order
+        Order o = new Order("Nuggets", "60", 0); //lokal order
 
         ArrayList<Order> list = new ArrayList<>();
 

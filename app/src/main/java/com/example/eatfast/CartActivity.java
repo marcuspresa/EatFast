@@ -61,7 +61,7 @@ public class CartActivity extends AppCompatActivity {
 
     public void retrieveCart(){
         ListView listView = (ListView) findViewById(R.id.cartList);
-        db = new Database(this,"Eatit.db",null, 1);
+        db = new Database(this);
 
         ArrayList<String> orderDetail = new ArrayList<>();
         Cursor data = db.fetchData();
