@@ -6,13 +6,13 @@ package com.example.eatfast.Model;
 public class Order {
     private String ProductName;
     private String Price;
-    private Integer Quantity;
 
-    public Order(String productName, String price, Integer quantity) {
+public Order(){
+
+}
+    public Order(String productName, String price) {
         ProductName = productName;
         Price = price;
-        Quantity = quantity;
-
     }
 
 
@@ -32,12 +32,5 @@ public class Order {
         Price = price;
     }
 
-    public void setQuantity(Integer quantity) {
-        Quantity = quantity;
-    }
-
-    public Integer getQuantity() {
-        return Quantity;
-    }
 
 }

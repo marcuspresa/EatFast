@@ -23,7 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@+id/deleteBtn"
-        android:text="+" />
+        android:text="+"
+        />
 
     <Button
 
@@ -34,6 +35,9 @@
         android:text="-"
 
         />
+
+
+
 
 
 </RelativeLayout>

@@ -24,7 +24,7 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
     private Context context;
 
     public CustomAdapterTwoButtons(ArrayList<String> list, Context context){
-        db = new Database(context, "Eatit.db",null, 1 );
+        db = new Database(context);
         this.list = list;
         this.context = context;
     }

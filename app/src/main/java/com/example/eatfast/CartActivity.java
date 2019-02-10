@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -27,11 +28,18 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
-
         retrieveCart();
+        floatingActionButton();
+        }
 
 
-
+    public void floatingActionButton(){
+        FloatingActionButton sendOrder = (FloatingActionButton) findViewById(R.id.sendOrder);
+        sendOrder.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                System.out.println("hej");
+            }
+        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,15 +56,6 @@ public class CartActivity extends AppCompatActivity {
             }
         });
         return true;
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_cart) {
-            Intent intent = new Intent(this, CartActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public void retrieveCart(){
