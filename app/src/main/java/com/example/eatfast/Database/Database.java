@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.eatfast.Model.Order;
 
 
 public class Database extends SQLiteOpenHelper {
@@ -15,9 +14,8 @@ public class Database extends SQLiteOpenHelper {
     public static final String COL_1 = "ID";
     public static final String COL_2 = "PRODUCTNAME";
     public static final String COL_3 = "PRICE";
-    public static final String COL_4 = "QUANTITY";
 
-    public Database(Context context) {
+    public Database(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, DATABASE_NAME, null, 1);
 
     }
@@ -25,7 +23,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE orderDetail(ID INTEGER PRIMARY KEY AUTOINCREMENT, PRODUCTNAME TEXT, PRICE TEXT, QUANTITY INTEGER)");
+        db.execSQL("CREATE TABLE orderDetail(ID INTEGER PRIMARY KEY AUTOINCREMENT, PRODUCTNAME TEXT, PRICE TEXT)");
 
     }
 
@@ -36,7 +34,7 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
-    public boolean insertData(String productname, String price ){
+    public boolean insertData(String productname, String price){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,productname);
@@ -61,10 +59,11 @@ public class Database extends SQLiteOpenHelper {
         return data;
     }
 
-    public void deleteRow(int id){
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + TABLE_NAME + "WHERE" + COL_1 + " =" + id ;
+    public void deleteRow(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.delete()
     }
+
 
 
 }

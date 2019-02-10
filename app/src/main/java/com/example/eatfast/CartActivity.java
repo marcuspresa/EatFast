@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -18,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eatfast.Database.Database;
+import com.example.eatfast.Model.Order;
 
 import java.util.ArrayList;
 
@@ -28,18 +28,9 @@ public class CartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
         retrieveCart();
-        floatingActionButton();
-        }
 
-
-    public void floatingActionButton(){
-        FloatingActionButton sendOrder = (FloatingActionButton) findViewById(R.id.sendOrder);
-        sendOrder.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                System.out.println("hej");
-            }
-        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,11 +49,20 @@ public class CartActivity extends AppCompatActivity {
         return true;
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_cart) {
+            Intent intent = new Intent(this, CartActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void retrieveCart(){
         ListView listView = (ListView) findViewById(R.id.cartList);
-        db = new Database(this);
+        db = new Database(this,"Eatit.db",null, 1);
 
-        ArrayList<String> orderDetail = new ArrayList<>();
+        ArrayList<Order> orderDetail = new ArrayList<>();
         Cursor data = db.fetchData();
 
         if(data.getCount() == 0){
@@ -70,10 +70,14 @@ public class CartActivity extends AppCompatActivity {
         }
         else{
             while(data.moveToNext()){
-                orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
+                Order o = new Order(data.getString(1), data.getString(2));
+                //orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
+                orderDetail.add(o);
                 CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
                 //ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,orderDetail );
                 listView.setAdapter(a);
+
+
             }
         }
     }
