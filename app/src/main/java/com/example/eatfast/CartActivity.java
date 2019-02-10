@@ -49,7 +49,7 @@ public class CartActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    /*public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_cart) {
             Intent intent = new Intent(this, CartActivity.class);
@@ -57,7 +57,7 @@ public class CartActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+*/
     public void retrieveCart(){
         ListView listView = (ListView) findViewById(R.id.cartList);
         db = new Database(this,"Eatit.db",null, 1);
@@ -70,14 +70,13 @@ public class CartActivity extends AppCompatActivity {
         }
         else{
             while(data.moveToNext()){
-                Order o = new Order(data.getString(1), data.getString(2));
+                Order o = new Order(data.getString(1), data.getString(2), data.getInt(0));
                 //orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
+                System.out.println("TESTING" + data.getInt(0));
                 orderDetail.add(o);
                 CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
                 //ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,orderDetail );
                 listView.setAdapter(a);
-
-
             }
         }
     }

@@ -43,7 +43,6 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
     @Override
     public long getItemId(int pos){
         return 0;
-
     }
 
     @Override
@@ -80,13 +79,10 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
             @Override
             public void onClick(View v) {
 
-                db.
-
-
+                Order testOrder = list.get(position);
+                db.deleteRow(testOrder.getId());
             }
         });
-
-
         return view;
     }
 
