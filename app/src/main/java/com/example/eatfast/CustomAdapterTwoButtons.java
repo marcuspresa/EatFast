@@ -11,6 +11,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
+import com.example.eatfast.CustomAdapterTwoButtons;
 
 
 import java.util.ArrayList;
@@ -20,10 +21,10 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
 
     Database db;
 
-    private ArrayList<String> list = new ArrayList<String>();
+    private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
-    public CustomAdapterTwoButtons(ArrayList<String> list, Context context){
+    public CustomAdapterTwoButtons(ArrayList<Order> list, Context context){
         db = new Database(context, "Eatit.db",null, 1 );
         this.list = list;
         this.context = context;
@@ -35,7 +36,7 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
     }
 
     @Override
-    public String getItem(int pos){
+    public Order getItem(int pos){
         return list.get(pos);
     }
 
@@ -54,7 +55,8 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
             view = inflater.inflate(R.layout.activity_cart_layout, null);
         }
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
-        listItemText.setText(list.get(position));
+        Order text = list.get(position);
+        listItemText.setText(text.getProductName() + text.getPrice());
 
         Button addBtn = (Button)view.findViewById(R.id.addBtn);
         Button deleteBtn = (Button)view.findViewById(R.id.deleteBtn);
@@ -63,6 +65,13 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
             @Override
             public void onClick(View v) {
 
+                Order testOrder = list.get(position);
+
+                boolean isInserted = db.insertData(testOrder.getProductName().toString(), testOrder.getPrice().toString());
+                if(isInserted == true)
+                    Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
 
 
             }
@@ -71,6 +80,7 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
             @Override
             public void onClick(View v) {
 
+                db.
 
 
             }

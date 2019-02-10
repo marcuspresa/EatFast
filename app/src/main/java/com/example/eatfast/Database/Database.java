@@ -59,6 +59,11 @@ public class Database extends SQLiteOpenHelper {
         return data;
     }
 
+    public void deleteRow(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        //db.delete()
+    }
+
 
 
 }

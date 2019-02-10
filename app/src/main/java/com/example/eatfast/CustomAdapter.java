@@ -23,6 +23,10 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
+    public CustomAdapter(){
+
+    }
+
     public CustomAdapter(ArrayList<Order> list, Context context){
         db = new Database(context, "Eatit.db",null, 1 );
         this.list = list;
@@ -54,29 +58,32 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.activity_categorydetail, null);
         }
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
-        listItemText.setText(list.get(position).toString()); //ändra
+        Order text = list.get(position);
+        listItemText.setText(text.getProductName() + text.getPrice());
 
         Button addBtn = (Button)view.findViewById(R.id.addBtn);
-
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                System.out.println("CLICKED:" + getItem(position));
-                Order testOrder = getItem(position);
-                System.out.println(testOrder.getProductName());
-                boolean isInserted = db.insertData(testOrder.getProductName().toString(), testOrder.getPrice().toString());
-                if(isInserted == true)
-                    Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
+                addToCart(position);
 
             }
         });
         return view;
     }
 
+    public void addToCart(int pos){
+
+        Order testOrder = getItem(pos);
+
+        boolean isInserted = db.insertData(testOrder.getProductName().toString(), testOrder.getPrice().toString());
+        if(isInserted == true)
+            Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
+    }
 
 
 

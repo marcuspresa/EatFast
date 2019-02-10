@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eatfast.Database.Database;
+import com.example.eatfast.Model.Order;
 
 import java.util.ArrayList;
 
@@ -29,8 +30,6 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         retrieveCart();
-
-
 
     }
 
@@ -63,7 +62,7 @@ public class CartActivity extends AppCompatActivity {
         ListView listView = (ListView) findViewById(R.id.cartList);
         db = new Database(this,"Eatit.db",null, 1);
 
-        ArrayList<String> orderDetail = new ArrayList<>();
+        ArrayList<Order> orderDetail = new ArrayList<>();
         Cursor data = db.fetchData();
 
         if(data.getCount() == 0){
@@ -71,10 +70,14 @@ public class CartActivity extends AppCompatActivity {
         }
         else{
             while(data.moveToNext()){
-                orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
+                Order o = new Order(data.getString(1), data.getString(2));
+                //orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
+                orderDetail.add(o);
                 CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
                 //ListAdapter listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,orderDetail );
                 listView.setAdapter(a);
+
+
             }
         }
     }
