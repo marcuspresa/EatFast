@@ -28,7 +28,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     }
 
     public CustomAdapter(ArrayList<Order> list, Context context){
-        db = new Database(context, "Eatit.db",null, 1 );
+        db = new Database(context);
         this.list = list;
         this.context = context;
     }

@@ -6,28 +6,15 @@ package com.example.eatfast.Model;
 public class Order {
     private String ProductName;
     private String Price;
-    private int id;
 
+public Order(){
 
-
-    public Order(){
-
-    }
-
+}
     public Order(String productName, String price) {
         ProductName = productName;
         Price = price;
     }
 
-    public Order(String productName, String price, int id) {
-        ProductName = productName;
-        Price = price;
-        this.id = id;
-    }
-
-    public int getId(){
-        return this.id;
-    }
 
     public String getProductName() {
         return ProductName;
@@ -44,5 +31,6 @@ public class Order {
     public void setPrice(String price) {
         Price = price;
     }
+
 
 }

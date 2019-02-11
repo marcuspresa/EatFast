@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "438832818923-a0f6app8imj5b64pjgd2dl643fcmqddp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eatfast",
+            "certificate_hash": "67f2fe1225f633fbca0b05cede8593b16562d022"
+          }
+        },
+        {
           "client_id": "438832818923-rco7aijvtg6dnegpdisrsdkr9mnhac51.apps.googleusercontent.com",
           "client_type": 3
         }

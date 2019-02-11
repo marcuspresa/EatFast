@@ -1,5 +1,6 @@
 package com.example.eatfast;
 import com.example.eatfast.Model.Order;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,11 +26,13 @@ import com.google.firebase.database.ValueEventListener;
 
 public class CategoryDetail extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorydetail);
         Intent i = getIntent();
+        FirebaseApp.initializeApp(this);
 
         setTitle(i.getStringExtra("id")); //Sätter titel på sidan beroende på vad man klicka på sidan innan.
         // kommer nog använda denna för att hämta från firebase.

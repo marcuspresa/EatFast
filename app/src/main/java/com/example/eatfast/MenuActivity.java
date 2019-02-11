@@ -44,6 +44,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
                 Object category = (list.getItemAtPosition(position).toString());
 
 
