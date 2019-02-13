@@ -55,11 +55,11 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.activity_categorydetail, null);
+            view = inflater.inflate(R.layout.fragment_menu, null);
         }
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
         Order text = list.get(position);
-        listItemText.setText(text.getProductName() + text.getPrice());
+        listItemText.setText(text.getProductName() + text.getPrice()+"kr");
 
         Button addBtn = (Button)view.findViewById(R.id.addBtn);
 

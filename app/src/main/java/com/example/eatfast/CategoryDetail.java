@@ -35,11 +35,6 @@ public class CategoryDetail extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
 
         setTitle(i.getStringExtra("id")); //Sätter titel på sidan beroende på vad man klicka på sidan innan.
-        // kommer nog använda denna för att hämta från firebase.
-
-        //Order o = new Order("Nuggets", "60"); //test order
-
-        //fyll meny från firebase
         if(i.getStringExtra("id").equals("Nuggets")){
 
            getMenu(i.getStringExtra("id"));
@@ -80,16 +75,6 @@ public class CategoryDetail extends AppCompatActivity {
         });
         return true;
     }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_cart) {
-            Intent intent = new Intent(this, CartActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
-    //hämtar data från firebase beroende på vilken category man är inne på.
     public void getMenu(String category){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -98,26 +83,29 @@ public class CategoryDetail extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
                 ArrayList<Order> list = new ArrayList<>();
-
                 for(DataSnapshot uniqueKeySnapshot : dataSnapshot.getChildren()) {
-                    //System.out.println("TESTING" + uniqueKeySnapshot.getValue());
-                    //orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
                     Order o = uniqueKeySnapshot.getValue(Order.class);
                     list.add(o);
                 }
-
-                    CustomAdapter adapter = new CustomAdapter(list, CategoryDetail.this);
-                    ListView l = (ListView) findViewById(R.id.list);
-                    l.setAdapter(adapter);
-                   //System.out.println("TESTING" + o.getProductName() + o.getPrice());
+                CustomAdapter adapter = new CustomAdapter(list, CategoryDetail.this);
+                ListView l = (ListView) findViewById(R.id.list);
+                l.setAdapter(adapter);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
     }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_cart) {
+            Intent intent = new Intent(this, CartActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }

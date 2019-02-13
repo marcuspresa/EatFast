@@ -60,7 +60,7 @@ public class CartActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    /*public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.menu_orders) {
             Intent intent = new Intent(this, OrderActivity.class);
@@ -68,7 +68,7 @@ public class CartActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
+*/
     public void retrieveCart(){
         ListView listView = (ListView) findViewById(R.id.cartList);
         db = new Database(this);
@@ -80,7 +80,9 @@ public class CartActivity extends AppCompatActivity {
         }
         else{
             while(data.moveToNext()){
-                Order o = new Order(data.getString(1), data.getString(2));
+                Order o = new Order(data.getString(1), data.getString(2), data.getInt(0));
+                //orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
+                //Order o = new Order(data.getString(1), data.getString(2));
                 amount = amount + Integer.parseInt(o.getPrice());
                 orderDetail.add(o);
                 products.add(o.getProductName());
@@ -96,14 +98,10 @@ public class CartActivity extends AppCompatActivity {
             order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    OrderSend orderSend = new OrderSend(
-                            amount,
-                            products
-                    );
-                    Map vetInteVad = new HashMap();
-                    vetInteVad.put("amount", amount);
-                    vetInteVad.put("foods", products);
-                    ordersRef.push().setValue(vetInteVad);
+                    Intent intent1 = new Intent(CartActivity.this, paymentActivity.class);
+                    intent1.putStringArrayListExtra("products", products);
+                    intent1.putExtra("amount", amount);
+                    startActivity(intent1);
                 }
             });
         }
