@@ -22,7 +22,6 @@ public class MenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
 
-
         final ListView list = (ListView) findViewById(R.id.listView);
 
         ArrayList<String> category = new ArrayList<>(); //lägger till saker till listan
@@ -44,14 +43,12 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
                 Object category = (list.getItemAtPosition(position).toString());
-
-
 
                 Intent intent = new Intent(MenuActivity.this, CategoryDetail.class);
                 intent.putExtra("id", list.getItemAtPosition(position).toString());
                 startActivity(intent);
+
             }
         });
 
@@ -62,7 +59,9 @@ public class MenuActivity extends AppCompatActivity {
 
         final MenuItem menuItem = menu.findItem(R.id.action_cart);
 
+
         View actionView = MenuItemCompat.getActionView(menuItem);
+
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +71,7 @@ public class MenuActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) { //varukorg
         int id = item.getItemId();
         if (id == R.id.action_cart) {
             Intent intent = new Intent(this, CartActivity.class);
@@ -80,7 +79,4 @@ public class MenuActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
-

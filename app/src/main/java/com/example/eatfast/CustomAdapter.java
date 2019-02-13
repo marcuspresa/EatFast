@@ -68,7 +68,6 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             public void onClick(View v) {
 
                 addToCart(position);
-
             }
         });
         return view;

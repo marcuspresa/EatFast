@@ -18,14 +18,13 @@ import java.util.ArrayList;
 
 public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter {
 
-
     Database db;
 
     private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
     public CustomAdapterTwoButtons(ArrayList<Order> list, Context context){
-        db = new Database(context, "Eatit.db",null, 1 );
+        db = new Database(context);
         this.list = list;
         this.context = context;
     }

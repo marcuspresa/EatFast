@@ -109,6 +109,7 @@ public class CategoryDetail extends AppCompatActivity {
                 }
 
                     CustomAdapter adapter = new CustomAdapter(list, CategoryDetail.this);
+
                     ListView l = (ListView) findViewById(R.id.list);
                     l.setAdapter(adapter);
                    //System.out.println("TESTING" + o.getProductName() + o.getPrice());

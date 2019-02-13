@@ -15,7 +15,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COL_2 = "PRODUCTNAME";
     public static final String COL_3 = "PRICE";
 
-    public Database(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public Database(Context context) {
         super(context, DATABASE_NAME, null, 1);
 
     }
@@ -61,10 +61,11 @@ public class Database extends SQLiteOpenHelper {
 
     public void deleteRow(int id){
         SQLiteDatabase db = this.getReadableDatabase();
-
-        //String query = "DELETE FROM" + TABLE_NAME + "WHERE" + COL_2 + "=" + name + "LIMIT 1";
         db.execSQL("DELETE FROM " + TABLE_NAME+ " WHERE "+COL_1+"='"+id+"'");
+    }
 
+    public void deleteCart(){
+        //something
     }
 
 

@@ -80,7 +80,7 @@ public class CartActivity extends AppCompatActivity {
         }
         else{
             while(data.moveToNext()){
-                Order o = new Order(data.getString(1), data.getString(2));
+                Order o = new Order(data.getString(1), data.getString(2), data.getInt(0));
                 amount = amount + Integer.parseInt(o.getPrice());
                 orderDetail.add(o);
                 products.add(o.getProductName());
