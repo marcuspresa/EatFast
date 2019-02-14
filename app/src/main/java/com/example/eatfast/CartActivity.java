@@ -42,6 +42,17 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         retrieveCart();
         sendOrder(products, amount);
+
+
+        FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.sendOrder);
+        myFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartActivity.this, paymentActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -12,6 +12,7 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@drawable/roundedbutton" />
+        <activity android:name=".paymentActivity"/>
         <activity android:name=".DisplayOrderActivity"/>
         <activity android:name=".MenuActivity" />
         <activity android:name=".CartActivity" />
