@@ -6,26 +6,28 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Button;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
-import com.example.eatfast.Model.GroupedOrders;
+public class CustomAdapterNoButtons extends BaseAdapter implements ListAdapter {
 
-public class CustomFragmentAdapter extends BaseAdapter implements ListAdapter {
 
     Database db;
 
-    private ArrayList<GroupedOrders> list = new ArrayList<GroupedOrders>();
+    private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
-    public CustomFragmentAdapter(ArrayList<GroupedOrders> list, Context context){
+    public CustomAdapterNoButtons(){
+
+    }
+
+    public CustomAdapterNoButtons(ArrayList<Order> list, Context context){
         db = new Database(context);
         this.list = list;
         this.context = context;
@@ -37,13 +39,14 @@ public class CustomFragmentAdapter extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public GroupedOrders getItem(int pos){
+    public Order getItem(int pos){
         return list.get(pos);
     }
 
     @Override
     public long getItemId(int pos){
         return 0;
+
     }
 
     @Override
@@ -52,15 +55,11 @@ public class CustomFragmentAdapter extends BaseAdapter implements ListAdapter {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.frag_order_layout, null);
+            view = inflater.inflate(R.layout.activity_display_order, null);
         }
-
-        TextView listItemText = (TextView)view.findViewById(R.id.order);
-        ListView listView = (ListView)view.findViewById(R.id.listV);
-
-        GroupedOrders groupedOrders = list.get(position);
-
-        listItemText.setText("ORDER NR: "+groupedOrders.getId());
+        TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
+        Order text = list.get(position);
+        listItemText.setText(text.getProductName() + text.getPrice());
 
         return view;
     }
