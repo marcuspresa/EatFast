@@ -21,13 +21,9 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-
-
         final ListView list = (ListView) findViewById(R.id.listView);
 
         ArrayList<String> category = new ArrayList<>(); //lägger till saker till listan
-        //bara att lägga till fler om det behövs
-        //Om man scrollar ner snabbt så går listan upp igen, vet inte varför.
         category.add("Nuggets");
         category.add("Burgers");
         category.add("Alcoholic Drinks");

@@ -15,7 +15,7 @@ public class Database extends SQLiteOpenHelper {
     public static final String COL_2 = "PRODUCTNAME";
     public static final String COL_3 = "PRICE";
 
-    public Database(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public Database(Context context) {
         super(context, DATABASE_NAME, null, 1);
 
     }
