@@ -40,10 +40,7 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-
                 Object category = (list.getItemAtPosition(position).toString());
-
-
 
                 Intent intent = new Intent(MenuActivity.this, CategoryDetail.class);
                 intent.putExtra("id", list.getItemAtPosition(position).toString());
@@ -68,7 +65,7 @@ public class MenuActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(MenuItem item) { //varukorg
         int id = item.getItemId();
         if (id == R.id.action_cart) {
             Intent intent = new Intent(this, CartActivity.class);
@@ -76,7 +73,4 @@ public class MenuActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
-

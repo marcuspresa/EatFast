@@ -42,6 +42,17 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         retrieveCart();
         sendOrder(products, amount);
+
+
+        FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.sendOrder);
+        myFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CartActivity.this, paymentActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -80,7 +91,7 @@ public class CartActivity extends AppCompatActivity {
         }
         else{
             while(data.moveToNext()){
-                Order o = new Order(data.getString(1), data.getString(2));
+                Order o = new Order(data.getString(1), data.getString(2), data.getInt(0));
                 amount = amount + Integer.parseInt(o.getPrice());
                 orderDetail.add(o);
                 products.add(o.getProductName());

@@ -11,9 +11,9 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.actions"
-            android:resource="@drawable/roundedbutton"
-             />
-
+            android:resource="@drawable/roundedbutton" />
+        <activity android:name=".paymentActivity"/>
+        <activity android:name=".DisplayOrderActivity"/>
         <activity android:name=".MenuActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".CategoryDetail" />
@@ -24,6 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".OrderActivity"
+            android:label="@string/title_activity_order"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

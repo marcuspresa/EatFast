@@ -17,4 +17,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
+
+    public void ordersClicked(View view){
+        Intent intent = new Intent(this, OrderActivity.class);
+        startActivity(intent);
+    }
 }

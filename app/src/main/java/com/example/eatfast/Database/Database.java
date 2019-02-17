@@ -61,10 +61,11 @@ public class Database extends SQLiteOpenHelper {
 
     public void deleteRow(int id){
         SQLiteDatabase db = this.getReadableDatabase();
-
-        //String query = "DELETE FROM" + TABLE_NAME + "WHERE" + COL_2 + "=" + name + "LIMIT 1";
         db.execSQL("DELETE FROM " + TABLE_NAME+ " WHERE "+COL_1+"='"+id+"'");
+    }
 
+    public void deleteCart(){
+        //something
     }
 
 

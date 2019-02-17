@@ -6,7 +6,7 @@ package com.example.eatfast.Model;
 public class Order {
     private String ProductName;
     private String Price;
-    private int Id;
+    private int orderId;
 
 public Order(){
 
@@ -16,12 +16,14 @@ public Order(){
         Price = price;
     }
 
-    public int getId() {
-        return Id;
+    public Order(String productName, String price, int id) {
+        ProductName = productName;
+        Price = price;
+        orderId = id;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public int getId(){
+        return orderId;
     }
 
     public String getProductName() {

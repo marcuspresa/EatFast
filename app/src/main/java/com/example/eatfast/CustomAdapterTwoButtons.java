@@ -18,7 +18,6 @@ import java.util.ArrayList;
 
 public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter {
 
-
     Database db;
 
     private ArrayList<Order> list = new ArrayList<Order>();

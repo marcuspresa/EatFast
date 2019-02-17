@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class CustomAdapter extends BaseAdapter implements ListAdapter {
+public class CustomAdapterNoButtons extends BaseAdapter implements ListAdapter {
 
 
     Database db;
@@ -23,11 +23,11 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
-    public CustomAdapter(){
+    public CustomAdapterNoButtons(){
 
     }
 
-    public CustomAdapter(ArrayList<Order> list, Context context){
+    public CustomAdapterNoButtons(ArrayList<Order> list, Context context){
         db = new Database(context);
         this.list = list;
         this.context = context;
@@ -55,35 +55,14 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.activity_categorydetail, null);
+            view = inflater.inflate(R.layout.activity_display_order, null);
         }
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
         Order text = list.get(position);
         listItemText.setText(text.getProductName() + text.getPrice());
 
-        Button addBtn = (Button)view.findViewById(R.id.addBtn);
-
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                addToCart(position);
-            }
-        });
         return view;
     }
-
-    public void addToCart(int pos){
-
-        Order testOrder = getItem(pos);
-
-        boolean isInserted = db.insertData(testOrder.getProductName().toString(), testOrder.getPrice().toString());
-        if(isInserted == true)
-            Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
-    }
-
 
 
 }
