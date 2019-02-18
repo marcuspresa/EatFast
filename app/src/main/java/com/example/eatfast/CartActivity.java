@@ -42,8 +42,6 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         retrieveCart();
         sendOrder(products, amount);
-
-
         FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.sendOrder);
         myFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,7 +81,6 @@ public class CartActivity extends AppCompatActivity {
     public void retrieveCart(){
         ListView listView = (ListView) findViewById(R.id.cartList);
         db = new Database(this);
-
         ArrayList<Order> orderDetail = new ArrayList<>();
         Cursor data = db.fetchData();
         if(data.getCount() == 0){
@@ -97,11 +94,11 @@ public class CartActivity extends AppCompatActivity {
                 products.add(o.getProductName());
                 CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
                 listView.setAdapter(a);
-
             }
             sendOrder(products, amount);
         }
     }
+
     public void sendOrder(final ArrayList<String> products, final int amount){
         FloatingActionButton order = (FloatingActionButton) findViewById(R.id.sendOrder);
             order.setOnClickListener(new View.OnClickListener() {

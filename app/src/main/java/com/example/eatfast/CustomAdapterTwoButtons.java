@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -80,6 +81,7 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
 
                 Order testOrder = list.get(position);
                 db.deleteRow(testOrder.getId());
+
             }
         });
         return view;
