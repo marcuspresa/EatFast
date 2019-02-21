@@ -1,5 +1,5 @@
 package com.example.eatfast;
-
+import com.example.eatfast.MenuActivity;
 import android.app.DownloadManager;
 import android.content.Intent;
 import android.database.Cursor;
@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eatfast.Database.Database;
@@ -30,17 +31,32 @@ import java.util.Map;
 
 
 public class CartActivity extends AppCompatActivity {
-    Database db;
+
+    int mCartItemCount = 0;
+    private TextView textCartItemCount;
+
+
+    private ListView listView;
+
+
+    private ArrayList<Order> orderDetail = new ArrayList<>();
+    private CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
+
+    private Database db;
     private int amount = 0;
     private ArrayList<String> products = new ArrayList<>();
-    final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference ref = database.getReference();
-    DatabaseReference ordersRef = ref.child("Orders");
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference ref = database.getReference();
+    private DatabaseReference ordersRef = ref.child("Orders");
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
+
+        listView = (ListView) findViewById(R.id.cartList);
+        listView.setAdapter(a);
         retrieveCart();
+
         sendOrder(products, amount);
         FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.sendOrder);
         myFab.setOnClickListener(new View.OnClickListener() {
@@ -50,7 +66,13 @@ public class CartActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listView.setAdapter(a);
+        a.notifyDataSetChanged();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,8 +80,12 @@ public class CartActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
 
         final MenuItem menuItem = menu.findItem(R.id.action_cart);
-
         View actionView = MenuItemCompat.getActionView(menuItem);
+
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        badgeSetup();
+
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,10 +105,9 @@ public class CartActivity extends AppCompatActivity {
     }
 
     public void retrieveCart(){
-        ListView listView = (ListView) findViewById(R.id.cartList);
         db = new Database(this);
-        ArrayList<Order> orderDetail = new ArrayList<>();
         Cursor data = db.fetchData();
+
         if(data.getCount() == 0){
             Toast.makeText(CartActivity.this, "Your cart is empty", Toast.LENGTH_LONG).show();
         }
@@ -91,9 +116,10 @@ public class CartActivity extends AppCompatActivity {
                 Order o = new Order(data.getString(1), data.getString(2), data.getInt(0));
                 amount = amount + Integer.parseInt(o.getPrice());
                 orderDetail.add(o);
+                mCartItemCount += 1;
                 products.add(o.getProductName());
-                CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
-                listView.setAdapter(a);
+                a.notifyDataSetChanged();
+
             }
             sendOrder(products, amount);
         }
@@ -109,7 +135,7 @@ public class CartActivity extends AppCompatActivity {
                             products
                     );
                     Map vetInteVad = new HashMap();
-                    vetInteVad.put("amount", amount);
+                    vetInteVad.put("amount", amount); //vet inte heller
                     vetInteVad.put("foods", products);
                     ordersRef.push().setValue(vetInteVad);
                 }
@@ -117,7 +143,24 @@ public class CartActivity extends AppCompatActivity {
         }
 
 
+    private void badgeSetup(){
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(mCartItemCount));
+
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
+
+}
 
 
 

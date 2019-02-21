@@ -1,9 +1,11 @@
 package com.example.eatfast.Model;
 
+import java.io.Serializable;
+
 /*
  A class to create orders.
  */
-public class Order {
+public class Order implements Serializable {
     private String ProductName;
     private String Price;
     private int orderId;

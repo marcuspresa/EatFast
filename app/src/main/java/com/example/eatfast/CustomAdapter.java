@@ -20,6 +20,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
     Database db;
 
+
     private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 

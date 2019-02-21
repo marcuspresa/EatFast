@@ -1,6 +1,7 @@
 package com.example.eatfast;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -14,11 +15,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TableLayout;
+import android.widget.TextView;
+
+import com.example.eatfast.Database.Database;
+import com.example.eatfast.Model.Order;
 
 import java.util.ArrayList;
 
 
 public class MenuActivity extends AppCompatActivity {
+
+    Database db;
+
 
     private MenuViewPagerAdapter adapter;
     private ViewPager viewPager;
@@ -42,6 +50,7 @@ public class MenuActivity extends AppCompatActivity {
         final MenuItem menuItem = menu.findItem(R.id.action_cart);
 
         View actionView = MenuItemCompat.getActionView(menuItem);
+
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,4 +68,5 @@ public class MenuActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }
