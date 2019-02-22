@@ -32,29 +32,28 @@ import java.util.Map;
 
 public class CartActivity extends AppCompatActivity {
 
-    int mCartItemCount = 0;
-    private TextView textCartItemCount;
+    public static int mCartItemCount = 0;
+    public static TextView textCartItemCount;
 
+    ListView listView;
 
-    private ListView listView;
+    public static ArrayList<Order> orderDetail = new ArrayList<>();
 
-
-    private ArrayList<Order> orderDetail = new ArrayList<>();
-    private CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
-
-    private Database db;
-    private int amount = 0;
-    private ArrayList<String> products = new ArrayList<>();
-    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference ref = database.getReference();
-    private DatabaseReference ordersRef = ref.child("Orders");
+    Database db;
+    int amount = 0;
+    ArrayList<String> products = new ArrayList<>();
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference ref = database.getReference();
+    DatabaseReference ordersRef = ref.child("Orders");
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
         listView = (ListView) findViewById(R.id.cartList);
+        CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
         listView.setAdapter(a);
+
         retrieveCart();
 
         sendOrder(products, amount);
@@ -68,13 +67,6 @@ public class CartActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        listView.setAdapter(a);
-        a.notifyDataSetChanged();
-    }
-
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -84,7 +76,7 @@ public class CartActivity extends AppCompatActivity {
 
         textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
 
-        badgeSetup();
+        badgeSetup(mCartItemCount);
 
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +99,8 @@ public class CartActivity extends AppCompatActivity {
     public void retrieveCart(){
         db = new Database(this);
         Cursor data = db.fetchData();
-
+        mCartItemCount = 0;
+        orderDetail.clear();
         if(data.getCount() == 0){
             Toast.makeText(CartActivity.this, "Your cart is empty", Toast.LENGTH_LONG).show();
         }
@@ -118,8 +111,6 @@ public class CartActivity extends AppCompatActivity {
                 orderDetail.add(o);
                 mCartItemCount += 1;
                 products.add(o.getProductName());
-                a.notifyDataSetChanged();
-
             }
             sendOrder(products, amount);
         }
@@ -142,8 +133,7 @@ public class CartActivity extends AppCompatActivity {
             });
         }
 
-
-    private void badgeSetup(){
+    public void badgeSetup(int iconNumber){
 
         if (textCartItemCount != null) {
             if (mCartItemCount == 0) {
@@ -151,7 +141,7 @@ public class CartActivity extends AppCompatActivity {
                     textCartItemCount.setVisibility(View.GONE);
                 }
             } else {
-                textCartItemCount.setText(String.valueOf(mCartItemCount));
+                textCartItemCount.setText(String.valueOf(iconNumber));
 
                 if (textCartItemCount.getVisibility() != View.VISIBLE) {
                     textCartItemCount.setVisibility(View.VISIBLE);

@@ -20,6 +20,8 @@ import android.widget.TextView;
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.Order;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 
@@ -27,6 +29,8 @@ public class MenuActivity extends AppCompatActivity {
 
     Database db;
 
+    public static int mCartItemCount;
+    public static TextView textCartItemCount;
 
     private MenuViewPagerAdapter adapter;
     private ViewPager viewPager;
@@ -48,8 +52,12 @@ public class MenuActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
 
         final MenuItem menuItem = menu.findItem(R.id.action_cart);
-
         View actionView = MenuItemCompat.getActionView(menuItem);
+
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        countCart();
+        badgeSetup();
 
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +75,33 @@ public class MenuActivity extends AppCompatActivity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void countCart(){
+        mCartItemCount = 0;
+        db = new Database(this);
+        Cursor data = db.fetchData();
+
+        while(data.moveToNext()){
+           mCartItemCount++;
+        }
+    }
+
+    public void badgeSetup(){
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(mCartItemCount));
+
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
     }
 
 }
