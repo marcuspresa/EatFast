@@ -33,16 +33,17 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
 
     public void add(Order p){
 
+        db.insertData(p.getProductName(), p.getPrice());
         list.add(p);
 
-        boolean isInserted = db.insertData(p.getProductName(), p.getPrice());
+        /*boolean isInserted =
         if(isInserted == true) {
             Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
         }
         else
             Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
+        */
 
-        System.out.println("TESTING" + CartActivity.mCartItemCount);
         notifyDataSetChanged();
     }
 
@@ -65,9 +66,8 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
     }
 
     public void delete(Order p){
-        list.remove(p);
         db.deleteRow(p.getId());
-        System.out.println("TESTING" + CartActivity.mCartItemCount);
+        list.remove(p);
         notifyDataSetChanged();
     }
 

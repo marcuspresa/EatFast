@@ -77,6 +77,16 @@ public class MenuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+
+
+
+
+
+
+
+
+
     public void countCart(){
         mCartItemCount = 0;
         db = new Database(this);

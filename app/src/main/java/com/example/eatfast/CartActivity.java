@@ -110,6 +110,7 @@ public class CartActivity extends AppCompatActivity {
                 amount = amount + Integer.parseInt(o.getPrice());
                 orderDetail.add(o);
                 mCartItemCount += 1;
+
                 products.add(o.getProductName());
             }
             sendOrder(products, amount);

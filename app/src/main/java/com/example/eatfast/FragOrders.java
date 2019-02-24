@@ -27,8 +27,6 @@ import java.util.List;
 
 public class FragOrders extends ListFragment {
 
-
-
     ArrayList<Order> li = new ArrayList<>();
     ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
     @Override
