@@ -1,35 +1,35 @@
 package com.example.eatfast;
 
-import android.app.DownloadManager;
+
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.Order;
-import com.example.eatfast.Model.OrderSend;
+import com.example.eatfast.Model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 public class CartActivity extends AppCompatActivity {
+    private static final String TAG = "CartActivity";
     Database db;
     private int amount = 0;
     private ArrayList<String> products = new ArrayList<>();
@@ -42,15 +42,6 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
         retrieveCart();
         sendOrder(products, amount);
-        FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.sendOrder);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, paymentActivity.class);
-                startActivity(intent);
-            }
-        });
-
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,9 +83,9 @@ public class CartActivity extends AppCompatActivity {
                 amount = amount + Integer.parseInt(o.getPrice());
                 orderDetail.add(o);
                 products.add(o.getProductName());
-                CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
-                listView.setAdapter(a);
             }
+            CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
+            listView.setAdapter(a);
             sendOrder(products, amount);
         }
     }
@@ -104,14 +95,18 @@ public class CartActivity extends AppCompatActivity {
             order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    OrderSend orderSend = new OrderSend(
-                            amount,
-                            products
-                    );
+                    SharedPreferences mPrefs = getSharedPreferences("UserID", MODE_PRIVATE);
+                    String uid = mPrefs.getString("user", "0");
+                    System.out.println(mPrefs.getString("user", "0"));
+                    User user = new User(uid);
+                    System.out.println(user.getUserId());
+                    Log.d(TAG, user.toString());
                     Map vetInteVad = new HashMap();
                     vetInteVad.put("amount", amount);
                     vetInteVad.put("foods", products);
                     ordersRef.push().setValue(vetInteVad);
+                    Intent intent = new Intent(CartActivity.this, paymentActivity.class);
+                    startActivity(intent);
                 }
             });
         }

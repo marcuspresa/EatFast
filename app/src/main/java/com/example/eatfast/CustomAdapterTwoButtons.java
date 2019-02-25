@@ -78,10 +78,9 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Order testOrder = list.get(position);
                 db.deleteRow(testOrder.getId());
-
+                notifyDataSetChanged();
             }
         });
         return view;

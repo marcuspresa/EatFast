@@ -20,7 +20,7 @@
         android:clickable="true"
         android:onClick="sendOrder"
         app:backgroundTint="@color/colorPrimaryDark"
-        android:src="@drawable/ic_done_black_24dp"
+        android:src="@drawable/ic_attach_money_black_24dp"
         />
 
 </RelativeLayout>

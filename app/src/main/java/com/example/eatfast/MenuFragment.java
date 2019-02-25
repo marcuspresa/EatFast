@@ -28,17 +28,19 @@ public class MenuFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        int position = getArguments().getInt("Position");
+        int position = getArguments().getInt("position");
         String category = new String();
         if(position == 0){
             category = "Burgers";
         }
         if(position == 1){
             category = "Nuggets";
+        }
+        if(position == 2){
+            category = "Burgers";
         }
         View view =  inflater.inflate(R.layout.fragment_menu, container, false);
         final ListView listView = view.findViewById(R.id.fragmentList);
