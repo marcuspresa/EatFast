@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class CartActivity extends AppCompatActivity {
     private static final String TAG = "CartActivity";
@@ -90,15 +91,23 @@ public class CartActivity extends AppCompatActivity {
             order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SharedPreferences mPrefs = getSharedPreferences("UserID", MODE_PRIVATE);
-                    String uid = mPrefs.getString("user", "0");
-                    System.out.println(mPrefs.getString("user", "0"));
+                    SharedPreferences preferences = getSharedPreferences("user", MODE_PRIVATE);
+                    String uid = preferences.getString("user", null);
+                    System.out.println(uid + "hello");
+                    if (uid == null){
+                        System.out.println("Inne");
+                        SharedPreferences mPrefs = getSharedPreferences("user",MODE_PRIVATE);
+                        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+                        uid = UUID.randomUUID().toString();
+                        prefsEditor.putString("user", uid );
+                        prefsEditor.commit();
+                    }
+                    System.out.println(uid);
                     User user = new User(uid);
-                    System.out.println(user.getUserID());
                     Log.d(TAG, user.toString());
                     Map vetInteVad = new HashMap();
                     vetInteVad.put("amount", amount);
-                    vetInteVad.put("user", user.getUserID());
+                    vetInteVad.put("user", user.getUserId());
                     vetInteVad.put("foods", products);
                     ordersRef.push().setValue(vetInteVad);
                     Intent intent = new Intent(CartActivity.this, paymentActivity.class);

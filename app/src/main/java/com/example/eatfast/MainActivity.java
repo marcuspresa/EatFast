@@ -15,10 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences mPrefs = getSharedPreferences("UserID",MODE_PRIVATE);
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-        prefsEditor.putString("user", UUID.randomUUID().toString());
-        prefsEditor.commit();
+
 
     }
     public void navigateToMenu(View view){
