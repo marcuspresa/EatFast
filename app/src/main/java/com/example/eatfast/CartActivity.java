@@ -14,19 +14,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.Order;
 import com.example.eatfast.Model.User;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-
 
 public class CartActivity extends AppCompatActivity {
     private static final String TAG = "CartActivity";
@@ -99,10 +94,11 @@ public class CartActivity extends AppCompatActivity {
                     String uid = mPrefs.getString("user", "0");
                     System.out.println(mPrefs.getString("user", "0"));
                     User user = new User(uid);
-                    System.out.println(user.getUserId());
+                    System.out.println(user.getUserID());
                     Log.d(TAG, user.toString());
                     Map vetInteVad = new HashMap();
                     vetInteVad.put("amount", amount);
+                    vetInteVad.put("user", user.getUserID());
                     vetInteVad.put("foods", products);
                     ordersRef.push().setValue(vetInteVad);
                     Intent intent = new Intent(CartActivity.this, paymentActivity.class);

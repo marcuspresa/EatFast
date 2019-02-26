@@ -1,32 +1,25 @@
 package com.example.eatfast;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TabWidget;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.eatfast.Model.Order;
-
 import com.example.eatfast.Model.GroupedOrders;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class FragOrders extends ListFragment {
@@ -35,6 +28,8 @@ public class FragOrders extends ListFragment {
 
     ArrayList<Order> li = new ArrayList<>();
     ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,17 +37,33 @@ public class FragOrders extends ListFragment {
                 false);
 
         Order o = new Order("Nuggets", "60"); //test order
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
+        String uid = preferences.getString("user", "0");
+
+
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference myRef = database.getReference("Orders").eq;
-        myRef.addValueEventListener(new ValueEventListener() {
+        DatabaseReference ref = database.getInstance().getReference("Orders").child("user");
+        ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<Order> orders = new ArrayList<>();
-                for(DataSnapshot uniqueKeySnapshot : dataSnapshot.getChildren()) {
-                    if (uniqueKeySnapshot.child("user").getValue().equals())
-                    Order order = uniqueKeySnapshot.getValue(Order.class);
-                    orders.add(order);
-                }
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                System.out.println("apa");
+              for(DataSnapshot datas: dataSnapshot.getChildren()){
+                  ArrayList<Order> orders = new ArrayList<>();
+                  Order order = datas.getValue(Order.class);
+                  orders.add(order);
+                  System.out.println(order.getProductName()+"apa");
+              }
+
+                //CustomAdapter adapter = new CustomAdapter(orders, getActivity());
+                //setListAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         //testar med lokala ordrar
         li.add(o);
         li.add(o);
@@ -69,7 +80,6 @@ public class FragOrders extends ListFragment {
 
         CustomFragmentAdapter adapter1 = new CustomFragmentAdapter(groupedOrdersList, getActivity());
 
-        setListAdapter(adapter1);
 
         return rootView;
     }
