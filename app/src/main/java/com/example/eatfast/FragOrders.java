@@ -18,6 +18,10 @@ import android.widget.Toast;
 import com.example.eatfast.Model.Order;
 
 import com.example.eatfast.Model.GroupedOrders;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 import java.io.Serializable;
@@ -38,7 +42,17 @@ public class FragOrders extends ListFragment {
                 false);
 
         Order o = new Order("Nuggets", "60"); //test order
-
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference myRef = database.getReference("Orders").eq;
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ArrayList<Order> orders = new ArrayList<>();
+                for(DataSnapshot uniqueKeySnapshot : dataSnapshot.getChildren()) {
+                    if (uniqueKeySnapshot.child("user").getValue().equals())
+                    Order order = uniqueKeySnapshot.getValue(Order.class);
+                    orders.add(order);
+                }
         //testar med lokala ordrar
         li.add(o);
         li.add(o);
