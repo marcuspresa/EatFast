@@ -27,8 +27,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FragOrders extends ListFragment {
 
-
-
     ArrayList<Order> li = new ArrayList<>();
     ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
 

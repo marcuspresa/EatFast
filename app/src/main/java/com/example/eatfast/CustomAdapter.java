@@ -20,6 +20,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
     Database db;
 
+
     private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
@@ -32,6 +33,25 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
         this.list = list;
         this.context = context;
     }
+
+    public void counter(ArrayList<Order> list) {
+
+        MenuActivity.mCartItemCount = 0;
+        for (int i = 0; i < list.size(); i++) {
+            MenuActivity.mCartItemCount++;
+        }
+        if (MenuActivity.mCartItemCount == 0) {
+            if (MenuActivity.textCartItemCount.getVisibility() != View.GONE) {
+                MenuActivity.textCartItemCount.setVisibility(View.GONE);
+            }
+        } else {
+            if (MenuActivity.textCartItemCount.getVisibility() != View.VISIBLE) {
+                MenuActivity.textCartItemCount.setVisibility(View.VISIBLE);
+            }
+            MenuActivity.textCartItemCount.setText(String.valueOf(MenuActivity.mCartItemCount));
+        }
+    }
+
 
     @Override
     public int getCount(){
@@ -46,7 +66,6 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     @Override
     public long getItemId(int pos){
         return 0;
-
     }
 
     @Override
@@ -68,6 +87,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             public void onClick(View v) {
 
                 addToCart(position);
+                counter(CartActivity.orderDetail);
             }
         });
         return view;
@@ -82,6 +102,8 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
         else
             Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
+
+
     }
 
 
