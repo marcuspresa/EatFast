@@ -1,6 +1,7 @@
 package com.example.eatfast;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.MenuItemCompat;
@@ -14,11 +15,22 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TableLayout;
+import android.widget.TextView;
+
+import com.example.eatfast.Database.Database;
+import com.example.eatfast.Model.Order;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 
 public class MenuActivity extends AppCompatActivity {
+
+    Database db;
+
+    public static int mCartItemCount;
+    public static TextView textCartItemCount;
 
     private MenuViewPagerAdapter adapter;
     private ViewPager viewPager;
@@ -40,8 +52,13 @@ public class MenuActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
 
         final MenuItem menuItem = menu.findItem(R.id.action_cart);
-
         View actionView = MenuItemCompat.getActionView(menuItem);
+
+        textCartItemCount = (TextView) actionView.findViewById(R.id.cart_badge);
+
+        countCart();
+        badgeSetup();
+
         actionView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,4 +76,42 @@ public class MenuActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
+
+
+
+
+
+
+
+
+
+    public void countCart(){
+        mCartItemCount = 0;
+        db = new Database(this);
+        Cursor data = db.fetchData();
+
+        while(data.moveToNext()){
+           mCartItemCount++;
+        }
+    }
+
+    public void badgeSetup(){
+
+        if (textCartItemCount != null) {
+            if (mCartItemCount == 0) {
+                if (textCartItemCount.getVisibility() != View.GONE) {
+                    textCartItemCount.setVisibility(View.GONE);
+                }
+            } else {
+                textCartItemCount.setText(String.valueOf(mCartItemCount));
+
+                if (textCartItemCount.getVisibility() != View.VISIBLE) {
+                    textCartItemCount.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
 }

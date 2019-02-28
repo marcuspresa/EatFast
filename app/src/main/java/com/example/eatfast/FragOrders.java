@@ -20,11 +20,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.UUID;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class FragOrders extends ListFragment {
-
-
 
     ArrayList<Order> li = new ArrayList<>();
     ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
@@ -37,17 +38,18 @@ public class FragOrders extends ListFragment {
                 false);
 
         Order o = new Order("Nuggets", "60"); //test order
-        SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-        String uid = preferences.getString("user", "0");
-
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", MODE_PRIVATE);
+        final String uid = preferences.getString("user", "0");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getInstance().getReference("Orders").child("user");
+        DatabaseReference ref = database.getInstance().getReference("Orders");
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println("apa");
+                System.out.println("apa" + uid);
               for(DataSnapshot datas: dataSnapshot.getChildren()){
+
+                  System.out.println(datas.getValue());
                   ArrayList<Order> orders = new ArrayList<>();
                   Order order = datas.getValue(Order.class);
                   orders.add(order);

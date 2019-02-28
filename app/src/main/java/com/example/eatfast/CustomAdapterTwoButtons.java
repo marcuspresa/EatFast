@@ -3,6 +3,7 @@ import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.Order;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,46 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
         db = new Database(context);
         this.list = list;
         this.context = context;
+    }
+
+    public void add(Order p){
+
+        db.insertData(p.getProductName(), p.getPrice());
+        list.add(p);
+
+        /*boolean isInserted =
+        if(isInserted == true) {
+            Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
+        }
+        else
+            Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
+        */
+
+        notifyDataSetChanged();
+    }
+
+    public void counter(ArrayList<Order> list) {
+
+        CartActivity.mCartItemCount = 0;
+        for (int i = 0; i < list.size(); i++) {
+            CartActivity.mCartItemCount++;
+        }
+        if (CartActivity.mCartItemCount == 0) {
+            if (CartActivity.textCartItemCount.getVisibility() != View.GONE) {
+                CartActivity.textCartItemCount.setVisibility(View.GONE);
+            }
+        } else {
+            if (CartActivity.textCartItemCount.getVisibility() != View.VISIBLE) {
+                CartActivity.textCartItemCount.setVisibility(View.VISIBLE);
+            }
+            CartActivity.textCartItemCount.setText(String.valueOf(CartActivity.mCartItemCount));
+        }
+    }
+
+    public void delete(Order p){
+        db.deleteRow(p.getId());
+        list.remove(p);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -57,7 +98,7 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
         Order text = list.get(position);
         listItemText.setText(text.getProductName() + text.getPrice());
 
-        Button addBtn = (Button)view.findViewById(R.id.addBtn);
+        final Button addBtn = (Button)view.findViewById(R.id.addBtn);
         Button deleteBtn = (Button)view.findViewById(R.id.deleteBtn);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -65,22 +106,19 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
             public void onClick(View v) {
 
                 Order testOrder = list.get(position);
-
-                boolean isInserted = db.insertData(testOrder.getProductName().toString(), testOrder.getPrice().toString());
-                if(isInserted == true)
-                    Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
-                else
-                    Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
-
+                add(testOrder);
+                counter(list);
 
             }
         });
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Order testOrder = list.get(position);
-                db.deleteRow(testOrder.getId());
-                notifyDataSetChanged();
+                delete(testOrder);
+                counter(list);
+
             }
         });
         return view;

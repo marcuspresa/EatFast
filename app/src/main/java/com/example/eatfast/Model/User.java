@@ -1,26 +1,23 @@
 package com.example.eatfast.Model;
 
 public class User {
-
-    private String userID;
-
-    public User(String userID) {
-        this.userID = userID;
+    private String userId;
+    public User(String userId) {
+        this.userId = userId;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userID='" + userID + '\'' +
+                "userId='" + userId + '\'' +
                 '}';
     }
-
 }
