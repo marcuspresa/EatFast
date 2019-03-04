@@ -78,7 +78,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
         }
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
         Order text = list.get(position);
-        listItemText.setText(text.getProductName() + text.getPrice());
+        listItemText.setText(text.getProductName() +" "+  text.getPrice()+":-");
 
         Button addBtn = (Button)view.findViewById(R.id.addBtn);
 

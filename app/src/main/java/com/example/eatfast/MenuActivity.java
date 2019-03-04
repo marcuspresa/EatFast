@@ -70,8 +70,13 @@ public class MenuActivity extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) { //varukorg
         int id = item.getItemId();
+
         if (id == R.id.action_cart) {
             Intent intent = new Intent(this, CartActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.menu_orders) {
+            Intent intent = new Intent(this, OrderActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

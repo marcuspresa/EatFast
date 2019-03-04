@@ -60,18 +60,9 @@ public class CartActivity extends AppCompatActivity {
         retrieveCart();
 
         sendOrder(products, amount);
-        FloatingActionButton myFab = (FloatingActionButton) findViewById(R.id.sendOrder);
-        myFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(CartActivity.this, paymentActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
 
         final MenuItem menuItem = menu.findItem(R.id.action_cart);
@@ -132,14 +123,6 @@ public class CartActivity extends AppCompatActivity {
                     SharedPreferences preferences = getSharedPreferences("user", MODE_PRIVATE);
                     String uid = preferences.getString("user", null);
                     System.out.println(uid + "hello");
-                    if (uid == null){
-                        System.out.println("Inne");
-                        SharedPreferences mPrefs = getSharedPreferences("user",MODE_PRIVATE);
-                        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-                        uid = UUID.randomUUID().toString();
-                        prefsEditor.putString("user", uid );
-                        prefsEditor.commit();
-                    }
                     System.out.println(uid);
                     User user = new User(uid);
                     Log.d(TAG, user.toString());
