@@ -1,5 +1,6 @@
 package com.example.eatfast;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,16 +13,9 @@ public class paymentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        Button button = (Button) findViewById(R.id.payButton);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                System.out.println("PAYED");
-
-            }
-            }
-        );
+    }
+    public void navigateToOrders(View view){
+        Intent intent = new Intent(this, OrderActivity.class);
+        startActivity(intent);
     }
 }

@@ -96,7 +96,7 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
         }
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
         Order text = list.get(position);
-        listItemText.setText(text.getProductName() + text.getPrice());
+        listItemText.setText(text.getProductName() + " "+  text.getPrice()+":-");
 
         final Button addBtn = (Button)view.findViewById(R.id.addBtn);
         Button deleteBtn = (Button)view.findViewById(R.id.deleteBtn);

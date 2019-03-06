@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.eatfast.Model.DoneOrder;
 import com.example.eatfast.Model.Order;
 import com.example.eatfast.Model.GroupedOrders;
 import com.google.firebase.database.DataSnapshot;
@@ -37,8 +39,7 @@ public class FragOrders extends ListFragment {
         View rootView = inflater.inflate(R.layout.fragorders, container,
                 false);
 
-        Order o = new Order("Nuggets", "60"); //test order
-        SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences preferences = this.getActivity().getSharedPreferences("user", MODE_PRIVATE);
         final String uid = preferences.getString("user", "0");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -47,17 +48,13 @@ public class FragOrders extends ListFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 System.out.println("apa" + uid);
+                ArrayList<String> orders = new ArrayList<>();
               for(DataSnapshot datas: dataSnapshot.getChildren()){
-
-                  System.out.println(datas.getValue());
-                  ArrayList<Order> orders = new ArrayList<>();
-                  Order order = datas.getValue(Order.class);
+                  String order = datas.getKey();
                   orders.add(order);
-                  System.out.println(order.getProductName()+"apa");
               }
-
-                //CustomAdapter adapter = new CustomAdapter(orders, getActivity());
-                //setListAdapter(adapter);
+                CustomAdapterOrders adapter = new CustomAdapterOrders(orders, getActivity());
+                setListAdapter(adapter);
             }
 
             @Override
@@ -67,20 +64,6 @@ public class FragOrders extends ListFragment {
         });
 
         //testar med lokala ordrar
-        li.add(o);
-        li.add(o);
-
-        GroupedOrders groupedOrders = new GroupedOrders("0", li);
-        GroupedOrders groupedOrders2 = new GroupedOrders("2", li);
-        GroupedOrders groupedOrders3 = new GroupedOrders("3", li);
-
-        //testar lokala ordrar
-        groupedOrdersList.add(groupedOrders);
-        groupedOrdersList.add(groupedOrders);
-        groupedOrdersList.add(groupedOrders2);
-        groupedOrdersList.add(groupedOrders3);
-
-        CustomFragmentAdapter adapter1 = new CustomFragmentAdapter(groupedOrdersList, getActivity());
 
 
         return rootView;
