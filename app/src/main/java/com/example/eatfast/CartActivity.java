@@ -126,12 +126,12 @@ public class CartActivity extends AppCompatActivity {
                     System.out.println(uid);
                     User user = new User(uid);
                     Log.d(TAG, user.toString());
-                    Map vetInteVad = new HashMap();
-                    vetInteVad.put("amount", amount); //vet inte heller
-                    vetInteVad.put("amount", amount);
-                    vetInteVad.put("user", user.getUserId());
-                    vetInteVad.put("foods", products);
-                    ordersRef.push().setValue(vetInteVad);
+                    Map firebaseOrder = new HashMap();
+                    firebaseOrder.put("amount", amount);
+                    firebaseOrder.put("amount", amount);
+                    firebaseOrder.put("user", user.getUserId());
+                    firebaseOrder.put("foods", products);
+                    ordersRef.push().setValue(firebaseOrder);
                     Intent intent = new Intent(CartActivity.this, paymentActivity.class);
                     startActivity(intent);
                 }
