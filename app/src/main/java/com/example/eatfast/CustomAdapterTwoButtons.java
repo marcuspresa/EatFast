@@ -33,8 +33,10 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
 
     public void add(Order p){
 
-        db.insertData(p.getProductName(), p.getPrice());
-        list.add(p);
+        int newId = list.get(list.size()-1).getId()+1;
+        Order o = new Order(p.getProductName(), p.getPrice(), newId);
+        db.insertData(o.getProductName(), o.getPrice());
+        list.add(o);
 
         /*boolean isInserted =
         if(isInserted == true) {
@@ -94,6 +96,7 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.activity_cart_layout, null);
         }
+
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
         Order text = list.get(position);
         listItemText.setText(text.getProductName() + " "+  text.getPrice()+":-");
@@ -106,8 +109,10 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
             public void onClick(View v) {
 
                 Order testOrder = list.get(position);
+                System.out.println(testOrder.getId() + "TESTING");
                 add(testOrder);
                 counter(list);
+                Toast.makeText(context, "Placed " + testOrder.getProductName() + " in cart", Toast.LENGTH_LONG).show();
 
             }
         });
@@ -118,6 +123,7 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
                 Order testOrder = list.get(position);
                 delete(testOrder);
                 counter(list);
+                Toast.makeText(context, "Removed " + testOrder.getProductName() + " from cart", Toast.LENGTH_LONG).show();
 
             }
         });

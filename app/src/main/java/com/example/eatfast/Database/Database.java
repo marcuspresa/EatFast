@@ -33,16 +33,14 @@ public class Database extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean insertData(String productname, String price){
+    public long insertData(String productname, String price){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,productname);
         contentValues.put(COL_3,price);
         long result = db.insert(TABLE_NAME, null, contentValues);
-        if(result == -1)
-            return false;
-        else
-            return true;
+
+        return result;
     }
 
     public Cursor fetchData(){
