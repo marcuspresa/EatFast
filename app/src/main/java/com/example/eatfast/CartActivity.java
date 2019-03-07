@@ -126,12 +126,12 @@ public class CartActivity extends AppCompatActivity {
                     System.out.println(uid);
                     User user = new User(uid);
                     Log.d(TAG, user.toString());
-                    Map vetInteVad = new HashMap();
-                    vetInteVad.put("amount", amount); //vet inte heller
-                    vetInteVad.put("amount", amount);
-                    vetInteVad.put("user", user.getUserId());
-                    vetInteVad.put("foods", products);
-                    ordersRef.push().setValue(vetInteVad);
+                    Map pushedOrders = new HashMap();
+                    pushedOrders.put("amount", amount); //vet inte heller
+                    pushedOrders.put("user", user.getUserId());
+                    pushedOrders.put("foods", products);
+                    pushedOrders.put("status", "Cooking");
+                    ordersRef.push().setValue(pushedOrders);
                     Intent intent = new Intent(CartActivity.this, paymentActivity.class);
                     startActivity(intent);
                 }

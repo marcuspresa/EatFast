@@ -1,5 +1,7 @@
 package com.example.eatfast;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,22 +38,23 @@ public class FragOrders extends ListFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragorders, container,
+        final View rootView = inflater.inflate(R.layout.fragorders, container,
                 false);
 
         SharedPreferences preferences = this.getActivity().getSharedPreferences("user", MODE_PRIVATE);
         final String uid = preferences.getString("user", "0");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getInstance().getReference("Orders");
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference ref = database.getInstance().getReference("Orders");
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                System.out.println("apa" + uid);
                 ArrayList<String> orders = new ArrayList<>();
+                ArrayList<DoneOrder> doneOrders = new ArrayList<DoneOrder>();
               for(DataSnapshot datas: dataSnapshot.getChildren()){
-                  String order = datas.getKey();
-                  orders.add(order);
+                  DoneOrder doneOrder = datas.getValue(DoneOrder.class);
+                  doneOrder.setOrderID(datas.getKey());
+                  doneOrders.add(doneOrder);
               }
                 CustomAdapterOrders adapter = new CustomAdapterOrders(orders, getActivity());
                 setListAdapter(adapter);
