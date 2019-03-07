@@ -37,14 +37,16 @@ import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
 
-
     private SectionsPageAdapter mSectionsPageAdapter;
-
     private ViewPager mViewPager;
+
+    String string;
 
     private static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
@@ -64,6 +66,10 @@ public class OrderActivity extends AppCompatActivity {
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+
+        final String tab1 = getResources().getString(R.string.tab_text_1);
+        string = tab1;
 
     }
     public void createFloatingWidget(View view) {
@@ -109,8 +115,8 @@ public class OrderActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragOrders(), "Pending orders");
-        adapter.addFragment(new FragDoneOrders(), "Completed orders");
+        adapter.addFragment(new FragOrders(), string);
+        adapter.addFragment(new FragDoneOrders(), "done");
         viewPager.setAdapter(adapter);
     }
 

@@ -18,12 +18,22 @@
         android:textStyle="bold" />
 
     <Button
-    android:id="@+id/addBtn"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toRightOf="@+id/orderItem"
-    android:text="+" />
+        android:id="@+id/addBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/infoBtn"
+        android:text="+"
+        />
 
+    <Button
+
+        android:id="@+id/infoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="info"
+
+        />
 
 
 </RelativeLayout>

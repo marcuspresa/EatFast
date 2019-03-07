@@ -9,5 +9,5 @@
         android:layout_height="wrap_content"
         android:onClick="navigateToOrders"
         android:layout_weight="1"
-        android:text="Pay!" />
+        android:text="@string/pay_button" />
 </LinearLayout>

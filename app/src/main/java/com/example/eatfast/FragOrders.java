@@ -63,9 +63,6 @@ public class FragOrders extends ListFragment {
             }
         });
 
-        //testar med lokala ordrar
-
-
         return rootView;
     }
 
