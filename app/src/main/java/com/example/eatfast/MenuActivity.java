@@ -19,6 +19,8 @@ import com.example.eatfast.Database.Database;
 
 public class MenuActivity extends AppCompatActivity {
 
+    public static ProgressBar spinner;
+
     Database db;
 
     public static int mCartItemCount;
@@ -39,8 +41,7 @@ public class MenuActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.menuTabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        ProgressBar pgsBar = (ProgressBar)findViewById(R.id.pBar);
-        pgsBar.setVisibility(View.VISIBLE);
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
 
     }
 
