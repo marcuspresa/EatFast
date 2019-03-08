@@ -43,7 +43,6 @@ public class OrderActivity extends AppCompatActivity {
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
 
-    String string;
 
     private static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
     @Override
@@ -53,7 +52,6 @@ public class OrderActivity extends AppCompatActivity {
         AlarmManager alarm =(AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pendingintent);
         alarm.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),5000, pendingintent);
-
 
 
         super.onCreate(savedInstanceState);
@@ -75,10 +73,6 @@ public class OrderActivity extends AppCompatActivity {
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-
-        final String tab1 = getResources().getString(R.string.tab_text_1);
-        string = tab1;
 
     }
     public void createFloatingWidget(View view) {
@@ -124,8 +118,8 @@ public class OrderActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragOrders(), string);
-        adapter.addFragment(new FragDoneOrders(), "done");
+        adapter.addFragment(new FragOrders(), "Pending orders");
+        adapter.addFragment(new FragDoneOrders(), "Done orders");
         viewPager.setAdapter(adapter);
     }
 
