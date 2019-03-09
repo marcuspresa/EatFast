@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ordersClicked(View view){
-        Intent intent = new Intent(this, OrderActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

@@ -17,6 +17,7 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".CategoryDetail" />
+        <activity android:name=".LoginActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
