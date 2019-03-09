@@ -48,26 +48,20 @@ public class OrderActivity extends AppCompatActivity {
     private static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         Intent serviceintent = new Intent(OrderActivity.this, NotifyUser.class);
-        PendingIntent pendingintent =PendingIntent.getService(OrderActivity.this,0, serviceintent,0);
+        PendingIntent pendingintent = PendingIntent.getService(OrderActivity.this,0, serviceintent,0);
         AlarmManager alarm =(AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pendingintent);
         alarm.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),5000, pendingintent);
 
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            //If the draw over permission is not available open the settings screen
-            //to grant the permission.
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:" + getPackageName()));
             startActivityForResult(intent, DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
         } else {
-            //If permission is granted start floating widget service
             startFloatingWidgetService();
         }
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
@@ -82,23 +76,16 @@ public class OrderActivity extends AppCompatActivity {
 
     }
     public void createFloatingWidget(View view) {
-        //Check if the application has draw over other apps permission or not?
-        //This permission is by default available for API<23. But for API > 23
-        //you have to ask for the permission in runtime.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            //If the draw over permission is not available open the settings screen
-            //to grant the permission.
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:" + getPackageName()));
             startActivityForResult(intent, DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
         } else {
-            //If permission is granted start floating widget service
             startFloatingWidgetService();
         }
 
     }
 
-    /*  Start Floating widget service and finish current activity */
     private void startFloatingWidgetService() {
         startService(new Intent(OrderActivity.this, FloatingWidgetService.class));
     }
@@ -121,13 +108,20 @@ public class OrderActivity extends AppCompatActivity {
         }
     }
 
-
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragOrders(), string);
+        adapter.addFragment(new FragOrders(), "cooking");
         adapter.addFragment(new FragDoneOrders(), "done");
         viewPager.setAdapter(adapter);
+
     }
+
+    public void startService(View v){
+        Intent serviceIntent = new Intent(this, NotifyUser.class);
+        startService(serviceIntent);
+
+    }
+
 
 
 }

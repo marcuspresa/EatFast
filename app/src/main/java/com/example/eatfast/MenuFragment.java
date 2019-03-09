@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-
 import com.example.eatfast.Model.Order;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 public class MenuFragment extends Fragment {
 
     public MenuFragment() {
-        // Required empty public constructor
     }
 
     @Override

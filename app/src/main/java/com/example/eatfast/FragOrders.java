@@ -55,6 +55,7 @@ public class FragOrders extends ListFragment {
                   DoneOrder doneOrder = datas.getValue(DoneOrder.class);
                   doneOrder.setOrderID(datas.getKey());
                   doneOrders.add(doneOrder);
+
               }
                 CustomAdapterOrders adapter = new CustomAdapterOrders(orders, getActivity());
                 setListAdapter(adapter);

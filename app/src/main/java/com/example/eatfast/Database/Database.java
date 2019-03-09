@@ -14,6 +14,11 @@ public class Database extends SQLiteOpenHelper {
     public static final String COL_1 = "ID";
     public static final String COL_2 = "PRODUCTNAME";
     public static final String COL_3 = "PRICE";
+    public static final String TABLE_NAME_1 = "doneOrder";
+    public static final String COL_1_0 = "ORDERID";
+    public static final String COL_2_0 = "FOODS";
+    public static final String COL_3_0 = "USERID";
+    public static final String COL_4_0 = "PRICE";
 
     public Database(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -24,6 +29,7 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("CREATE TABLE orderDetail(ID INTEGER PRIMARY KEY AUTOINCREMENT, PRODUCTNAME TEXT, PRICE TEXT)");
+        db.execSQL("CREATE TABLE doneOrder(ORDERID TEXT PRIMARY KEY, FOODS TEXT, PRICE TEXT)");
 
     }
 
