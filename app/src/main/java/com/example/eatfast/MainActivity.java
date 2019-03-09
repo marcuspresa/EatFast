@@ -3,14 +3,14 @@ package com.example.eatfast;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-
+import android.widget.Toast;
 import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,25 +31,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Set and initialize the view elements.
+     */
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
 
-    public boolean onOptionsItemSelected(MenuItem item) { //varukorg
-        int id = item.getItemId();
-        if (id == R.id.action_setting) {
-            Intent intent = new Intent(this, OrderActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void navigateToMenu(View view){
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
-
 
 }

@@ -1,13 +1,9 @@
 package com.example.eatfast;
-import com.example.eatfast.MenuActivity;
-import android.app.DownloadManager;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +11,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class CartActivity extends AppCompatActivity {
 
@@ -126,12 +120,12 @@ public class CartActivity extends AppCompatActivity {
                     System.out.println(uid);
                     User user = new User(uid);
                     Log.d(TAG, user.toString());
-                    Map firebaseOrder = new HashMap();
-                    firebaseOrder.put("amount", amount);
-                    firebaseOrder.put("amount", amount);
-                    firebaseOrder.put("user", user.getUserId());
-                    firebaseOrder.put("foods", products);
-                    ordersRef.push().setValue(firebaseOrder);
+                    Map pushedOrders = new HashMap();
+                    pushedOrders.put("amount", amount); //vet inte heller
+                    pushedOrders.put("user", user.getUserId());
+                    pushedOrders.put("foods", products);
+                    pushedOrders.put("status", "Cooking");
+                    ordersRef.push().setValue(pushedOrders);
                     Intent intent = new Intent(CartActivity.this, paymentActivity.class);
                     startActivity(intent);
                 }

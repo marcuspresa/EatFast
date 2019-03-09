@@ -23,7 +23,6 @@ import java.util.ArrayList;
  */
 public class MenuFragment extends Fragment {
 
-
     public MenuFragment() {
         // Required empty public constructor
     }

@@ -1,21 +1,50 @@
 package com.example.eatfast.Model;
 
+import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DoneOrder {
 
     private String orderID;
-    private String amount;
-    private ArrayList<String> foods;
+    private String user;
+    private int amount;
+    private String status;
 
 
     public DoneOrder(){
 
     }
-    public DoneOrder(String orderID, String amount, ArrayList<String> foods) {
-        this.orderID = orderID;
+    public DoneOrder(int amount, String status, String user, String orderID) {
         this.amount = amount;
-        this.foods = foods;
+        this.status = status;
+        this.user = user;
+        this.orderID = orderID;
+    }
+
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getOrderID() {
@@ -24,22 +53,6 @@ public class DoneOrder {
 
     public void setOrderID(String orderID) {
         this.orderID = orderID;
-    }
-
-    public String getAmount() {
-        return amount;
-    }
-
-    public void setAmount(String amount) {
-        this.amount = amount;
-    }
-
-    public ArrayList<String> getFoods() {
-        return foods;
-    }
-
-    public void setFoods(ArrayList<String> foods) {
-        this.foods = foods;
     }
 }
 

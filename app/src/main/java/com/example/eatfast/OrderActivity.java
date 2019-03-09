@@ -1,5 +1,8 @@
 package com.example.eatfast;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -37,17 +40,25 @@ import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
 
-
     private SectionsPageAdapter mSectionsPageAdapter;
-
     private ViewPager mViewPager;
+
+    String string;
 
     private static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Intent serviceintent = new Intent(OrderActivity.this, NotifyUser.class);
+        PendingIntent pendingintent =PendingIntent.getService(OrderActivity.this,0, serviceintent,0);
+        AlarmManager alarm =(AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarm.cancel(pendingintent);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),5000, pendingintent);
+
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
             //If the draw over permission is not available open the settings screen
@@ -64,6 +75,10 @@ public class OrderActivity extends AppCompatActivity {
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+
+        final String tab1 = getResources().getString(R.string.tab_text_1);
+        string = tab1;
 
     }
     public void createFloatingWidget(View view) {
@@ -109,8 +124,8 @@ public class OrderActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragOrders(), "Pending orders");
-        adapter.addFragment(new FragDoneOrders(), "Completed orders");
+        adapter.addFragment(new FragOrders(), string);
+        adapter.addFragment(new FragDoneOrders(), "done");
         viewPager.setAdapter(adapter);
     }
 

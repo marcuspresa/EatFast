@@ -4,7 +4,8 @@
 
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
-
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
 
@@ -29,6 +30,11 @@
             android:name=".FloatingWidgetService"
             android:enabled="true"
             android:exported="false" />
+        <service
+            android:name=".NotifyUser"
+            android:enabled="true"
+            android:exported="true"
+            />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -38,6 +44,7 @@
         <activity
             android:name=".OrderActivity"
             android:label="@string/title_activity_order"
+            android:stopWithTask="false"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
     </application>
