@@ -146,13 +146,13 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
 
     /*  Implement Touch Listener to Floating Widget Root View  */
     private void implementTouchListenerToFloatingWidgetView() {
-        //Drag and move floating view using user's touch action.
+
         mFloatingWidgetView.findViewById(R.id.root_container).setOnTouchListener(new View.OnTouchListener() {
 
             long time_start = 0, time_end = 0;
 
-            boolean isLongClick = false;//variable to judge if user click long press
-            boolean inBounded = false;//variable to judge if floating view is bounded to remove view
+            boolean isLongClick = false;
+            boolean inBounded = false;
             int remove_img_width = 0, remove_img_height = 0;
 
             Handler handler_longClick = new Handler();
