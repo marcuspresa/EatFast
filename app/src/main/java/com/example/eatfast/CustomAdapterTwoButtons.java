@@ -34,7 +34,7 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
     public void add(Order p){
 
         int newId = list.get(list.size()-1).getId()+1;
-        Order o = new Order(p.getProductName(), p.getPrice(), newId);
+        Order o = new Order( newId, p.getProductName(), p.getPrice());
         db.insertData(o.getProductName(), o.getPrice());
         list.add(o);
 

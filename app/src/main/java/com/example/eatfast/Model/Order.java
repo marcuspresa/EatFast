@@ -18,7 +18,13 @@ public Order(){
         Price = price;
     }
 
-    public Order(String productName, String price, int id) {
+    public Order(int id, String productName, String price) {
+        ProductName = productName;
+        Price = price;
+        orderId = id;
+    }
+
+    public Order(String price, int id, String productName){
         ProductName = productName;
         Price = price;
         orderId = id;

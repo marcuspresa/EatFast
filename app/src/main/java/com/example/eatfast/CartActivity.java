@@ -41,7 +41,7 @@ public class CartActivity extends AppCompatActivity {
     private static final String TAG = "CartActivity";
     Database db;
     private int amount = 0;
-    private ArrayList<String> products = new ArrayList<>();
+    private ArrayList<Order> products = new ArrayList<>();
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference();
     DatabaseReference ordersRef = ref.child("Orders");
@@ -98,12 +98,12 @@ public class CartActivity extends AppCompatActivity {
         }
         else{
             while(data.moveToNext()){
-                Order o = new Order(data.getString(1), data.getString(2), data.getInt(0));
+                Order o = new Order(data.getInt(0), data.getString(1), data.getString(2));
                 amount = amount + Integer.parseInt(o.getPrice());
                 orderDetail.add(o);
                 mCartItemCount += 1;
 
-                products.add(o.getProductName());
+                products.add(o);
             }
             CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
             listView.setAdapter(a);
@@ -111,7 +111,7 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
-    public void sendOrder(final ArrayList<String> products, final int amount){
+    public void sendOrder(final ArrayList<Order> products, final int amount){
         FloatingActionButton order = (FloatingActionButton) findViewById(R.id.sendOrder);
             order.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -128,7 +128,6 @@ public class CartActivity extends AppCompatActivity {
                     pushedOrders.put("foods", products);
                     pushedOrders.put("status", "Cooking");
                     ordersRef.push().setValue(pushedOrders);
-
 
                     Intent intent = new Intent(CartActivity.this, paymentActivity.class);
                     GroupedOrders o = new GroupedOrders(orderDetail);
