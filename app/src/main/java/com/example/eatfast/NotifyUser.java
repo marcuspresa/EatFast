@@ -15,6 +15,7 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.example.eatfast.Model.DoneOrder;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +26,8 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class NotifyUser extends Service {
+
+    private static final String TAG = "NotifyUser";
 
     public NotifyUser() {
     }
@@ -45,7 +48,7 @@ public class NotifyUser extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    public void Notify(){
+    public void Notify() {
         SharedPreferences preferences = getSharedPreferences("user", MODE_PRIVATE);
         final String uid = preferences.getString("user", "0");
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -54,10 +57,13 @@ public class NotifyUser extends Service {
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot datas: dataSnapshot.getChildren()){
-                    if(datas.getValue(DoneOrder.class).getStatus().equals("ready")){
+                Log.d(TAG, "OnDataChanged for notifyUser");
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    if (datas.getValue(DoneOrder.class).getStatus().equals("ready")) {
                         System.out.println("Notifikation" + "Hej");
-                }
+                        showNotification();
+
+                    }
                 }
 
             }
@@ -68,7 +74,23 @@ public class NotifyUser extends Service {
 
             }
         });
+    }
+        private void showNotification(){
+            Intent notificationIntent = new Intent(this, OrderActivity.class);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this,0,notificationIntent,0);
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.drawable.badge_background)
+                            .setContentTitle("Notification Title")
+                            .setContentText("Notification ")
+                            .setContentIntent(pendingIntent );
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, mBuilder.build());
+
+
+        }
 
 
     }
-}
+

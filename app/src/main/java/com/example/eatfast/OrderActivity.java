@@ -49,10 +49,10 @@ public class OrderActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Intent serviceintent = new Intent(OrderActivity.this, NotifyUser.class);
-        PendingIntent pendingintent =PendingIntent.getService(OrderActivity.this,0, serviceintent,0);
+        PendingIntent pendingintent =PendingIntent.getService(this,0, serviceintent,0);
         AlarmManager alarm =(AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pendingintent);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),5000, pendingintent);
+        alarm.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),500, pendingintent);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
