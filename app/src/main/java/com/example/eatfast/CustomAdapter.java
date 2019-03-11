@@ -2,7 +2,10 @@ package com.example.eatfast;
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.Order;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,10 +37,10 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
         this.context = context;
     }
 
-    public void counter(ArrayList<Order> list) {
+    public void counter(int amount) {
 
         MenuActivity.mCartItemCount = 0;
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < amount; i++) {
             MenuActivity.mCartItemCount++;
         }
         if (MenuActivity.mCartItemCount == 0) {
@@ -51,7 +54,6 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             MenuActivity.textCartItemCount.setText(String.valueOf(MenuActivity.mCartItemCount));
         }
     }
-
 
     @Override
     public int getCount(){
@@ -81,14 +83,38 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
         listItemText.setText(text.getProductName() +" "+  text.getPrice()+":-");
 
         Button addBtn = (Button)view.findViewById(R.id.addBtn);
+        Button infoBtn = (Button)view.findViewById(R.id.infoBtn);
+
+
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 addToCart(position);
-                counter(CartActivity.orderDetail);
+
             }
+        });
+
+        infoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+                System.out.println("CLICKED" + " " + position);
+                final Order o = getItem(position);
+                alertDialog.setTitle(o.getProductName() + " " + o.getPrice() + " :-");
+
+                alertDialog.setPositiveButton(
+                        "Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }
+                );
+                alertDialog.show();
+
+            }
+
         });
         return view;
     }
@@ -96,13 +122,10 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     public void addToCart(int pos){
 
         Order testOrder = getItem(pos);
-
-        boolean isInserted = db.insertData(testOrder.getProductName().toString(), testOrder.getPrice().toString());
-        if(isInserted == true)
-            Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
-
+        db.insertData(testOrder.getProductName(), testOrder.getPrice());
+        Toast.makeText(context, "Placed " + testOrder.getProductName() + " in cart", Toast.LENGTH_LONG).show();
+        MenuActivity.mCartItemCount++;
+        counter(MenuActivity.mCartItemCount);
 
     }
 

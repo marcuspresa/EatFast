@@ -40,10 +40,9 @@ import java.util.ArrayList;
 
 public class OrderActivity extends AppCompatActivity {
 
-
     private SectionsPageAdapter mSectionsPageAdapter;
-
     private ViewPager mViewPager;
+
 
     private static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
     @Override
@@ -53,6 +52,7 @@ public class OrderActivity extends AppCompatActivity {
         AlarmManager alarm =(AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarm.cancel(pendingintent);
         alarm.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),500, pendingintent);
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
@@ -119,7 +119,7 @@ public class OrderActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragOrders(), "Pending orders");
-        adapter.addFragment(new FragDoneOrders(), "Completed orders");
+        adapter.addFragment(new FragDoneOrders(), "Done orders");
         viewPager.setAdapter(adapter);
     }
 

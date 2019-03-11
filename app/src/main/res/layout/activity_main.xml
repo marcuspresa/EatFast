@@ -7,31 +7,26 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/menu"
         android:layout_width="309dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="350dp"
         android:layout_marginEnd="24dp"
-        android:text="Menu"
+        android:text="@string/menuButton"
         android:onClick="navigateToMenu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView"
+    <Button
+        android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="77dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="77dp"
-        android:text="Press the menu button to view our menu"
+        android:text="Button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        tools:layout_editor_absoluteY="499dp"
+        android:onClick="navigateToAdminPage"/>
 
-
-
-        />
 </android.support.constraint.ConstraintLayout>

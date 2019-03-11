@@ -4,28 +4,22 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.support.design.widget.TabLayout;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TableLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.eatfast.Database.Database;
-import com.example.eatfast.Model.Order;
-
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 
 
 public class MenuActivity extends AppCompatActivity {
+
+    public static ProgressBar spinner;
 
     Database db;
 
@@ -35,6 +29,7 @@ public class MenuActivity extends AppCompatActivity {
     private MenuViewPagerAdapter adapter;
     private ViewPager viewPager;
     private TabLayout tabLayout;
+
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
@@ -43,10 +38,20 @@ public class MenuActivity extends AppCompatActivity {
         adapter = new MenuViewPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.menuTabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        countCart();
+        badgeSetup();
+    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
@@ -81,15 +86,6 @@ public class MenuActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
-
-
-
-
-
 
 
     public void countCart(){

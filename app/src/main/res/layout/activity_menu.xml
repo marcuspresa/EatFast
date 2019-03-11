@@ -11,14 +11,19 @@
     <android.support.design.widget.TabLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/tabs"
+        android:id="@+id/menuTabs"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
         app:tabMode="fixed"
-        app:tabGravity="fill"
+        app:tabGravity="fill"/>
 
-        />
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
 
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
@@ -27,3 +32,7 @@
         />
 
 </LinearLayout>
+
+
+
+

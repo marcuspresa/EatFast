@@ -42,10 +42,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void ordersClicked(View view){
-        Intent intent = new Intent(this, OrderActivity.class);
+    public void navigateToAdminPage(View view){
+        Intent intent = new Intent(this, AdminLoginActivity.class);
         startActivity(intent);
     }
-
-
 }

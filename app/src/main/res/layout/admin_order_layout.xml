@@ -3,37 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/listV"
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 
 
     <TextView
-        android:id="@+id/orderItem"
+        android:id="@+id/order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
-        android:textSize="18sp"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:textSize="40sp"
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/addBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/infoBtn"
-        android:text="+"
-        />
-
-    <Button
-
-        android:id="@+id/infoBtn"
+        android:id="@+id/deleteBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="info"
-
+        android:text="x"
         />
-
 
 </RelativeLayout>

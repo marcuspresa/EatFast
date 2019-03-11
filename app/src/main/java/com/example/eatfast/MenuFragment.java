@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.example.eatfast.Model.Order;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class MenuFragment extends Fragment {
+
 
 
     public MenuFragment() {
@@ -42,6 +44,7 @@ public class MenuFragment extends Fragment {
         if(position == 2){
             category = "Burgers";
         }
+
         View view =  inflater.inflate(R.layout.fragment_menu, container, false);
         final ListView listView = view.findViewById(R.id.fragmentList);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -56,6 +59,7 @@ public class MenuFragment extends Fragment {
                 }
                 CustomAdapter adapter = new CustomAdapter(orders, getActivity());
                 listView.setAdapter(adapter);
+                MenuActivity.spinner.setVisibility(View.GONE);
             }
 
             @Override
@@ -63,6 +67,7 @@ public class MenuFragment extends Fragment {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
+
         return view;
     }
 

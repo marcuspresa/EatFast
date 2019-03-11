@@ -68,7 +68,6 @@ public class NotifyUser extends Service {
 
             }
 
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
