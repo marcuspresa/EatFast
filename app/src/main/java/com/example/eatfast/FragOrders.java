@@ -35,10 +35,12 @@ public class FragOrders extends ListFragment {
 
     ArrayList<Order> li = new ArrayList<>();
     ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
-    GroupedOrders groupedOrders = new GroupedOrders();
+    ArrayList<Order> orderList = new ArrayList<>();
 
+    String orderNr;
     ArrayList<String> orders = new ArrayList<>();
     ArrayList<DoneOrder> doneOrders = new ArrayList<DoneOrder>();
+    DoneOrder doneOrder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,34 +55,63 @@ public class FragOrders extends ListFragment {
         final DatabaseReference ref = database.getInstance().getReference("Orders");
 
 
+
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Order> list = new ArrayList<Order>();
 
               for(DataSnapshot datas: dataSnapshot.getChildren()){
-                  DoneOrder doneOrder = datas.getValue(DoneOrder.class);
+                  doneOrder = datas.getValue(DoneOrder.class);
                   doneOrder.setOrderID(datas.getKey());
-                  doneOrders.add(doneOrder);
-                  String food = doneOrder.getOrderID();
 
-                  DatabaseReference foodRef = ref.child(food);
+                  System.out.println("TESTING" + datas.getKey());
+
+                  orderNr = datas.getKey();
+
+                  DatabaseReference foodRef = ref.child(orderNr);
                   DatabaseReference foodsRef = foodRef.child("foods");
 
-                  System.out.println("TESTING" );
+                  foodsRef.addValueEventListener(new ValueEventListener() {
+
+                      @Override
+                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                              Order order = snapshot.getValue(Order.class);
+                              orderList.add(order);
+                          }
+                          doneOrder.setOrders(orderList);
+
+                          doneOrders.add(doneOrder);
+
+                          //System.out.println("TESTING" + doneOrders);
+
+                          GroupedOrders groupedOrders = new GroupedOrders(doneOrders, orderNr);
+                         // System.out.println("TESTING" + " " + doneOrders);
+
+                          groupedOrdersList.add(groupedOrders);
+                          System.out.println("TESTING" + groupedOrdersList);
+
+
+                      }
+                      @Override
+                      public void onCancelled(@NonNull DatabaseError databaseError) {
+                      }
+
+                  });
 
               }
+                CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(groupedOrdersList, getActivity());
+                setListAdapter(customFragmentAdapter);
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
-
-
-
-
         return rootView;
+
     }
 
     @Override

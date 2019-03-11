@@ -22,6 +22,11 @@ public class GroupedOrders extends AppCompatActivity implements Serializable {
         this.list = list;
     }
 
+    public GroupedOrders(ArrayList<DoneOrder> list, String id){
+        this.id = id;
+        this.list2 = list;
+    }
+
     public GroupedOrders(String userId, ArrayList<DoneOrder> list, String status){
         list2 = list;
         this.status = status;

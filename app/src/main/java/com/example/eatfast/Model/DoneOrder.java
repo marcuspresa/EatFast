@@ -11,6 +11,7 @@ public class DoneOrder {
     private int amount;
     private String status;
     private ArrayList<Order> list = new ArrayList<>();
+    private ArrayList<String> slist = new ArrayList<>();
 
 
     public DoneOrder(){
@@ -32,6 +33,7 @@ public class DoneOrder {
         this.list = list;
     }
 
+    public DoneOrder(ArrayList<String> list){this.slist = list;}
 
     public ArrayList<Order> getOrders(){return this.list;}
 
