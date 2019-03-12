@@ -56,17 +56,22 @@ public class FragOrders extends ListFragment {
 
 
 
+        final CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(groupedOrdersList, getActivity());
+        setListAdapter(customFragmentAdapter);
+
+
+
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
               for(DataSnapshot datas: dataSnapshot.getChildren()){
-                  doneOrder = datas.getValue(DoneOrder.class);
+                  final DoneOrder doneOrder = datas.getValue(DoneOrder.class);
                   doneOrder.setOrderID(datas.getKey());
 
                   System.out.println("TESTING" + datas.getKey());
 
-                  orderNr = datas.getKey();
+                  final String orderNr = datas.getKey();
 
                   DatabaseReference foodRef = ref.child(orderNr);
                   DatabaseReference foodsRef = foodRef.child("foods");
@@ -88,9 +93,9 @@ public class FragOrders extends ListFragment {
 
                           GroupedOrders groupedOrders = new GroupedOrders(doneOrders, orderNr);
                          // System.out.println("TESTING" + " " + doneOrders);
-
                           groupedOrdersList.add(groupedOrders);
                           System.out.println("TESTING" + groupedOrdersList);
+                          customFragmentAdapter.notifyDataSetChanged();
 
 
                       }
@@ -101,8 +106,7 @@ public class FragOrders extends ListFragment {
                   });
 
               }
-                CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(groupedOrdersList, getActivity());
-                setListAdapter(customFragmentAdapter);
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
