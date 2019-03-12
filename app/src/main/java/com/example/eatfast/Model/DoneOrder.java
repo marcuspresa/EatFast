@@ -1,10 +1,11 @@
 package com.example.eatfast.Model;
 
+import java.io.Serializable;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoneOrder {
+public class DoneOrder implements Serializable {
 
     private String orderID;
     private String user;
