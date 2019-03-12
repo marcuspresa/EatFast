@@ -64,53 +64,41 @@ public class FragOrders extends ListFragment {
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot datas: dataSnapshot.getChildren()) {
+                    final DoneOrder doneOrder = datas.getValue(DoneOrder.class);
 
-              for(DataSnapshot datas: dataSnapshot.getChildren()){
-                  final DoneOrder doneOrder = datas.getValue(DoneOrder.class);
-                  doneOrder.setOrderID(datas.getKey());
+                    if (doneOrder.getStatus().equals("Cooking")) {
+                        doneOrder.setOrderID(datas.getKey());
+                        final String orderNr = datas.getKey();
+                        DatabaseReference foodRef = ref.child(orderNr);
+                        DatabaseReference foodsRef = foodRef.child("foods");
+                        foodsRef.addValueEventListener(new ValueEventListener() {
 
-                  System.out.println("TESTING" + datas.getKey());
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                  final String orderNr = datas.getKey();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Order order = snapshot.getValue(Order.class);
+                                    orderList.add(order);
+                                }
+                                doneOrder.setOrders(orderList);
+                                doneOrders.add(doneOrder);
+                                GroupedOrders groupedOrders = new GroupedOrders(doneOrders, orderNr);
+                                groupedOrdersList.add(groupedOrders);
+                                System.out.println("TESTING" + groupedOrdersList);
+                                customFragmentAdapter.notifyDataSetChanged();
 
-                  DatabaseReference foodRef = ref.child(orderNr);
-                  DatabaseReference foodsRef = foodRef.child("foods");
+                            }
 
-                  foodsRef.addValueEventListener(new ValueEventListener() {
-
-                      @Override
-                      public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                          for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                              Order order = snapshot.getValue(Order.class);
-                              orderList.add(order);
-                          }
-                          doneOrder.setOrders(orderList);
-
-                          doneOrders.add(doneOrder);
-
-                          //System.out.println("TESTING" + doneOrders);
-
-                          GroupedOrders groupedOrders = new GroupedOrders(doneOrders, orderNr);
-                         // System.out.println("TESTING" + " " + doneOrders);
-                          groupedOrdersList.add(groupedOrders);
-                          System.out.println("TESTING" + groupedOrdersList);
-                          customFragmentAdapter.notifyDataSetChanged();
-
-
-                      }
-                      @Override
-                      public void onCancelled(@NonNull DatabaseError databaseError) {
-                      }
-
-                  });
-
-              }
-
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
+                    }
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
