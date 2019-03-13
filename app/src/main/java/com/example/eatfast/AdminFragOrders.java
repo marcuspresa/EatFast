@@ -52,7 +52,9 @@ public class AdminFragOrders extends ListFragment {
                     DoneOrder doneOrder = datas.getValue(DoneOrder.class);
                     doneOrder.setOrderID(datas.getKey());
                     doneOrders.add(doneOrder);
+                    System.out.println(doneOrder.getOrders() + "Apa");
                 }
+
                 CustomAdapterOrders adapter = new CustomAdapterOrders(orders, getActivity());
                 setListAdapter(adapter);
             }

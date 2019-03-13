@@ -40,14 +40,14 @@ public class NotificationHelper extends ContextWrapper {
         }
 
 
-        public NotificationCompat.Builder getChannel(){
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelID);
-            builder.setAutoCancel(true)
-                    .setContentTitle("Food")
-                    .setContentText("Your order is ready")
-                    .setSmallIcon(R.drawable.ic_attach_money_black_24dp);
+    public NotificationCompat.Builder getChannel(){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), channelID);
+        builder.setAutoCancel(true)
+                .setContentTitle("Food")
+                .setContentText("Your order is ready")
+                .setSmallIcon(R.drawable.ic_attach_money_black_24dp);
 
-            return builder;
+        return builder;
     }
 
 }

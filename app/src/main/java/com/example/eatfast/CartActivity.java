@@ -118,17 +118,13 @@ public class CartActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     SharedPreferences preferences = getSharedPreferences("user", MODE_PRIVATE);
                     String uid = preferences.getString("user", null);
-                    System.out.println(uid + "hello");
-                    System.out.println(uid);
                     User user = new User(uid);
-                    Log.d(TAG, user.toString());
                     Map pushedOrders = new HashMap();
                     pushedOrders.put("amount", amount);
                     pushedOrders.put("user", user.getUserId());
                     pushedOrders.put("foods", products);
                     pushedOrders.put("status", "Cooking");
                     ordersRef.push().setValue(pushedOrders);
-
                     Intent intent = new Intent(CartActivity.this, paymentActivity.class);
                     GroupedOrders o = new GroupedOrders(orderDetail);
                     intent.putExtra("KEY", o);
