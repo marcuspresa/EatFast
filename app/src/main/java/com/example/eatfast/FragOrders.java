@@ -35,10 +35,12 @@ public class FragOrders extends ListFragment {
 
     ArrayList<Order> li = new ArrayList<>();
     ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
-    GroupedOrders groupedOrders = new GroupedOrders();
+    ArrayList<Order> orderList = new ArrayList<>();
 
+    String orderNr;
     ArrayList<String> orders = new ArrayList<>();
     ArrayList<DoneOrder> doneOrders = new ArrayList<DoneOrder>();
+    DoneOrder doneOrder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,34 +55,55 @@ public class FragOrders extends ListFragment {
         final DatabaseReference ref = database.getInstance().getReference("Orders");
 
 
+
+        final CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(groupedOrdersList, getActivity());
+        setListAdapter(customFragmentAdapter);
+
+
+
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Order> list = new ArrayList<Order>();
+                for(DataSnapshot datas: dataSnapshot.getChildren()) {
+                    final DoneOrder doneOrder = datas.getValue(DoneOrder.class);
 
-              for(DataSnapshot datas: dataSnapshot.getChildren()){
-                  DoneOrder doneOrder = datas.getValue(DoneOrder.class);
-                  doneOrder.setOrderID(datas.getKey());
-                  doneOrders.add(doneOrder);
-                  String food = doneOrder.getOrderID();
+                    if (doneOrder.getStatus().equals("Cooking")) {
+                        doneOrder.setOrderID(datas.getKey());
+                        final String orderNr = datas.getKey();
+                        DatabaseReference foodRef = ref.child(orderNr);
+                        DatabaseReference foodsRef = foodRef.child("foods");
+                        foodsRef.addValueEventListener(new ValueEventListener() {
 
-                  DatabaseReference foodRef = ref.child(food);
-                  DatabaseReference foodsRef = foodRef.child("foods");
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                  System.out.println("TESTING" );
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Order order = snapshot.getValue(Order.class);
+                                    orderList.add(order);
+                                }
+                                doneOrder.setOrders(orderList);
+                                doneOrders.add(doneOrder);
+                                GroupedOrders groupedOrders = new GroupedOrders(doneOrders, orderNr);
+                                groupedOrdersList.add(groupedOrders);
+                                System.out.println("TESTING" + groupedOrdersList);
+                                customFragmentAdapter.notifyDataSetChanged();
 
-              }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
+                    }
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
 
-
-
-
-
         return rootView;
+
     }
 
     @Override

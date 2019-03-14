@@ -1,16 +1,18 @@
 package com.example.eatfast.Model;
 
+import java.io.Serializable;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DoneOrder {
+public class DoneOrder implements Serializable {
 
     private String orderID;
     private String user;
     private int amount;
     private String status;
     private ArrayList<Order> list = new ArrayList<>();
+    private ArrayList<String> slist = new ArrayList<>();
 
 
     public DoneOrder(){
@@ -32,6 +34,7 @@ public class DoneOrder {
         this.list = list;
     }
 
+    public DoneOrder(ArrayList<String> list){this.slist = list;}
 
     public ArrayList<Order> getOrders(){return this.list;}
 

@@ -28,44 +28,79 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class AdminFragOrders extends ListFragment {
 
+
     ArrayList<Order> li = new ArrayList<>();
     ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
+    ArrayList<Order> orderList = new ArrayList<>();
 
+    String orderNr;
+    ArrayList<String> orders = new ArrayList<>();
+    ArrayList<DoneOrder> doneOrders = new ArrayList<DoneOrder>();
+    DoneOrder doneOrder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragorders, container,
                 false);
-
+        final ListView listView = rootView.findViewById(R.id.fragmentList);
         SharedPreferences preferences = this.getActivity().getSharedPreferences("user", MODE_PRIVATE);
         final String uid = preferences.getString("user", "0");
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference ref = database.getInstance().getReference("Orders");
-        ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+
+
+
+        final CustomAdapterWithDeleteButton customAdapterWithDeleteButton = new CustomAdapterWithDeleteButton(groupedOrdersList, getActivity());
+        setListAdapter(customAdapterWithDeleteButton);
+
+
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> orders = new ArrayList<>();
-                ArrayList<DoneOrder> doneOrders = new ArrayList<DoneOrder>();
-                for(DataSnapshot datas: dataSnapshot.getChildren()){
-                    DoneOrder doneOrder = datas.getValue(DoneOrder.class);
-                    doneOrder.setOrderID(datas.getKey());
-                    doneOrders.add(doneOrder);
-                    System.out.println(doneOrder.getOrders() + "Apa");
+                for(DataSnapshot datas: dataSnapshot.getChildren()) {
+                    final DoneOrder doneOrder = datas.getValue(DoneOrder.class);
+
+                    if (doneOrder.getStatus().equals("Cooking")) {
+                        doneOrder.setOrderID(datas.getKey());
+                        final String orderNr = datas.getKey();
+                        DatabaseReference foodRef = ref.child(orderNr);
+                        DatabaseReference foodsRef = foodRef.child("foods");
+                        foodsRef.addValueEventListener(new ValueEventListener() {
+
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    Order order = snapshot.getValue(Order.class);
+                                    orderList.add(order);
+                                }
+                                doneOrder.setOrders(orderList);
+                                doneOrders.add(doneOrder);
+                                GroupedOrders groupedOrders = new GroupedOrders(doneOrders, orderNr);
+                                groupedOrdersList.add(groupedOrders);
+                                System.out.println("TESTING" + groupedOrdersList);
+                                customAdapterWithDeleteButton.notifyDataSetChanged();
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
+                    }
                 }
-
-                CustomAdapterOrders adapter = new CustomAdapterOrders(orders, getActivity());
-                setListAdapter(adapter);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
         return rootView;
+
     }
 
     @Override
@@ -77,6 +112,5 @@ public class AdminFragOrders extends ListFragment {
         intent.putExtra("KEY", o);
         startActivity(intent);
     }
-
 
 }

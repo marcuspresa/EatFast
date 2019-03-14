@@ -130,7 +130,6 @@ public class CartActivity extends AppCompatActivity {
                     intent.putExtra("KEY", o);
                     startActivity(intent);
 
-
                 }
             });
         }
