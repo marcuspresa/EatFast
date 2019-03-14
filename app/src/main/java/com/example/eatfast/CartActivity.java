@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eatfast.Database.Database;
+import com.example.eatfast.Model.GroupedOrders;
 import com.example.eatfast.Model.Order;
 import com.example.eatfast.Model.User;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +35,8 @@ public class CartActivity extends AppCompatActivity {
     ListView listView;
 
     public static ArrayList<Order> orderDetail = new ArrayList<>();
+
+
 
     private static final String TAG = "CartActivity";
     Database db;
@@ -87,7 +90,6 @@ public class CartActivity extends AppCompatActivity {
     public void retrieveCart(){
         ListView listView = (ListView) findViewById(R.id.cartList);
         db = new Database(this);
-        ArrayList<Order> orderDetail = new ArrayList<>();
         Cursor data = db.fetchData();
         mCartItemCount = 0;
         orderDetail.clear();
@@ -121,13 +123,19 @@ public class CartActivity extends AppCompatActivity {
                     User user = new User(uid);
                     Log.d(TAG, user.toString());
                     Map pushedOrders = new HashMap();
-                    pushedOrders.put("amount", amount); //vet inte heller
+                    pushedOrders.put("amount", amount);
                     pushedOrders.put("user", user.getUserId());
                     pushedOrders.put("foods", products);
                     pushedOrders.put("status", "Cooking");
                     ordersRef.push().setValue(pushedOrders);
+
+
                     Intent intent = new Intent(CartActivity.this, paymentActivity.class);
+                    GroupedOrders o = new GroupedOrders(orderDetail);
+                    intent.putExtra("KEY", o);
                     startActivity(intent);
+
+
                 }
             });
         }

@@ -25,6 +25,9 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".CategoryDetail" />
+        <activity android:name=".AdminOrdersActivity"/>
+        <activity android:name=".AdminLoginActivity"/>
+        <activity android:name=".ProcessPaymentActivity"/>
         <service
             android:name=".FloatingWidgetService"
             android:enabled="true"

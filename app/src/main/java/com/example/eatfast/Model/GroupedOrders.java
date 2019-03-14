@@ -3,6 +3,7 @@ package com.example.eatfast.Model;
 import android.support.v7.app.AppCompatActivity;
 
 import java.io.Serializable;
+import java.security.acl.Group;
 import java.util.ArrayList;
 
 public class GroupedOrders extends AppCompatActivity implements Serializable {
@@ -17,6 +18,11 @@ public class GroupedOrders extends AppCompatActivity implements Serializable {
         this.id = id;
         this.list = list;
     }
+
+    public GroupedOrders(ArrayList<Order> list){
+        this.list = list;
+    }
+
     public ArrayList<Order> getOrderList(){
         return list;
     }

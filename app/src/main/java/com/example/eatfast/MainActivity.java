@@ -45,4 +45,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void navigateToAdminPage(View view){
+        Intent intent = new Intent(this, AdminLoginActivity.class);
+        startActivity(intent);
+    }
 }
