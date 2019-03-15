@@ -25,6 +25,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="150dp"
             android:layout_weight="1"
+            android:onClick="signOutbtn"
             android:text="Sign Out" />
 
         <android.support.v7.widget.Toolbar
