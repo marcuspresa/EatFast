@@ -11,6 +11,7 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,10 +32,8 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FragOrders extends ListFragment {
 
-    ArrayList<Order> li = new ArrayList<>();
+    ArrayList<String> orders = new ArrayList<String>();
     ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -49,18 +48,20 @@ public class FragOrders extends ListFragment {
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> orders = new ArrayList<>();
                 ArrayList<DoneOrder> doneOrders = new ArrayList<DoneOrder>();
+
               for(DataSnapshot datas: dataSnapshot.getChildren()){
                   DoneOrder doneOrder = datas.getValue(DoneOrder.class);
                   doneOrder.setOrderID(datas.getKey());
                   doneOrders.add(doneOrder);
+                  orders.add(datas.getKey());
 
               }
-                CustomAdapterOrders adapter = new CustomAdapterOrders(orders, getActivity());
-                setListAdapter(adapter);
-            }
+              ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, orders);
+              setListAdapter(adapter);
+              MenuActivity.spinner.setVisibility(View.GONE);
 
+            }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -69,6 +70,7 @@ public class FragOrders extends ListFragment {
 
         return rootView;
     }
+
 
     @Override
     public void onListItemClick(ListView l, View v, int pos, long id) {

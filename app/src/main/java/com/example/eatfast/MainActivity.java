@@ -11,8 +11,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.Random;
 import java.util.UUID;
@@ -45,8 +49,20 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void navigateToAdminPage(View view){
-        Intent intent = new Intent(this, AdminLoginActivity.class);
-        startActivity(intent);
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_setting) {
+            Intent intent = new Intent(this, AdminLoginActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

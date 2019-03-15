@@ -75,16 +75,7 @@ public class OrderActivity extends AppCompatActivity {
         string = tab1;
 
     }
-    public void createFloatingWidget(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + getPackageName()));
-            startActivityForResult(intent, DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
-        } else {
-            startFloatingWidgetService();
-        }
 
-    }
 
     private void startFloatingWidgetService() {
         startService(new Intent(OrderActivity.this, FloatingWidgetService.class));
@@ -93,12 +84,9 @@ public class OrderActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE) {
-            //Check if the permission is granted or not.
             if (resultCode == RESULT_OK)
-                //If permission granted start floating widget service
                 startFloatingWidgetService();
             else
-                //Permission is not available then display toast
                 Toast.makeText(this,
                         getResources().getString(R.string.draw_other_app_permission_denied),
                         Toast.LENGTH_SHORT).show();
