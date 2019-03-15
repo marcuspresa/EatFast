@@ -21,7 +21,7 @@ public class NotificationHelper extends ContextWrapper {
     }
 
     public void createChannels(){
-        NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_DEFAULT);
+        NotificationChannel channel = new NotificationChannel(channelID, channelName, NotificationManager.IMPORTANCE_HIGH);
         channel.enableLights(true);
         channel.enableVibration(true);
         channel.setLightColor(R.color.colorPrimary);
@@ -45,7 +45,7 @@ public class NotificationHelper extends ContextWrapper {
         builder.setAutoCancel(true)
                 .setContentTitle("Food")
                 .setContentText("Your order is ready")
-                .setSmallIcon(R.drawable.ic_attach_money_black_24dp);
+                .setSmallIcon(R.drawable.badge_background);
 
         return builder;
     }

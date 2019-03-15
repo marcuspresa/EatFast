@@ -23,6 +23,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.logging.Handler;
 
 public class CustomAdapterWithDeleteButton extends BaseAdapter implements ListAdapter {
 
@@ -74,16 +77,20 @@ public class CustomAdapterWithDeleteButton extends BaseAdapter implements ListAd
             public void onClick(View v) {
 
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
-                GroupedOrders groupedOrders = list.get(position);
+                final GroupedOrders groupedOrders = list.get(position);
                 groupedOrders.getId();
-                //System.out.println("TESTING ID" + groupedOrders.getId());
-
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 final DatabaseReference ref = database.getInstance().getReference("Orders").child(groupedOrders.getId()).child("status");
                 ref.setValue("Done");
                 notifyDataSetChanged();
-                alertDialog.setTitle("Mark as done?");
+                /*new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        database.getReference("Orders").child(groupedOrders.getId()).removeValue();
+                    }
+                }, 20000);*/
 
+                alertDialog.setTitle("Mark as done?");
                 alertDialog.setPositiveButton(
                         "Ok",
                         new DialogInterface.OnClickListener() {

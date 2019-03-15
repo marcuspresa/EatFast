@@ -37,6 +37,7 @@ public class FragOrders extends ListFragment {
     ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
     ArrayList<Order> orderList = new ArrayList<>();
 
+
     String orderNr;
     ArrayList<String> orders = new ArrayList<>();
     ArrayList<DoneOrder> doneOrders = new ArrayList<DoneOrder>();
@@ -54,12 +55,8 @@ public class FragOrders extends ListFragment {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference ref = database.getInstance().getReference("Orders");
 
-
-
         final CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(groupedOrdersList, getActivity());
         setListAdapter(customFragmentAdapter);
-
-
 
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -85,7 +82,6 @@ public class FragOrders extends ListFragment {
                                 doneOrders.add(doneOrder);
                                 GroupedOrders groupedOrders = new GroupedOrders(doneOrders, orderNr);
                                 groupedOrdersList.add(groupedOrders);
-                                System.out.println("TESTING" + groupedOrdersList);
                                 customFragmentAdapter.notifyDataSetChanged();
 
                             }

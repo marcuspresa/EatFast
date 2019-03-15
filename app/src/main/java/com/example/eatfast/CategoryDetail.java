@@ -30,12 +30,8 @@ public class CategoryDetail extends AppCompatActivity {
         Intent i = getIntent();
         FirebaseApp.initializeApp(this);
 
-        setTitle(i.getStringExtra("id")); //Sätter titel på sidan beroende på vad man klicka på sidan innan.
-        // kommer nog använda denna för att hämta från firebase.
+        setTitle(i.getStringExtra("id"));
 
-        //Order o = new Order("Nuggets", "60"); //test order
-
-        //fyll meny från firebase
         if(i.getStringExtra("id").equals("Nuggets")){
 
            getMenu(i.getStringExtra("id"));
@@ -57,12 +53,12 @@ public class CategoryDetail extends AppCompatActivity {
 
         }
         else{
-            //något error
+
         }
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+
         getMenuInflater().inflate(R.menu.menu, menu);
 
         final MenuItem menuItem = menu.findItem(R.id.action_cart);
@@ -85,7 +81,6 @@ public class CategoryDetail extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    //hämtar data från firebase beroende på vilken category man är inne på.
     public void getMenu(String category){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -98,8 +93,7 @@ public class CategoryDetail extends AppCompatActivity {
                 ArrayList<Order> list = new ArrayList<>();
 
                 for(DataSnapshot uniqueKeySnapshot : dataSnapshot.getChildren()) {
-                    //System.out.println("TESTING" + uniqueKeySnapshot.getValue());
-                    //orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
+
                     Order o = uniqueKeySnapshot.getValue(Order.class);
                     list.add(o);
                 }
@@ -108,7 +102,7 @@ public class CategoryDetail extends AppCompatActivity {
 
                     ListView l = (ListView) findViewById(R.id.list);
                     l.setAdapter(adapter);
-                   //System.out.println("TESTING" + o.getProductName() + o.getPrice());
+
             }
 
             @Override

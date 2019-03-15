@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.GroupedOrders;
 import com.example.eatfast.Model.Order;
 
@@ -39,5 +40,7 @@ public class paymentActivity extends AppCompatActivity {
     public void paymentClicked(View view){
         Intent intent = new Intent(this, ProcessPaymentActivity.class);
         startActivity(intent);
+        Database db = new Database(this);
+        db.deleteAll();
     }
 }

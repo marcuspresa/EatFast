@@ -32,11 +32,8 @@ public class AdminFragOrders extends ListFragment {
     ArrayList<Order> li = new ArrayList<>();
     ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
     ArrayList<Order> orderList = new ArrayList<>();
-
-    String orderNr;
     ArrayList<String> orders = new ArrayList<>();
     ArrayList<DoneOrder> doneOrders = new ArrayList<DoneOrder>();
-    DoneOrder doneOrder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,31 +46,22 @@ public class AdminFragOrders extends ListFragment {
 
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference ref = database.getInstance().getReference("Orders");
-
-
-
-
-
         final CustomAdapterWithDeleteButton customAdapterWithDeleteButton = new CustomAdapterWithDeleteButton(groupedOrdersList, getActivity());
         setListAdapter(customAdapterWithDeleteButton);
-
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()) {
                     final DoneOrder doneOrder = datas.getValue(DoneOrder.class);
-
                     if (doneOrder.getStatus().equals("Cooking")) {
                         doneOrder.setOrderID(datas.getKey());
                         final String orderNr = datas.getKey();
                         DatabaseReference foodRef = ref.child(orderNr);
                         DatabaseReference foodsRef = foodRef.child("foods");
                         foodsRef.addValueEventListener(new ValueEventListener() {
-
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     Order order = snapshot.getValue(Order.class);
                                     orderList.add(order);
@@ -82,9 +70,7 @@ public class AdminFragOrders extends ListFragment {
                                 doneOrders.add(doneOrder);
                                 GroupedOrders groupedOrders = new GroupedOrders(doneOrders, orderNr);
                                 groupedOrdersList.add(groupedOrders);
-                                System.out.println("TESTING" + groupedOrdersList);
                                 customAdapterWithDeleteButton.notifyDataSetChanged();
-
                             }
 
                             @Override
@@ -109,6 +95,7 @@ public class AdminFragOrders extends ListFragment {
         Toast.makeText(getActivity(), "Item " + pos + " was clicked", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(AdminFragOrders.this.getContext(), DisplayOrderActivity.class);
         GroupedOrders o = groupedOrdersList.get(pos);
+        System.out.println(o);
         intent.putExtra("KEY", o);
         startActivity(intent);
     }
