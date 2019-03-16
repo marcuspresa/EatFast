@@ -1,10 +1,11 @@
 package com.example.eatfast;
 
 import android.content.Intent;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,8 +19,20 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void ordersClicked(View view){
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_setting) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            startActivity(intent);
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
