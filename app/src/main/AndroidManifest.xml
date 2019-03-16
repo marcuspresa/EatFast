@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.eatfast">
 
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,9 +22,18 @@
         <activity android:name=".MenuActivity" />
         <activity android:name=".CartActivity" />
         <activity android:name=".CategoryDetail" />
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".CreditCardPayment"/>
-
+        <activity android:name=".AdminOrdersActivity"/>
+        <activity android:name=".AdminLoginActivity"/>
+        <activity android:name=".ProcessPaymentActivity"/>
+        <service
+            android:name=".FloatingWidgetService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
+            android:name=".NotifyUserService"
+            android:enabled="true"
+            android:exported="true"
+            />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +44,9 @@
         <activity
             android:name=".OrderActivity"
             android:label="@string/title_activity_order"
+            android:stopWithTask="false"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

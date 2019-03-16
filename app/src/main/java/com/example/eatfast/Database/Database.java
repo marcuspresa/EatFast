@@ -61,9 +61,13 @@ public class Database extends SQLiteOpenHelper {
         Cursor data = db.rawQuery(query, null);
         return data;
     }
-
+    public void deleteAll(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.delete(TABLE_NAME, null, null);
+    }
     public void deleteRow(int id){
         SQLiteDatabase db = this.getReadableDatabase();
+
         db.execSQL("DELETE FROM " + TABLE_NAME+ " WHERE "+COL_1+"='"+id+"'");
     }
 

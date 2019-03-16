@@ -9,6 +9,7 @@ public class Order implements Serializable {
     private String ProductName;
     private String Price;
     private int orderId;
+    private String stringId;
 
 public Order(){
 
@@ -18,15 +19,23 @@ public Order(){
         Price = price;
     }
 
-    public Order(String productName, String price, int id) {
+    public Order(int id, String productName, String price) {
         ProductName = productName;
         Price = price;
         orderId = id;
     }
 
+    public Order(String price, String id, String productName){
+        ProductName = productName;
+        Price = price;
+        stringId = id;
+    }
+
     public int getId(){
         return orderId;
     }
+
+    public String retrnStringId() {return stringId;}
 
     public String getProductName() {
         return ProductName;
