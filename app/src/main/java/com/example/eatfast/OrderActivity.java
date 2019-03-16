@@ -1,14 +1,7 @@
 package com.example.eatfast;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Build;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -30,86 +23,53 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
+import com.example.eatfast.Model.Order;
 
 public class OrderActivity extends AppCompatActivity {
 
+    private static final String TAG = "OrderActivity";
+
     private SectionsPageAdapter mSectionsPageAdapter;
+
     private ViewPager mViewPager;
 
-    String string;
-
-    private static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        Intent serviceintent = new Intent(OrderActivity.this, NotifyUser.class);
-        PendingIntent pendingintent = PendingIntent.getService(OrderActivity.this,0, serviceintent,0);
-        AlarmManager alarm =(AlarmManager)getSystemService(Context.ALARM_SERVICE);
-        alarm.cancel(pendingintent);
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP,System.currentTimeMillis(),5000, pendingintent);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                    Uri.parse("package:" + getPackageName()));
-            startActivityForResult(intent, DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
-        } else {
-            startFloatingWidgetService();
-        }
+        Log.d("TAG", "onCreate: Starting.");
+
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+
         mViewPager = (ViewPager) findViewById(R.id.container);
         setupViewPager(mViewPager);
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-
-        final String tab1 = getResources().getString(R.string.tab_text_1);
-        string = tab1;
-
-    }
-
-
-    private void startFloatingWidgetService() {
-        startService(new Intent(OrderActivity.this, FloatingWidgetService.class));
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE) {
-            if (resultCode == RESULT_OK)
-                startFloatingWidgetService();
-            else
-                Toast.makeText(this,
-                        getResources().getString(R.string.draw_other_app_permission_denied),
-                        Toast.LENGTH_SHORT).show();
-
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
     }
 
     private void setupViewPager(ViewPager viewPager){
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FragOrders(), "cooking");
-        adapter.addFragment(new FragDoneOrders(), "done");
+        adapter.addFragment(new FragOrders(), "Pending orders");
+        adapter.addFragment(new FragDoneOrders(), "Completed orders");
         viewPager.setAdapter(adapter);
-
     }
 
-    public void startService(View v){
-        Intent serviceIntent = new Intent(this, NotifyUser.class);
-        startService(serviceIntent);
+    public void signOutbtn(View view){
+
+        Toast.makeText(OrderActivity.this, "Signing Out",
+                Toast.LENGTH_SHORT).show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(OrderActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        }, 1500);
+
 
     }
-
 
 
 }
