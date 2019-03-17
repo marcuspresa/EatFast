@@ -1,30 +1,27 @@
-package com.example.eatfast;
+package com.example.eatfast.Fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eatfast.CustomAdapter.CustomFragmentAdapter;
+import com.example.eatfast.Activities.DisplayOrderActivity;
 import com.example.eatfast.Model.DoneOrder;
 import com.example.eatfast.Model.GroupedOrders;
 import com.example.eatfast.Model.Order;
+import com.example.eatfast.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

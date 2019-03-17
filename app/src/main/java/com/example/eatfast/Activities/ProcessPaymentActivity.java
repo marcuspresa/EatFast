@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.example.eatfast.R;
 
 
 public class ProcessPaymentActivity extends AppCompatActivity {
@@ -41,6 +41,7 @@ public class ProcessPaymentActivity extends AppCompatActivity {
     public void viewOrdersClicked(View view){
         Intent intent = new Intent(this, OrderActivity.class);
         startActivity(intent);
+        finish();
     }
 
 

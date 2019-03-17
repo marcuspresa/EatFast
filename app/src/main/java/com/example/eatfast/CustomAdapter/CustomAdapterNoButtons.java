@@ -1,6 +1,7 @@
-package com.example.eatfast;
+package com.example.eatfast.CustomAdapter;
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.Order;
+import com.example.eatfast.R;
 
 import android.content.Context;
 import android.view.LayoutInflater;

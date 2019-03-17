@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".OrderActivity">
+    tools:context=".Activities.OrderActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -15,18 +15,6 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/appbar_padding_top"
         android:theme="@style/AppTheme.AppBarOverlay">
-
-        <Button
-            android:id="@+id/signoutbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="false"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="150dp"
-            android:layout_weight="1"
-            android:onClick="signOutbtn"
-            android:text="Sign Out" />
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"

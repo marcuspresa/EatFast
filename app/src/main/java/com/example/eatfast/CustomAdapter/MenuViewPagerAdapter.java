@@ -1,10 +1,12 @@
-package com.example.eatfast;
+package com.example.eatfast.CustomAdapter;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.example.eatfast.Fragments.MenuFragment;
 
 import java.util.ArrayList;
 
@@ -33,8 +35,8 @@ public class MenuViewPagerAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         ArrayList<String> menu = new ArrayList<>();
-        menu.add("Chicken");
         menu.add("Hamburgers");
+        menu.add("Chicken");
         menu.add("Other");
         return menu.get(position);
     }

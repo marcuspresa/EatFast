@@ -1,7 +1,6 @@
-package com.example.eatfast;
+package com.example.eatfast.Activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.support.v7.app.AppCompatActivity;
+
+import com.example.eatfast.R;
 
 public class AdminLoginActivity extends AppCompatActivity {
     private EditText Name;

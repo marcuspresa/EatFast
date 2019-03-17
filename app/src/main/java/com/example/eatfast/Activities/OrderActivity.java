@@ -1,8 +1,5 @@
-package com.example.eatfast;
+package com.example.eatfast.Activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -12,9 +9,17 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.View;
 
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.example.eatfast.CustomAdapter.SectionsPageAdapter;
+import com.example.eatfast.Fragments.FragDoneOrders;
+import com.example.eatfast.Fragments.FragOrders;
+import com.example.eatfast.R;
+import com.example.eatfast.Services.FloatingWidgetService;
 
 public class OrderActivity extends AppCompatActivity {
 
@@ -67,6 +72,22 @@ public class OrderActivity extends AppCompatActivity {
         adapter.addFragment(new FragOrders(), "Pending orders");
         adapter.addFragment(new FragDoneOrders(), "Done orders");
         viewPager.setAdapter(adapter);
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater= getMenuInflater();
+        inflater.inflate(R.menu.menu_home, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.ic_home_black) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

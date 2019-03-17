@@ -1,8 +1,9 @@
-package com.example.eatfast;
+package com.example.eatfast.CustomAdapter;
 import com.example.eatfast.Database.Database;
+import com.example.eatfast.Activities.MenuActivity;
 import com.example.eatfast.Model.Order;
+import com.example.eatfast.R;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;

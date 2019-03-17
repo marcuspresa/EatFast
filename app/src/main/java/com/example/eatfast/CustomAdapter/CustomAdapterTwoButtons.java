@@ -1,19 +1,19 @@
-package com.example.eatfast;
+package com.example.eatfast.CustomAdapter;
+import com.example.eatfast.Activities.CartActivity;
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.Order;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
-import com.example.eatfast.CustomAdapterTwoButtons;
+
+import com.example.eatfast.R;
 
 
 import java.util.ArrayList;

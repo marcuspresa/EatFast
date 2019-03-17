@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Services;
 
 
 import android.app.Notification;
@@ -15,6 +15,8 @@ import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import com.example.eatfast.Model.DoneOrder;
+import com.example.eatfast.Activities.OrderActivity;
+import com.example.eatfast.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 
 
 public class NotifyUserService extends Service {
-    private NotificationHelper helper;
     public static final String CHANNEL_ID = "Channel2ID";
 
     public NotifyUserService() {
@@ -41,10 +42,9 @@ public class NotifyUserService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        helper = new NotificationHelper(this);
+
         startMyOwnForeground();
         Notify();
-
         return super.onStartCommand(intent, flags, startId);
     }
 
@@ -81,6 +81,8 @@ public class NotifyUserService extends Service {
                     if (datas.getValue(DoneOrder.class).getStatus().equals("Done")) {
                             stopForeground(true);
                             showNotification();
+
+                            ref.removeValue();
                     }
                 }
             }
@@ -108,5 +110,7 @@ public class NotifyUserService extends Service {
 
 
         }
-    }
+
+
+}
 

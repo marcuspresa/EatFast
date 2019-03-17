@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.CustomAdapter;
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.Order;
 
@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.eatfast.Model.GroupedOrders;
+import com.example.eatfast.R;
 
 public class CustomFragmentAdapter extends BaseAdapter implements ListAdapter {
 

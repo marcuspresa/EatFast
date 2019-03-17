@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.CustomAdapter;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.GroupedOrders;
 import com.example.eatfast.Model.Order;
+import com.example.eatfast.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

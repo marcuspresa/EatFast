@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,7 +14,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.eatfast.CustomAdapter.MenuViewPagerAdapter;
 import com.example.eatfast.Database.Database;
+import com.example.eatfast.R;
 
 
 public class MenuActivity extends AppCompatActivity {
@@ -72,7 +74,7 @@ public class MenuActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) { //varukorg
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.action_cart) {

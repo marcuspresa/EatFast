@@ -1,12 +1,17 @@
-package com.example.eatfast;
+package com.example.eatfast.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
+
+import com.example.eatfast.R;
 
 import java.util.UUID;
 
@@ -28,6 +33,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater= getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_setting) {
+            Intent intent = new Intent(this, AdminLoginActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     /**
      * Set and initialize the view elements.
@@ -40,8 +60,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void navigateToAdminPage(View view){
-        Intent intent = new Intent(this, AdminLoginActivity.class);
-        startActivity(intent);
-    }
 }

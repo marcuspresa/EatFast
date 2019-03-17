@@ -1,11 +1,14 @@
-package com.example.eatfast;
+package com.example.eatfast.Activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ProgressBar;
+
+import com.example.eatfast.CustomAdapter.SectionsPageAdapter;
+import com.example.eatfast.Fragments.AdminFragDoneOrders;
+import com.example.eatfast.Fragments.AdminFragOrders;
+import com.example.eatfast.R;
 
 public class AdminOrdersActivity extends AppCompatActivity {
 
@@ -21,6 +24,11 @@ public class AdminOrdersActivity extends AppCompatActivity {
         setupViewPager(mViewPager);
 
 
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
     }
 
     private void setupViewPager(ViewPager viewPager){

@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,19 +7,20 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eatfast.CustomAdapter.CustomAdapterTwoButtons;
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.GroupedOrders;
 import com.example.eatfast.Model.Order;
 import com.example.eatfast.Model.User;
+import com.example.eatfast.R;
+import com.example.eatfast.Services.NotifyUserService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -125,10 +126,13 @@ public class CartActivity extends AppCompatActivity {
                     pushedOrders.put("foods", products);
                     pushedOrders.put("status", "Cooking");
                     ordersRef.push().setValue(pushedOrders);
-                    Intent intent = new Intent(CartActivity.this, CreditCardPayment.class);
+                    startService(new Intent(CartActivity.this, NotifyUserService.class));
+                    Intent intent = new Intent(CartActivity.this, paymentActivity.class);
+                    intent.putExtra("Amount", amount);
                     GroupedOrders o = new GroupedOrders(orderDetail);
                     intent.putExtra("KEY", o);
                     startActivity(intent);
+                    finish();
 
                 }
             });

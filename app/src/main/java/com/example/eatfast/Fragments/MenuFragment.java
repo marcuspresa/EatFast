@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Fragments;
 
 
 import android.os.Bundle;
@@ -7,8 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.ProgressBar;
+
+import com.example.eatfast.CustomAdapter.CustomAdapter;
+import com.example.eatfast.Activities.MenuActivity;
 import com.example.eatfast.Model.Order;
+import com.example.eatfast.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

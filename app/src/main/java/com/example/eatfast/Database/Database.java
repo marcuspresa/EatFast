@@ -29,13 +29,14 @@ public class Database extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("CREATE TABLE orderDetail(ID INTEGER PRIMARY KEY AUTOINCREMENT, PRODUCTNAME TEXT, PRICE TEXT)");
-        db.execSQL("CREATE TABLE doneOrder(ORDERID TEXT PRIMARY KEY, FOODS TEXT, PRICE TEXT)");
+        db.execSQL("CREATE TABLE doneOrder(ORDERID TEXT PRIMARY KEY, FOODS TEXT, PRICE TEXT, USERID TEXT)");
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME_1);
         onCreate(db);
     }
 
@@ -48,6 +49,8 @@ public class Database extends SQLiteOpenHelper {
 
         return result;
     }
+
+
 
     public Cursor fetchData(){
         SQLiteDatabase db = this.getWritableDatabase();
