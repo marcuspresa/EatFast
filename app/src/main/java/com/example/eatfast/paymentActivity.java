@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.eatfast.Model.GroupedOrders;
 import com.example.eatfast.Model.Order;
+import com.example.eatfast.Model.FoodItem;
 
 import java.util.ArrayList;
 
@@ -21,23 +22,30 @@ public class paymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment);
         Intent intent = getIntent();
 
-        GroupedOrders o = (GroupedOrders) intent.getExtras().getSerializable("KEY");
+        Order o = (Order) intent.getExtras().getSerializable("KEY");
         System.out.println("TESTING" + o.getTotalPrice());
 
-        ArrayList<Order> l = o.getOrderList();
+        ArrayList<FoodItem> l = o.getOrderList();
         CustomAdapterNoButtons customAdapterNoButtons = new CustomAdapterNoButtons(l, this);
 
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(customAdapterNoButtons);
 
-        String totalCost = String.valueOf(o.getTotalPrice());
-
-        TextView text = (TextView) findViewById(R.id.totalCost);
-        text.setText(totalCost);
+        Button payBtn = (Button) findViewById(R.id.payButton);
+        payBtn.setText("PAY "+o.getTotalPrice()+ " :-");
 
     }
     public void paymentClicked(View view){
+        Toast.makeText(paymentActivity.this, "Processing order..", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, ProcessPaymentActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, CartActivity.class);
         startActivity(intent);
     }
 }

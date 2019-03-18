@@ -1,22 +1,12 @@
 package com.example.eatfast;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.app.TaskStackBuilder;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.ContextCompat;
 
-import com.example.eatfast.Model.DoneOrder;
+import com.example.eatfast.Model.FirebaseOrder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -55,7 +45,7 @@ public class NotifyUser extends Service {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()){
-                    if(datas.getValue(DoneOrder.class).getStatus().equals("ready")){
+                    if(datas.getValue(FirebaseOrder.class).getStatus().equals("Complete")){
                         System.out.println("Notifikation" + "Hej");
                 }
                 }

@@ -58,13 +58,21 @@ public class Database extends SQLiteOpenHelper {
 
     public void deleteRow(int id){
         SQLiteDatabase db = this.getReadableDatabase();
+        //int idToDelete = Integer.parseInt(id);
         db.execSQL("DELETE FROM " + TABLE_NAME+ " WHERE "+COL_1+"='"+id+"'");
+        System.out.println("TESTING ID" + id);
     }
 
     public void deleteCart(){
-        //something
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DROP TABLE  " + TABLE_NAME);
+        createTable();
     }
 
+    public void createTable(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("CREATE TABLE orderDetail(ID INTEGER PRIMARY KEY AUTOINCREMENT, PRODUCTNAME TEXT, PRICE TEXT)");
+    }
 
 
 }

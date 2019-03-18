@@ -1,12 +1,10 @@
 package com.example.eatfast;
 import com.example.eatfast.Database.Database;
-import com.example.eatfast.Model.Order;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -14,18 +12,17 @@ import android.widget.TextView;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
-import com.example.eatfast.Model.GroupedOrders;
+import com.example.eatfast.Model.Order;
 
 public class CustomFragmentAdapter extends BaseAdapter implements ListAdapter {
 
     Database db;
 
-    private ArrayList<GroupedOrders> list = new ArrayList<GroupedOrders>();
+    private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
-    public CustomFragmentAdapter(ArrayList<GroupedOrders> list, Context context){
+    public CustomFragmentAdapter(ArrayList<Order> list, Context context){
         db = new Database(context);
         this.list = list;
         this.context = context;
@@ -37,7 +34,7 @@ public class CustomFragmentAdapter extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public GroupedOrders getItem(int pos){
+    public Order getItem(int pos){
         return list.get(pos);
     }
 
@@ -55,12 +52,12 @@ public class CustomFragmentAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.frag_order_layout, null);
         }
 
-        TextView listItemText = (TextView)view.findViewById(R.id.order);
+        TextView listItemText = (TextView)view.findViewById(R.id.FoodItem);
         ListView listView = (ListView)view.findViewById(R.id.listV);
 
-        GroupedOrders groupedOrders = list.get(position);
+        Order order = list.get(position);
 
-        listItemText.setText("ORDER NR: "+groupedOrders.getId());
+        listItemText.setText("ORDER NR: "+ order.getId());
 
         return view;
     }

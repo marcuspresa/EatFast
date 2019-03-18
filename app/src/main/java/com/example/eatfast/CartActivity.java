@@ -12,12 +12,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eatfast.Database.Database;
-import com.example.eatfast.Model.GroupedOrders;
+import com.example.eatfast.Model.FoodItem;
 import com.example.eatfast.Model.Order;
 import com.example.eatfast.Model.User;
 import com.google.firebase.database.DatabaseReference;
@@ -34,14 +33,14 @@ public class CartActivity extends AppCompatActivity {
 
     ListView listView;
 
-    public static ArrayList<Order> orderDetail = new ArrayList<>();
-
+    public static ArrayList<FoodItem> foodItemDetail = new ArrayList<>();
+    final CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(foodItemDetail, this);
 
 
     private static final String TAG = "CartActivity";
     Database db;
-    private int amount = 0;
-    private ArrayList<Order> products = new ArrayList<>();
+    String amount;
+    private ArrayList<FoodItem> products = new ArrayList<>();
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference ref = database.getReference();
     DatabaseReference ordersRef = ref.child("Orders");
@@ -51,12 +50,12 @@ public class CartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cart);
 
         listView = (ListView) findViewById(R.id.cartList);
-        CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
+        CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(foodItemDetail, this);
         listView.setAdapter(a);
 
         retrieveCart();
 
-        sendOrder(products, amount);
+        sendOrder(amount);
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,48 +91,52 @@ public class CartActivity extends AppCompatActivity {
         db = new Database(this);
         Cursor data = db.fetchData();
         mCartItemCount = 0;
-        orderDetail.clear();
+        foodItemDetail.clear();
         if(data.getCount() == 0){
             Toast.makeText(CartActivity.this, "Your cart is empty", Toast.LENGTH_LONG).show();
         }
         else{
             while(data.moveToNext()){
-                Order o = new Order(data.getInt(0), data.getString(1), data.getString(2));
-                amount = amount + Integer.parseInt(o.getPrice());
-                orderDetail.add(o);
+                FoodItem o = new FoodItem(data.getInt(0), data.getString(1), data.getString(2));
+                foodItemDetail.add(o);
                 mCartItemCount += 1;
-
                 products.add(o);
             }
-            CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(orderDetail, this);
+            Order o = new Order(foodItemDetail);
+            amount = o.getTotalPrice();
             listView.setAdapter(a);
-            sendOrder(products, amount);
+            sendOrder(amount);
         }
     }
 
-    public void sendOrder(final ArrayList<Order> products, final int amount){
+    public void sendOrder(final String amount){
         FloatingActionButton order = (FloatingActionButton) findViewById(R.id.sendOrder);
             order.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    SharedPreferences preferences = getSharedPreferences("user", MODE_PRIVATE);
-                    String uid = preferences.getString("user", null);
-                    System.out.println(uid + "hello");
-                    System.out.println(uid);
-                    User user = new User(uid);
-                    Log.d(TAG, user.toString());
-                    Map pushedOrders = new HashMap();
-                    pushedOrders.put("amount", amount);
-                    pushedOrders.put("user", user.getUserId());
-                    pushedOrders.put("foods", products);
-                    pushedOrders.put("status", "Cooking");
-                    ordersRef.push().setValue(pushedOrders);
+                    if(products.size() == 0){
+                        Toast.makeText(CartActivity.this, "Your cart is empty!" +
+                                "", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        SharedPreferences preferences = getSharedPreferences("user", MODE_PRIVATE);
+                        String uid = preferences.getString("user", null);
+                        User user = new User(uid);
+                        Log.d(TAG, user.toString());
+                        Map pushedOrders = new HashMap();
 
-                    Intent intent = new Intent(CartActivity.this, paymentActivity.class);
-                    GroupedOrders o = new GroupedOrders(orderDetail);
-                    intent.putExtra("KEY", o);
-                    startActivity(intent);
+                        pushedOrders.put("amount", amount);
+                        pushedOrders.put("user", user.getUserId());
+                        pushedOrders.put("foods", a.getUpdatedList());
+                        pushedOrders.put("status", "Cooking");
+                        ordersRef.push().setValue(pushedOrders);
 
+                        Intent intent = new Intent(CartActivity.this, paymentActivity.class);
+                        Order o = new Order(foodItemDetail);
+                        intent.putExtra("KEY", o);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             });
         }

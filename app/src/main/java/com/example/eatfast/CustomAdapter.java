@@ -1,8 +1,7 @@
 package com.example.eatfast;
 import com.example.eatfast.Database.Database;
-import com.example.eatfast.Model.Order;
+import com.example.eatfast.Model.FoodItem;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -24,14 +23,14 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     Database db;
 
 
-    private ArrayList<Order> list = new ArrayList<Order>();
+    private ArrayList<FoodItem> list = new ArrayList<FoodItem>();
     private Context context;
 
     public CustomAdapter(){
 
     }
 
-    public CustomAdapter(ArrayList<Order> list, Context context){
+    public CustomAdapter(ArrayList<FoodItem> list, Context context){
         db = new Database(context);
         this.list = list;
         this.context = context;
@@ -61,7 +60,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public Order getItem(int pos){
+    public FoodItem getItem(int pos){
         return list.get(pos);
     }
 
@@ -79,7 +78,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.activity_categorydetail, null);
         }
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
-        Order text = list.get(position);
+        FoodItem text = list.get(position);
         listItemText.setText(text.getProductName() +" "+  text.getPrice()+":-");
 
         Button addBtn = (Button)view.findViewById(R.id.addBtn);
@@ -90,6 +89,8 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 addToCart(position);
 
             }
@@ -99,9 +100,9 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
-                System.out.println("CLICKED" + " " + position);
-                final Order o = getItem(position);
-                alertDialog.setTitle(o.getProductName() + " " + o.getPrice() + " :-");
+                final FoodItem o = getItem(position);
+                alertDialog.setMessage(o.getProductName() + " " + o.getPrice() + " :-" + "\n\n"  + o.getFoodInfo() + "\n\n" + o.getCalories() + " Calories");
+
 
                 alertDialog.setPositiveButton(
                         "Ok",
@@ -121,9 +122,9 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
     public void addToCart(int pos){
 
-        Order testOrder = getItem(pos);
-        db.insertData(testOrder.getProductName(), testOrder.getPrice());
-        Toast.makeText(context, "Placed " + testOrder.getProductName() + " in cart", Toast.LENGTH_LONG).show();
+        FoodItem testFoodItem = getItem(pos);
+        db.insertData(testFoodItem.getProductName(), testFoodItem.getPrice());
+        Toast.makeText(context, "Placed " + testFoodItem.getProductName() + " in cart", Toast.LENGTH_LONG).show();
         MenuActivity.mCartItemCount++;
         counter(MenuActivity.mCartItemCount);
 

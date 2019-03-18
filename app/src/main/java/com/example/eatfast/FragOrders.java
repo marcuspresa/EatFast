@@ -1,8 +1,5 @@
 package com.example.eatfast;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,33 +11,30 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.eatfast.Model.DoneOrder;
+import com.example.eatfast.Model.FirebaseOrder;
+import com.example.eatfast.Model.FoodItem;
 import com.example.eatfast.Model.Order;
-import com.example.eatfast.Model.GroupedOrders;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
 public class FragOrders extends ListFragment {
 
-    ArrayList<Order> li = new ArrayList<>();
-    ArrayList<GroupedOrders> groupedOrdersList = new ArrayList<>();
+    ArrayList<FoodItem> li = new ArrayList<>();
     ArrayList<Order> orderList = new ArrayList<>();
+    ArrayList<FoodItem> foodItemList = new ArrayList<>();
+    ArrayList<Order> intentList = new ArrayList<>();
 
     String orderNr;
     ArrayList<String> orders = new ArrayList<>();
-    ArrayList<DoneOrder> doneOrders = new ArrayList<DoneOrder>();
-    DoneOrder doneOrder;
+    ArrayList<FirebaseOrder> FirebaseOrders = new ArrayList<FirebaseOrder>();
+    FirebaseOrder FirebaseOrder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,8 +50,10 @@ public class FragOrders extends ListFragment {
 
 
 
-        final CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(groupedOrdersList, getActivity());
+        final CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(orderList, getActivity());
         setListAdapter(customFragmentAdapter);
+
+
 
 
 
@@ -65,27 +61,35 @@ public class FragOrders extends ListFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()) {
-                    final DoneOrder doneOrder = datas.getValue(DoneOrder.class);
+                    final FirebaseOrder FirebaseOrder = datas.getValue(FirebaseOrder.class);
 
-                    if (doneOrder.getStatus().equals("Cooking")) {
-                        doneOrder.setOrderID(datas.getKey());
+                    if (FirebaseOrder.getStatus().equals("Cooking")) {
+
+                        FirebaseOrder.setOrderID(datas.getKey());
                         final String orderNr = datas.getKey();
+
                         DatabaseReference foodRef = ref.child(orderNr);
                         DatabaseReference foodsRef = foodRef.child("foods");
                         foodsRef.addValueEventListener(new ValueEventListener() {
 
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                                foodItemList.clear();
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    Order order = snapshot.getValue(Order.class);
-                                    orderList.add(order);
+                                    FoodItem FoodItem = snapshot.getValue(FoodItem.class);
+                                    foodItemList.add(FoodItem);
                                 }
-                                doneOrder.setOrders(orderList);
-                                doneOrders.add(doneOrder);
-                                GroupedOrders groupedOrders = new GroupedOrders(doneOrders, orderNr);
-                                groupedOrdersList.add(groupedOrders);
-                                System.out.println("TESTING" + groupedOrdersList);
+
+                                //FirebaseOrder.setOrders(foodItemList);
+                                //FirebaseOrders.add(FirebaseOrder);
+
+                                Order order = new Order(FirebaseOrders, orderNr);
+
+                                Order intentOrder = new Order(orderNr, foodItemList);
+
+                                intentList.add(intentOrder);
+                                orderList.add(order);
+
                                 customFragmentAdapter.notifyDataSetChanged();
 
                             }
@@ -111,7 +115,7 @@ public class FragOrders extends ListFragment {
         super.onListItemClick(l, v, pos, id);
         Toast.makeText(getActivity(), "Item " + pos + " was clicked", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(FragOrders.this.getContext(), DisplayOrderActivity.class);
-        GroupedOrders o = groupedOrdersList.get(pos);
+        Order o = intentList.get(pos);
         intent.putExtra("KEY", o);
         startActivity(intent);
     }

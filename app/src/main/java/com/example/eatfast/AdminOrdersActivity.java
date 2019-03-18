@@ -9,6 +9,7 @@ import android.widget.ProgressBar;
 
 public class AdminOrdersActivity extends AppCompatActivity {
 
+    public static ProgressBar spinner;
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
 
@@ -21,6 +22,8 @@ public class AdminOrdersActivity extends AppCompatActivity {
         setupViewPager(mViewPager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
+        spinner = (ProgressBar) findViewById(R.id.progressBar1);
 
     }
 

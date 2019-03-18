@@ -9,12 +9,17 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.eatfast.Database.Database;
 
 import org.w3c.dom.Text;
 
 
 public class ProcessPaymentActivity extends AppCompatActivity {
 
+
+    Database db;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,19 +34,15 @@ public class ProcessPaymentActivity extends AppCompatActivity {
 
             public void onFinish() {
                 ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
-                TextView text = (TextView)findViewById(R.id.processText);
-                Button btn = (Button)findViewById(R.id.viewOrdersButton);
-                text.setText("Order sent!");
                 spinner.setVisibility(View.GONE);
-                btn.setVisibility(View.VISIBLE);
+                Toast.makeText(ProcessPaymentActivity.this, "Order sent!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(ProcessPaymentActivity.this,  OrderActivity.class);
+                db = new Database(ProcessPaymentActivity.this);
+                db.deleteCart();
+                startActivity(intent);
+                finish();
             }
         }.start();
     }
-
-    public void viewOrdersClicked(View view){
-        Intent intent = new Intent(this, OrderActivity.class);
-        startActivity(intent);
-    }
-
 
 }

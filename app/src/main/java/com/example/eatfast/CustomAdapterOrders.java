@@ -1,6 +1,4 @@
 package com.example.eatfast;
-import com.example.eatfast.Database.Database;
-import com.example.eatfast.Model.Order;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Button;
-import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -54,7 +50,7 @@ public class CustomAdapterOrders extends BaseAdapter implements ListAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.frag_order_layout, null);
         }
-        TextView listItemText = (TextView)view.findViewById(R.id.order);
+        TextView listItemText = (TextView)view.findViewById(R.id.FoodItem);
         String text = list.get(position);
         listItemText.setText(text);
 

@@ -1,24 +1,23 @@
 package com.example.eatfast.Model;
 
 import java.io.Serializable;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.List;
 
-public class DoneOrder implements Serializable {
+public class FirebaseOrder implements Serializable {
 
     private String orderID;
     private String user;
-    private int amount;
+    private String amount;
     private String status;
-    private ArrayList<Order> list = new ArrayList<>();
+    private ArrayList<FoodItem> list = new ArrayList<>();
     private ArrayList<String> slist = new ArrayList<>();
 
 
-    public DoneOrder(){
+    public FirebaseOrder(){
 
     }
-    public DoneOrder(int amount, String status, String user, String orderID) {
+
+    public FirebaseOrder(String amount, String status, String user, String orderID) {
         this.amount = amount;
         this.status = status;
         this.user = user;
@@ -26,7 +25,7 @@ public class DoneOrder implements Serializable {
 
     }
 
-    public DoneOrder(int amount, String status, String user, String orderID, ArrayList<Order> list) {
+    public FirebaseOrder(String amount, String status, String user, String orderID, ArrayList<FoodItem> list) {
         this.amount = amount;
         this.status = status;
         this.user = user;
@@ -34,9 +33,9 @@ public class DoneOrder implements Serializable {
         this.list = list;
     }
 
-    public DoneOrder(ArrayList<String> list){this.slist = list;}
+    public FirebaseOrder(ArrayList<String> list){this.slist = list;}
 
-    public ArrayList<Order> getOrders(){return this.list;}
+    public ArrayList<FoodItem> getOrders(){return this.list;}
 
     public String getUser() {
         return user;
@@ -46,11 +45,11 @@ public class DoneOrder implements Serializable {
         this.user = user;
     }
 
-    public int getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
@@ -70,9 +69,9 @@ public class DoneOrder implements Serializable {
         this.orderID = orderID;
     }
 
-    public void addOrder(Order o) { list.add(o);}
+    public void addOrder(FoodItem o) { list.add(o);}
 
-    public void setOrders(ArrayList<Order> list) {
+    public void setOrders(ArrayList<FoodItem> list) {
         this.list = list;
     }
 }

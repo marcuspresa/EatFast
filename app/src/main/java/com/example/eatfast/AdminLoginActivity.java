@@ -13,6 +13,9 @@ import android.widget.Toast;
 import android.support.v7.app.AppCompatActivity;
 
 public class AdminLoginActivity extends AppCompatActivity {
+
+    public static boolean loggedIn = false;
+
     private EditText Name;
     private EditText Password;
     private TextView Info;
@@ -27,7 +30,6 @@ public class AdminLoginActivity extends AppCompatActivity {
         Info = (TextView) findViewById(R.id.textViewInfo);
         Login = (Button) findViewById(R.id.btnLogin);
 
-        Info.setText("No of attempts remaining: 3");
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,18 +37,23 @@ public class AdminLoginActivity extends AppCompatActivity {
                 validate(Name.getText().toString(), Password.getText().toString());
             }
         });
+
+        if(loggedIn == true){
+            loggedIn();
+        }
     }
 
     private void validate(String userName, String userPassword){
         if((userName.equals("Admin")) && (userPassword.equals("1234"))){
             Intent intent = new Intent(this, AdminOrdersActivity.class);
+            loggedIn = true;
             startActivity(intent);
+            finish();
         }
-        else{
-            Counter--;
-            Info.setText("No of attempts remaining: " + String.valueOf(Counter));
-            if(Counter == 0)
-                Login.setEnabled(false);
-        }
+    }
+    private void loggedIn(){
+        Intent intent = new Intent(this, AdminOrdersActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

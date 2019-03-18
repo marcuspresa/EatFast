@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
-import com.example.eatfast.Model.Order;
+import com.example.eatfast.Model.FoodItem;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,7 +33,7 @@ public class CategoryDetail extends AppCompatActivity {
         setTitle(i.getStringExtra("id")); //Sätter titel på sidan beroende på vad man klicka på sidan innan.
         // kommer nog använda denna för att hämta från firebase.
 
-        //Order o = new Order("Nuggets", "60"); //test order
+        //FoodItem o = new FoodItem("Nuggets", "60"); //test order
 
         //fyll meny från firebase
         if(i.getStringExtra("id").equals("Nuggets")){
@@ -95,12 +95,12 @@ public class CategoryDetail extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                ArrayList<Order> list = new ArrayList<>();
+                ArrayList<FoodItem> list = new ArrayList<>();
 
                 for(DataSnapshot uniqueKeySnapshot : dataSnapshot.getChildren()) {
                     //System.out.println("TESTING" + uniqueKeySnapshot.getValue());
-                    //orderDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
-                    Order o = uniqueKeySnapshot.getValue(Order.class);
+                    //foodItemDetail.add(data.getString(1)+" "+ data.getString(2)+":-");
+                    FoodItem o = uniqueKeySnapshot.getValue(FoodItem.class);
                     list.add(o);
                 }
 
