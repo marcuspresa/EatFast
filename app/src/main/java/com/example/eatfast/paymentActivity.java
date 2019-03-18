@@ -52,6 +52,8 @@ public class paymentActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
                             Toast.makeText(paymentActivity.this, "Thank you for purchase", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(paymentActivity.this, MainActivity.class);
+                            startActivity(intent);
                         }
                     });
                     alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
