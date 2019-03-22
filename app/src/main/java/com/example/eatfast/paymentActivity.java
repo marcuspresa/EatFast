@@ -39,6 +39,7 @@ public class paymentActivity extends AppCompatActivity {
         Toast.makeText(paymentActivity.this, "Processing order..", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, ProcessPaymentActivity.class);
         startActivity(intent);
+        startService(new Intent(paymentActivity.this, NotifyUserService.class));
         finish();
     }
 

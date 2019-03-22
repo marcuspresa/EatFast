@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity {
         Info = (TextView) findViewById(R.id.textViewInfo);
         Login = (Button) findViewById(R.id.btnLogin);
 
-        Info.setText("No of attempts remaining: 3");
+        /*Info.setText("No of attempts remaining: 3");*/
 
         Login.setOnClickListener(new View.OnClickListener() {
             @Override

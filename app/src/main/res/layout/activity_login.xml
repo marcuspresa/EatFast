@@ -47,15 +47,4 @@
         android:text="LOGIN"
         tools:text="Login" />
 
-    <TextView
-        android:id="@+id/textViewInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="137dp"
-        android:layout_marginRight="137dp"
-        android:layout_marginBottom="260dp"
-        android:text="No of attemps remaining" />
 </RelativeLayout>
