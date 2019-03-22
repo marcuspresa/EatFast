@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.eatfast.Model.FirebaseOrder;
@@ -24,22 +25,19 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class FragDoneOrders extends ListFragment {
+public class AdminFragOrders extends ListFragment {
 
-    ArrayList<FoodItem> li = new ArrayList<>();
+
+
     ArrayList<Order> orderList = new ArrayList<>();
-    ArrayList<FoodItem> foodItemList = new ArrayList<>();
     ArrayList<Order> intentList = new ArrayList<>();
-
-    String orderNr;
-    ArrayList<String> orders = new ArrayList<>();
+    ArrayList<FoodItem> foodItemList = new ArrayList<>();
     ArrayList<FirebaseOrder> FirebaseOrders = new ArrayList<FirebaseOrder>();
-    FirebaseOrder FirebaseOrder;
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragdoneorders, container,
+        final View rootView = inflater.inflate(R.layout.fragorders, container,
                 false);
         final ListView listView = rootView.findViewById(R.id.fragmentList);
         SharedPreferences preferences = this.getActivity().getSharedPreferences("user", MODE_PRIVATE);
@@ -48,19 +46,18 @@ public class FragDoneOrders extends ListFragment {
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference ref = database.getInstance().getReference("Orders");
 
+        final CustomAdapterWithDeleteButton customAdapterWithDeleteButton = new CustomAdapterWithDeleteButton(orderList, getActivity());
+        setListAdapter(customAdapterWithDeleteButton);
 
 
-        final CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(orderList, getActivity());
-        setListAdapter(customFragmentAdapter);
-
-
-        ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot datas: dataSnapshot.getChildren()) {
                     final FirebaseOrder FirebaseOrder = datas.getValue(FirebaseOrder.class);
 
-                    if (FirebaseOrder.getStatus().equals("Done")) {
+                    if (FirebaseOrder.getStatus().equals("Cooking")) {
+                        
                         foodItemList.clear();
                         orderList.clear();
                         FirebaseOrders.clear();
@@ -79,14 +76,18 @@ public class FragDoneOrders extends ListFragment {
                                     foodItemList.add(FoodItem);
                                 }
 
-                                FirebaseOrder.setOrders(foodItemList);
-                                FirebaseOrders.add(FirebaseOrder);
+                                //FirebaseOrder.setOrders(foodItemList);
+                                //FirebaseOrders.add(FirebaseOrder);
+
+
                                 Order order = new Order(FirebaseOrders, orderNr);
                                 Order intentOrder = new Order(orderNr, foodItemList);
+
+
                                 intentList.add(intentOrder);
                                 orderList.add(order);
-                                System.out.println("TESTING" + orderList);
-                                customFragmentAdapter.notifyDataSetChanged();
+
+                                customAdapterWithDeleteButton.notifyDataSetChanged();
 
                             }
 
@@ -101,6 +102,7 @@ public class FragDoneOrders extends ListFragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
+
         return rootView;
     }
 
@@ -108,11 +110,10 @@ public class FragDoneOrders extends ListFragment {
     public void onListItemClick(ListView l, View v, int pos, long id) {
         super.onListItemClick(l, v, pos, id);
         Toast.makeText(getActivity(), "Item " + pos + " was clicked", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(FragDoneOrders.this.getContext(), DisplayOrderActivity.class);
+        Intent intent = new Intent(AdminFragOrders.this.getContext(), DisplayOrderActivity.class);
         Order o = intentList.get(pos);
         intent.putExtra("KEY", o);
         startActivity(intent);
     }
-
 
 }

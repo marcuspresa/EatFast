@@ -9,9 +9,9 @@
         app:actionLayout="@layout/custom_action_item_layout"
         app:showAsAction="always"/>
     <item
-
         android:id="@+id/menu_orders"
         app:showAsAction="always"
-        android:title="Orders" />
+        android:title="@string/menu_orders"
+        />
 
 </menu>

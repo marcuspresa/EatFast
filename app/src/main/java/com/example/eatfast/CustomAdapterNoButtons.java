@@ -1,6 +1,6 @@
 package com.example.eatfast;
 import com.example.eatfast.Database.Database;
-import com.example.eatfast.Model.Order;
+import com.example.eatfast.Model.FoodItem;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Button;
-import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -20,14 +18,14 @@ public class CustomAdapterNoButtons extends BaseAdapter implements ListAdapter {
 
     Database db;
 
-    private ArrayList<Order> list = new ArrayList<Order>();
+    private ArrayList<FoodItem> list = new ArrayList<FoodItem>();
     private Context context;
 
     public CustomAdapterNoButtons(){
 
     }
 
-    public CustomAdapterNoButtons(ArrayList<Order> list, Context context){
+    public CustomAdapterNoButtons(ArrayList<FoodItem> list, Context context){
         db = new Database(context);
         this.list = list;
         this.context = context;
@@ -39,7 +37,7 @@ public class CustomAdapterNoButtons extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public Order getItem(int pos){
+    public FoodItem getItem(int pos){
         return list.get(pos);
     }
 
@@ -58,8 +56,8 @@ public class CustomAdapterNoButtons extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.activity_display_order, null);
         }
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
-        Order text = list.get(position);
-        listItemText.setText(text.getProductName() + text.getPrice());
+        FoodItem text = list.get(position);
+        listItemText.setText(text.getProductName() + " " + text.getPrice() +" :-");
 
         return view;
     }

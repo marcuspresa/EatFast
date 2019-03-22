@@ -31,19 +31,16 @@ public class Database extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
         onCreate(db);
-
     }
 
-    public boolean insertData(String productname, String price){
+    public long insertData(String productname, String price){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,productname);
         contentValues.put(COL_3,price);
         long result = db.insert(TABLE_NAME, null, contentValues);
-        if(result == -1)
-            return false;
-        else
-            return true;
+
+        return result;
     }
 
     public Cursor fetchData(){
@@ -61,13 +58,21 @@ public class Database extends SQLiteOpenHelper {
 
     public void deleteRow(int id){
         SQLiteDatabase db = this.getReadableDatabase();
+        //int idToDelete = Integer.parseInt(id);
         db.execSQL("DELETE FROM " + TABLE_NAME+ " WHERE "+COL_1+"='"+id+"'");
+        System.out.println("TESTING ID" + id);
     }
 
     public void deleteCart(){
-        //something
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("DROP TABLE  " + TABLE_NAME);
+        createTable();
     }
 
+    public void createTable(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.execSQL("CREATE TABLE orderDetail(ID INTEGER PRIMARY KEY AUTOINCREMENT, PRODUCTNAME TEXT, PRICE TEXT)");
+    }
 
 
 }

@@ -1,8 +1,10 @@
 package com.example.eatfast;
 import com.example.eatfast.Database.Database;
-import com.example.eatfast.Model.Order;
+import com.example.eatfast.Model.FoodItem;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +22,36 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
 
     Database db;
 
-    private ArrayList<Order> list = new ArrayList<Order>();
+
+    private ArrayList<FoodItem> list = new ArrayList<FoodItem>();
     private Context context;
 
     public CustomAdapter(){
 
     }
 
-    public CustomAdapter(ArrayList<Order> list, Context context){
+    public CustomAdapter(ArrayList<FoodItem> list, Context context){
         db = new Database(context);
         this.list = list;
         this.context = context;
+    }
+
+    public void counter(int amount) {
+
+        MenuActivity.mCartItemCount = 0;
+        for (int i = 0; i < amount; i++) {
+            MenuActivity.mCartItemCount++;
+        }
+        if (MenuActivity.mCartItemCount == 0) {
+            if (MenuActivity.textCartItemCount.getVisibility() != View.GONE) {
+                MenuActivity.textCartItemCount.setVisibility(View.GONE);
+            }
+        } else {
+            if (MenuActivity.textCartItemCount.getVisibility() != View.VISIBLE) {
+                MenuActivity.textCartItemCount.setVisibility(View.VISIBLE);
+            }
+            MenuActivity.textCartItemCount.setText(String.valueOf(MenuActivity.mCartItemCount));
+        }
     }
 
     @Override
@@ -39,14 +60,13 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public Order getItem(int pos){
+    public FoodItem getItem(int pos){
         return list.get(pos);
     }
 
     @Override
     public long getItemId(int pos){
         return 0;
-
     }
 
     @Override
@@ -58,30 +78,56 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.activity_categorydetail, null);
         }
         TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
-        Order text = list.get(position);
-        listItemText.setText(text.getProductName() + text.getPrice());
+        FoodItem text = list.get(position);
+        listItemText.setText(text.getProductName() +" "+  text.getPrice()+":-");
 
         Button addBtn = (Button)view.findViewById(R.id.addBtn);
+        Button infoBtn = (Button)view.findViewById(R.id.infoBtn);
+
+
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
                 addToCart(position);
+
             }
+        });
+
+        infoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
+                final FoodItem o = getItem(position);
+                alertDialog.setMessage(o.getProductName() + " " + o.getPrice() + " :-" + "\n\n"  + o.getFoodInfo() + "\n\n" + o.getCalories() + " Calories");
+
+
+                alertDialog.setPositiveButton(
+                        "Ok",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        }
+                );
+                alertDialog.show();
+
+            }
+
         });
         return view;
     }
 
     public void addToCart(int pos){
 
-        Order testOrder = getItem(pos);
+        FoodItem testFoodItem = getItem(pos);
+        db.insertData(testFoodItem.getProductName(), testFoodItem.getPrice());
+        Toast.makeText(context, "Placed " + testFoodItem.getProductName() + " in cart", Toast.LENGTH_LONG).show();
+        MenuActivity.mCartItemCount++;
+        counter(MenuActivity.mCartItemCount);
 
-        boolean isInserted = db.insertData(testOrder.getProductName().toString(), testOrder.getPrice().toString());
-        if(isInserted == true)
-            Toast.makeText(context, "Placed in cart", Toast.LENGTH_LONG).show();
-        else
-            Toast.makeText(context, "Error", Toast.LENGTH_LONG).show();
     }
 
 

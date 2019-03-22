@@ -3,37 +3,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+
     <ListView
-        android:id="@+id/list"
+        android:id="@android:id/list"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 
     <TextView
-        android:id="@+id/orderItem"
+        android:id="@+id/FoodItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
         android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/addBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/infoBtn"
-        android:text="+"
+        android:textStyle="bold"
         />
 
     <Button
-
-        android:id="@+id/infoBtn"
+        android:id="@+id/deleteBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:text="info"
-
+        android:text="x"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         />
-
 
 </RelativeLayout>

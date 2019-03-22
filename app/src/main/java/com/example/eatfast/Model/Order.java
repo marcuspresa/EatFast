@@ -1,46 +1,68 @@
 package com.example.eatfast.Model;
 
-/*
- A class to create orders.
- */
-public class Order {
-    private String ProductName;
-    private String Price;
-    private int orderId;
+import android.support.v7.app.AppCompatActivity;
 
-public Order(){
+import java.io.Serializable;
+import java.util.ArrayList;
 
-}
-    public Order(String productName, String price) {
-        ProductName = productName;
-        Price = price;
+public class Order extends AppCompatActivity implements Serializable {
+
+    String id;
+    String status;
+
+    ArrayList<FoodItem> list = new ArrayList<>();
+    ArrayList<FirebaseOrder> list2 = new ArrayList<>();
+
+    public Order(){
     }
 
-    public Order(String productName, String price, int id) {
-        ProductName = productName;
-        Price = price;
-        orderId = id;
+    public Order(String id, ArrayList<FoodItem> list){
+        this.id = id;
+        this.list = list;
     }
 
-    public int getId(){
-        return orderId;
+    public Order(ArrayList<FirebaseOrder> list, String id){
+        this.id = id;
+        this.list2 = list;
     }
 
-    public String getProductName() {
-        return ProductName;
+    public Order(String userId, ArrayList<FirebaseOrder> list, String status){
+        list2 = list;
+        this.status = status;
+        id = userId;
     }
 
-    public void setProductName(String productName) {
-        ProductName = productName;
+    public Order(ArrayList<FoodItem> list){
+        this.list = list;
     }
 
-    public String getPrice() {
-        return Price;
+    public ArrayList<FoodItem> getOrderList(){
+        return list;
     }
 
-    public void setPrice(String price) {
-        Price = price;
+    public ArrayList<FirebaseOrder> getFireBaseList(){
+        return list2;
     }
 
+    public String getId(){
+        return id;
+    }
+
+    public void setStatus(String status){this.status = status;}
+
+    public void setId(String id){this.id = id;}
+
+    public void setOrderList(ArrayList<FoodItem> list){this.list = list;}
+
+    public String getTotalPrice(){
+
+        int intTotal = 0;
+        for(int i = 0; i<list.size(); i++){
+            FoodItem o = list.get(i);
+            intTotal += Integer.parseInt(o.getPrice());
+        }
+        String price = Integer.toString(intTotal);
+        return price;
+    }
 
 }

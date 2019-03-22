@@ -1,77 +1,51 @@
 package com.example.eatfast;
 
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
-import android.view.InputDevice;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.braintreepayments.cardform.view.CardForm;
+import com.example.eatfast.Model.Order;
+import com.example.eatfast.Model.FoodItem;
+
+import java.util.ArrayList;
 
 public class paymentActivity extends AppCompatActivity {
 
-    CardForm cardForm;
-    Button buy;
-    AlertDialog.Builder alertBuilder;
-
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+        Intent intent = getIntent();
 
-        cardForm = findViewById(R.id.card_form);
-        buy = findViewById(R.id.btnBuy);
-        cardForm.cardRequired(true)
-                .expirationRequired(true)
-                .cvvRequired(true)
-                .postalCodeRequired(true)
-                .mobileNumberExplanation("SMS is required on this number")
-                .mobileNumberRequired(true)
-                .setup(paymentActivity.this);
-        cardForm.getCvvEditText().setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_PASSWORD);
-        buy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (cardForm.isValid()) {
-                    AlertDialog.Builder alertBuilder = new AlertDialog.Builder(paymentActivity.this);
-                    alertBuilder.setTitle("Confirm before purchase");
-                    alertBuilder.setMessage("Card number: " + cardForm.getCardNumber() + "\n" +
-                            "Card expiry date: " + cardForm.getExpirationDateEditText().getText().toString() + "\n" +
-                            "Card CVV: " + cardForm.getCvv() + "\n" +
-                            "Postal code: " + cardForm.getPostalCode() + "\n" +
-                            "Phone number: " + cardForm.getMobileNumber());
-                    alertBuilder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                            Toast.makeText(paymentActivity.this, "Thank you for purchase", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(paymentActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        }
-                    });
-                    alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            dialogInterface.dismiss();
-                        }
-                    });
-                    AlertDialog alertDialog = alertBuilder.create();
-                    alertDialog.show();
-                } else {
-                    Toast.makeText(paymentActivity.this, "Please complete the form", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+        Order o = (Order) intent.getExtras().getSerializable("KEY");
+        System.out.println("TESTING" + o.getTotalPrice());
 
+        ArrayList<FoodItem> l = o.getOrderList();
+        CustomAdapterNoButtons customAdapterNoButtons = new CustomAdapterNoButtons(l, this);
+
+        ListView listView = (ListView) findViewById(R.id.list);
+        listView.setAdapter(customAdapterNoButtons);
+
+        Button payBtn = (Button) findViewById(R.id.payButton);
+        payBtn.setText("PAY "+o.getTotalPrice()+ " :-");
 
     }
+    public void paymentClicked(View view){
+        Toast.makeText(paymentActivity.this, "Processing order..", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(this, ProcessPaymentActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, CartActivity.class);
+        startActivity(intent);
+    }
 }

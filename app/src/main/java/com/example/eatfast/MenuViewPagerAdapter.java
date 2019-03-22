@@ -13,6 +13,8 @@ public class MenuViewPagerAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
+
+
     @Override
     public Fragment getItem(int i) {
         MenuFragment menuFragment = new MenuFragment();
@@ -24,7 +26,6 @@ public class MenuViewPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-
         return 3;
     }
 
