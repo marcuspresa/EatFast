@@ -1,8 +1,6 @@
-package com.example.eatfast;
+package com.example.eatfast.Menu;
 
 
-import android.content.Context;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,7 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.eatfast.Adapters.CustomAdapter;
+import com.example.eatfast.Menu.MenuActivity;
 import com.example.eatfast.Model.FoodItem;
+import com.example.eatfast.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

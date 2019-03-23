@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,20 +8,26 @@ import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.example.eatfast.Database.Database;
+import com.example.eatfast.Model.FoodItem;
+import com.example.eatfast.R;
 
 import java.util.ArrayList;
 
-public class CustomAdapterOrders extends BaseAdapter implements ListAdapter {
+public class CustomAdapterNoButtons extends BaseAdapter implements ListAdapter {
 
 
-    private ArrayList<String> list = new ArrayList<String>();
+    Database db;
+
+    private ArrayList<FoodItem> list = new ArrayList<FoodItem>();
     private Context context;
 
-    public CustomAdapterOrders(){
+    public CustomAdapterNoButtons(){
 
     }
 
-    public CustomAdapterOrders(ArrayList<String> list, Context context){
+    public CustomAdapterNoButtons(ArrayList<FoodItem> list, Context context){
+        db = new Database(context);
         this.list = list;
         this.context = context;
     }
@@ -32,7 +38,7 @@ public class CustomAdapterOrders extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public String getItem(int pos){
+    public FoodItem getItem(int pos){
         return list.get(pos);
     }
 
@@ -48,11 +54,11 @@ public class CustomAdapterOrders extends BaseAdapter implements ListAdapter {
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.frag_order_layout, null);
+            view = inflater.inflate(R.layout.activity_display_order, null);
         }
-        TextView listItemText = (TextView)view.findViewById(R.id.FoodItem);
-        String text = list.get(position);
-        listItemText.setText(text);
+        TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
+        FoodItem text = list.get(position);
+        listItemText.setText(text.getProductName() + " " + text.getPrice() +" :-");
 
         return view;
     }

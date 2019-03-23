@@ -19,33 +19,32 @@
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@drawable/roundedbutton" />
-        <activity android:name=".paymentActivity"/>
+        <activity android:name=".Payment.paymentActivity"/>
 
-        <activity android:name=".DisplayOrderActivity"/>
-        <activity android:name=".MenuActivity" />
-        <activity android:name=".CartActivity" />
-        <activity android:name=".CategoryDetail" />
-        <activity android:name=".AdminOrdersActivity"/>
-        <activity android:name=".AdminLoginActivity"/>
-        <activity android:name=".ProcessPaymentActivity"/>
+        <activity android:name=".Orders.DisplayOrderActivity"/>
+        <activity android:name=".Menu.MenuActivity" />
+        <activity android:name=".Orders.CartActivity" />
+        <activity android:name=".Admin.AdminOrdersActivity"/>
+        <activity android:name=".Admin.AdminLoginActivity"/>
+        <activity android:name=".Payment.ProcessPaymentActivity"/>
         <service
-            android:name=".FloatingWidgetService"
+            android:name=".Services.FloatingWidgetService"
             android:enabled="true"
             android:exported="false" />
         <service
-            android:name=".NotifyUserService"
+            android:name=".Services.NotifyUserService"
             android:enabled="true"
             android:exported="true"
             />
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".Main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".OrderActivity"
+            android:name=".Orders.OrderActivity"
             android:label="@string/title_activity_order"
             android:stopWithTask="false"
             android:theme="@style/AppTheme.NoActionBar"></activity>

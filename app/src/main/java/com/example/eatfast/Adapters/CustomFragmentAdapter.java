@@ -1,5 +1,4 @@
-package com.example.eatfast;
-import com.example.eatfast.Database.Database;
+package com.example.eatfast.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,10 +9,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.eatfast.Database.Database;
+import com.example.eatfast.Model.Order;
+import com.example.eatfast.R;
 
 import java.util.ArrayList;
-
-import com.example.eatfast.Model.Order;
 
 public class CustomFragmentAdapter extends BaseAdapter implements ListAdapter {
 

@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Menu;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -15,6 +15,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.eatfast.Database.Database;
+import com.example.eatfast.Orders.CartActivity;
+import com.example.eatfast.Orders.OrderActivity;
+import com.example.eatfast.R;
 
 
 public class MenuActivity extends AppCompatActivity {

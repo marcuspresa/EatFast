@@ -1,6 +1,5 @@
-package com.example.eatfast;
+package com.example.eatfast.Adapters;
 
-import com.example.eatfast.AdminFragOrders;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.Order;
+import com.example.eatfast.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -79,7 +79,6 @@ public class CustomAdapterWithDeleteButton extends BaseAdapter implements ListAd
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
                 Order order = list.get(position);
                 order.getId();
-                //System.out.println("TESTING ID" + order.getId());
 
                 final FirebaseDatabase database = FirebaseDatabase.getInstance();
                 final DatabaseReference ref = database.getInstance().getReference("Orders").child(order.getId()).child("status");

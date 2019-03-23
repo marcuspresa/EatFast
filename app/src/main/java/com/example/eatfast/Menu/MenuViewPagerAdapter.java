@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Menu;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,13 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.eatfast.Menu.MenuFragment;
+
 import java.util.ArrayList;
 
 public class MenuViewPagerAdapter extends FragmentPagerAdapter {
     public MenuViewPagerAdapter(FragmentManager fm) {
         super(fm);
     }
-
 
 
     @Override

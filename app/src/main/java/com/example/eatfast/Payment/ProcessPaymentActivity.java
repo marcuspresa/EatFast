@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Payment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,14 +6,12 @@ import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.eatfast.Database.Database;
-
-import org.w3c.dom.Text;
+import com.example.eatfast.Orders.OrderActivity;
+import com.example.eatfast.R;
 
 
 public class ProcessPaymentActivity extends AppCompatActivity {

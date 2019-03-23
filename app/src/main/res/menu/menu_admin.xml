@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.eatfast.Orders.OrderActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/admin_settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Log out"
         app:showAsAction="never" />
-
 </menu>

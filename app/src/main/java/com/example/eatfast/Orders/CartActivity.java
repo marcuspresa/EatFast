@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Orders;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,10 +15,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.eatfast.Adapters.CustomAdapterTwoButtons;
 import com.example.eatfast.Database.Database;
 import com.example.eatfast.Model.FoodItem;
 import com.example.eatfast.Model.Order;
 import com.example.eatfast.Model.User;
+import com.example.eatfast.Payment.paymentActivity;
+import com.example.eatfast.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,7 +37,7 @@ public class CartActivity extends AppCompatActivity {
     ListView listView;
 
     public static ArrayList<FoodItem> foodItemDetail = new ArrayList<>();
-    final CustomAdapterTwoButtons a = new CustomAdapterTwoButtons(foodItemDetail, this);
+    final CustomAdapterTwoButtons customAdapterTwoButtons = new CustomAdapterTwoButtons(foodItemDetail, this);
 
 
     private static final String TAG = "CartActivity";
@@ -104,7 +107,7 @@ public class CartActivity extends AppCompatActivity {
             }
             Order o = new Order(foodItemDetail);
             amount = o.getTotalPrice();
-            listView.setAdapter(a);
+            listView.setAdapter(customAdapterTwoButtons);
             sendOrder(amount);
         }
     }
@@ -127,7 +130,7 @@ public class CartActivity extends AppCompatActivity {
 
                         pushedOrders.put("amount", amount);
                         pushedOrders.put("user", user.getUserId());
-                        pushedOrders.put("foods", a.getUpdatedList());
+                        pushedOrders.put("foods", customAdapterTwoButtons.getUpdatedList());
                         pushedOrders.put("status", "Cooking");
                         ordersRef.push().setValue(pushedOrders);
 

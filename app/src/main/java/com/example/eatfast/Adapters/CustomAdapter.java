@@ -1,6 +1,4 @@
-package com.example.eatfast;
-import com.example.eatfast.Database.Database;
-import com.example.eatfast.Model.FoodItem;
+package com.example.eatfast.Adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,11 +7,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.eatfast.Database.Database;
+import com.example.eatfast.Menu.MenuActivity;
+import com.example.eatfast.Model.FoodItem;
+import com.example.eatfast.R;
 
 import java.util.ArrayList;
 

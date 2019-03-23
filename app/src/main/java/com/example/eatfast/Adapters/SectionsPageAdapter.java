@@ -1,6 +1,5 @@
-package com.example.eatfast;
+package com.example.eatfast.Adapters;
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;

@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Payment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,11 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eatfast.Model.Order;
+import com.example.eatfast.Adapters.CustomAdapterNoButtons;
+import com.example.eatfast.Orders.CartActivity;
 import com.example.eatfast.Model.FoodItem;
+import com.example.eatfast.Model.Order;
+import com.example.eatfast.Services.NotifyUserService;
+import com.example.eatfast.R;
 
 import java.util.ArrayList;
 

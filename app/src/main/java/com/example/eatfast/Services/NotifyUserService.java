@@ -1,4 +1,4 @@
-package com.example.eatfast;
+package com.example.eatfast.Services;
 
 
 import android.app.Notification;
@@ -13,8 +13,13 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
+
 import com.example.eatfast.Model.FirebaseOrder;
+import com.example.eatfast.Orders.OrderActivity;
+import com.example.eatfast.R;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +46,7 @@ public class NotifyUserService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        startMyOwnForeground();
+        //startMyOwnForeground();
         Notify();
         return super.onStartCommand(intent, flags, startId);
     }
@@ -72,18 +77,44 @@ public class NotifyUserService extends Service {
         final String uid = preferences.getString("user", "0");
         final FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference ref = database.getInstance().getReference("Orders");
+
         ref.orderByChild("user").equalTo(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot datas : dataSnapshot.getChildren()) {
-                    if (datas.getValue(FirebaseOrder.class).getStatus().equals("Done")) {
-                        stopForeground(true);
-                        showNotification();
-                        //ref.removeValue();
-                    }
+                for (final DataSnapshot datas : dataSnapshot.getChildren()) {
+
+                    ref.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                            if (datas.getValue(FirebaseOrder.class).getStatus().equals("Done")) {
+                                stopForeground(true);
+                                showNotification();
+                            }
+                        }
+
+                        @Override
+                        public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

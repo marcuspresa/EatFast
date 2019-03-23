@@ -1,14 +1,15 @@
-package com.example.eatfast;
+package com.example.eatfast.Orders;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import com.example.eatfast.Adapters.CustomAdapterNoButtons;
 import com.example.eatfast.Model.FoodItem;
 import com.example.eatfast.Model.Order;
+import com.example.eatfast.R;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,9 +24,6 @@ public class DisplayOrderActivity extends AppCompatActivity implements Serializa
 
         Order o = (Order) intent.getSerializableExtra("KEY");
 
-        //TextView price = (TextView) findViewById(R.id.totalCost);
-        //price.setText("Cost: "+o.getTotalPrice()+" :-");
-
         ArrayList<FoodItem> l = o.getOrderList();
         CustomAdapterNoButtons customAdapterNoButtons = new CustomAdapterNoButtons(l, this);
 
@@ -33,7 +31,6 @@ public class DisplayOrderActivity extends AppCompatActivity implements Serializa
         listView.setAdapter(customAdapterNoButtons);
 
     }
-
 
 }
 
