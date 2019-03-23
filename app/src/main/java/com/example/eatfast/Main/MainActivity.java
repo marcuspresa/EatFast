@@ -57,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void Loginbtn(View view){
+        Intent intent = new Intent(MainActivity.this, AdminLoginActivity.class);
+        startActivity(intent);
+    }
 }
 
 

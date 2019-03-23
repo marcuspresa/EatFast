@@ -8,9 +8,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.eatfast.Main.MainActivity;
 import com.example.eatfast.R;
 import com.example.eatfast.Adapters.SectionsPageAdapter;
 
@@ -62,6 +64,11 @@ public class AdminOrdersActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void signOutbtn(View view){
+        Intent intent = new Intent(AdminOrdersActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
 }
