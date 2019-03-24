@@ -30,7 +30,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class FragOrders extends ListFragment {
 
     ArrayList<Order> orderList = new ArrayList<>();
-    ArrayList<FoodItem> foodItemList = new ArrayList<>();
+
     ArrayList<Order> intentList = new ArrayList<>();
     ArrayList<FirebaseOrder> FirebaseOrders = new ArrayList<>();
 
@@ -72,13 +72,12 @@ public class FragOrders extends ListFragment {
                         foods.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                foodItemList.clear();
+                                ArrayList<FoodItem> foodItemList = new ArrayList<>();
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     FoodItem FoodItem = snapshot.getValue(FoodItem.class);
                                     System.out.println("TESTING FIRE" + FoodItem.getProductName());
                                     foodItemList.add(FoodItem);
                                 }
-
 
                                 Order intentOrder = new Order(FirebaseOrder.getOrderID(), foodItemList);
                                 intentList.add(intentOrder);
@@ -87,11 +86,6 @@ public class FragOrders extends ListFragment {
                                 FirebaseOrders.add(FirebaseOrder);
                                 Order order = new Order(FirebaseOrders, FirebaseOrder.getOrderID());
                                 orderList.add(order);
-
-
-
-
-
 
 
                                 customFragmentAdapter.notifyDataSetChanged();
@@ -116,7 +110,6 @@ public class FragOrders extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int pos, long id) {
         super.onListItemClick(l, v, pos, id);
-        Toast.makeText(getActivity(), "Item " + pos + " was clicked", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(FragOrders.this.getContext(), DisplayOrderActivity.class);
         Order o = intentList.get(pos);
         intent.putExtra("KEY", o);

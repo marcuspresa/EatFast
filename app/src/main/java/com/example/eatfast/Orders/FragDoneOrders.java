@@ -59,35 +59,37 @@ public class FragDoneOrders extends ListFragment {
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 for(DataSnapshot datas: dataSnapshot.getChildren()) {
                     final FirebaseOrder FirebaseOrder = datas.getValue(FirebaseOrder.class);
 
                     if (FirebaseOrder.getStatus().equals("Done")) {
-                        foodItemList.clear();
-                        orderList.clear();
-                        FirebaseOrders.clear();
-                        intentList.clear();
-                        FirebaseOrder.setOrderID(datas.getKey());
-                        final String orderNr = datas.getKey();
-                        DatabaseReference foodRef = ref.child(orderNr);
-                        DatabaseReference foodsRef = foodRef.child("foods");
-                        foodsRef.addValueEventListener(new ValueEventListener() {
 
+                        FirebaseOrder.setOrderID(datas.getKey());
+                        String orderNr = datas.getKey();
+
+                        DatabaseReference foodRef = ref.child(orderNr);
+                        DatabaseReference foods = foodRef.child("foods");
+
+                        foods.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                                ArrayList<FoodItem> foodItemList = new ArrayList<>();
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     FoodItem FoodItem = snapshot.getValue(FoodItem.class);
+                                    System.out.println("TESTING FIRE" + FoodItem.getProductName());
                                     foodItemList.add(FoodItem);
                                 }
 
+                                Order intentOrder = new Order(FirebaseOrder.getOrderID(), foodItemList);
+                                intentList.add(intentOrder);
+
                                 FirebaseOrder.setOrders(foodItemList);
                                 FirebaseOrders.add(FirebaseOrder);
-                                Order order = new Order(FirebaseOrders, orderNr);
-                                Order intentOrder = new Order(orderNr, foodItemList);
-                                intentList.add(intentOrder);
+                                Order order = new Order(FirebaseOrders, FirebaseOrder.getOrderID());
                                 orderList.add(order);
-                                System.out.println("TESTING" + orderList);
+
+
                                 customFragmentAdapter.notifyDataSetChanged();
 
                             }
@@ -109,7 +111,6 @@ public class FragDoneOrders extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int pos, long id) {
         super.onListItemClick(l, v, pos, id);
-        Toast.makeText(getActivity(), "Item " + pos + " was clicked", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(FragDoneOrders.this.getContext(), DisplayOrderActivity.class);
         Order o = intentList.get(pos);
         intent.putExtra("KEY", o);
