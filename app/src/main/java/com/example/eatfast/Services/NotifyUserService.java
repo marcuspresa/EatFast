@@ -85,7 +85,7 @@ public class NotifyUserService extends Service {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (final DataSnapshot datas : dataSnapshot.getChildren()) {
 
-                    ref.addChildEventListener(new ChildEventListener() {
+                    ref.orderByChild("user").equalTo(uid).addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
