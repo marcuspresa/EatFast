@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class paymentActivity extends AppCompatActivity {
 
-    protected void onCreate(@Nullable Bundle savedInstanceState){
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
         Intent intent = getIntent();
@@ -35,10 +35,11 @@ public class paymentActivity extends AppCompatActivity {
         listView.setAdapter(customAdapterNoButtons);
 
         Button payBtn = (Button) findViewById(R.id.payButton);
-        payBtn.setText("PAY "+o.getTotalPrice()+ " :-");
+        payBtn.setText("PAY " + o.getTotalPrice() + " :-");
 
     }
-    public void paymentClicked(View view){
+
+    public void paymentClicked(View view) {
         Toast.makeText(paymentActivity.this, "Processing order..", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(this, ProcessPaymentActivity.class);
         startActivity(intent);

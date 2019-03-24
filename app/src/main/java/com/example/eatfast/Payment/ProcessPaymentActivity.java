@@ -31,10 +31,10 @@ public class ProcessPaymentActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                ProgressBar spinner = (ProgressBar)findViewById(R.id.progressBar);
+                ProgressBar spinner = (ProgressBar) findViewById(R.id.progressBar);
                 spinner.setVisibility(View.GONE);
                 Toast.makeText(ProcessPaymentActivity.this, "Order sent!", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ProcessPaymentActivity.this,  OrderActivity.class);
+                Intent intent = new Intent(ProcessPaymentActivity.this, OrderActivity.class);
                 db = new Database(ProcessPaymentActivity.this);
                 db.deleteCart();
                 startActivity(intent);

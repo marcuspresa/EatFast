@@ -24,19 +24,19 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
     private ArrayList<FoodItem> list = new ArrayList<FoodItem>();
     private Context context;
 
-    public CustomAdapterTwoButtons(ArrayList<FoodItem> list, Context context){
+    public CustomAdapterTwoButtons(ArrayList<FoodItem> list, Context context) {
         db = new Database(context);
         this.list = list;
         this.context = context;
     }
 
-    public void add(FoodItem p){
+    public void add(FoodItem p) {
 
 
-        int newId = list.get(list.size()-1).getIntId()+1;
+        int newId = list.get(list.size() - 1).getIntId() + 1;
         System.out.println("TESTING NEWID" + newId);
 
-        FoodItem o = new FoodItem( newId, p.getProductName(), p.getPrice());
+        FoodItem o = new FoodItem(newId, p.getProductName(), p.getPrice());
         db.insertData(o.getProductName(), o.getPrice());
 
         list.add(o);
@@ -70,29 +70,29 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
         }
     }
 
-    public void delete(FoodItem p){
+    public void delete(FoodItem p) {
         db.deleteRow(p.getIntId());
         list.remove(p);
 
         notifyDataSetChanged();
     }
 
-    public ArrayList<FoodItem> getUpdatedList(){
+    public ArrayList<FoodItem> getUpdatedList() {
         return list;
     }
 
     @Override
-    public int getCount(){
+    public int getCount() {
         return list.size();
     }
 
     @Override
-    public FoodItem getItem(int pos){
+    public FoodItem getItem(int pos) {
         return list.get(pos);
     }
 
     @Override
-    public long getItemId(int pos){
+    public long getItemId(int pos) {
         return 0;
     }
 
@@ -105,12 +105,12 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
             view = inflater.inflate(R.layout.activity_cart_layout, null);
         }
 
-        TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
+        TextView listItemText = (TextView) view.findViewById(R.id.orderItem);
         FoodItem text = list.get(position);
-        listItemText.setText(text.getProductName() + " "+  text.getPrice()+":-");
+        listItemText.setText(text.getProductName() + " " + text.getPrice() + ":-");
 
-        final Button addBtn = (Button)view.findViewById(R.id.addBtn);
-        Button deleteBtn = (Button)view.findViewById(R.id.deleteBtn);
+        final Button addBtn = (Button) view.findViewById(R.id.addBtn);
+        Button deleteBtn = (Button) view.findViewById(R.id.deleteBtn);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,8 +137,6 @@ public class CustomAdapterTwoButtons extends BaseAdapter implements ListAdapter 
         });
         return view;
     }
-
-
 
 
 }

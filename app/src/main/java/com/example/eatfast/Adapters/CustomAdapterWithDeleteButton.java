@@ -27,29 +27,29 @@ public class CustomAdapterWithDeleteButton extends BaseAdapter implements ListAd
     private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
-    public CustomAdapterWithDeleteButton(ArrayList<Order> list, Context context){
+    public CustomAdapterWithDeleteButton(ArrayList<Order> list, Context context) {
         db = new Database(context);
         this.list = list;
         this.context = context;
     }
 
-    //android adapter notify activity google
+
     @Override
-    public int getCount(){
+    public int getCount() {
         return list.size();
     }
 
     @Override
-    public Order getItem(int pos){
+    public Order getItem(int pos) {
         return list.get(pos);
     }
 
     @Override
-    public long getItemId(int pos){
+    public long getItemId(int pos) {
         return 0;
     }
 
-    public void delete(Order o){
+    public void delete(Order o) {
         list.remove(o);
         notifyDataSetChanged();
     }
@@ -63,14 +63,14 @@ public class CustomAdapterWithDeleteButton extends BaseAdapter implements ListAd
             view = inflater.inflate(R.layout.admin_order_layout, null);
         }
 
-        TextView listItemText = (TextView)view.findViewById(R.id.FoodItem);
-        ListView listView = (ListView)view.findViewById(R.id.list);
-        final Button deleteBtn = (Button)view.findViewById(R.id.deleteBtn);
+        TextView listItemText = (TextView) view.findViewById(R.id.FoodItem);
+        ListView listView = (ListView) view.findViewById(R.id.list);
+        final Button deleteBtn = (Button) view.findViewById(R.id.deleteBtn);
 
 
         Order order = list.get(position);
 
-        listItemText.setText("ORDER NR: "+ order.getId());
+        listItemText.setText("ORDER NR: " + order.getId());
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override

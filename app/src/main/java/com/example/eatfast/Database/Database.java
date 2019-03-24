@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 
-
 public class Database extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Eatit.db";
     public static final String TABLE_NAME = "orderDetail";
@@ -29,47 +28,46 @@ public class Database extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
-    public long insertData(String productname, String price){
+    public long insertData(String productname, String price) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2,productname);
-        contentValues.put(COL_3,price);
+        contentValues.put(COL_2, productname);
+        contentValues.put(COL_3, price);
         long result = db.insert(TABLE_NAME, null, contentValues);
 
         return result;
     }
 
-    public Cursor fetchData(){
+    public Cursor fetchData() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor data = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         return data;
     }
 
-    public Cursor getItemID(String name){
+    public Cursor getItemID(String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT" + COL_1 + "FROM" + TABLE_NAME + "WHERE" + COL_2 + "=" + name;
         Cursor data = db.rawQuery(query, null);
         return data;
     }
 
-    public void deleteRow(int id){
+    public void deleteRow(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        //int idToDelete = Integer.parseInt(id);
-        db.execSQL("DELETE FROM " + TABLE_NAME+ " WHERE "+COL_1+"='"+id+"'");
+        db.execSQL("DELETE FROM " + TABLE_NAME + " WHERE " + COL_1 + "='" + id + "'");
         System.out.println("TESTING ID" + id);
     }
 
-    public void deleteCart(){
+    public void deleteCart() {
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("DROP TABLE  " + TABLE_NAME);
         createTable();
     }
 
-    public void createTable(){
+    public void createTable() {
         SQLiteDatabase db = this.getReadableDatabase();
         db.execSQL("CREATE TABLE orderDetail(ID INTEGER PRIMARY KEY AUTOINCREMENT, PRODUCTNAME TEXT, PRICE TEXT)");
     }

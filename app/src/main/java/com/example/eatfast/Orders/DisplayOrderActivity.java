@@ -16,16 +16,16 @@ import java.util.ArrayList;
 
 public class DisplayOrderActivity extends AppCompatActivity implements Serializable {
 
-    protected void onCreate(@Nullable Bundle savedInstanceState){
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_order);
 
         Intent intent = getIntent();
 
-        Order o = (Order) intent.getSerializableExtra("KEY");
+        Order order = (Order) intent.getSerializableExtra("KEY");
 
-        ArrayList<FoodItem> l = o.getOrderList();
-        CustomAdapterNoButtons customAdapterNoButtons = new CustomAdapterNoButtons(l, this);
+        ArrayList<FoodItem> list = order.getOrderList();
+        CustomAdapterNoButtons customAdapterNoButtons = new CustomAdapterNoButtons(list, this);
 
         ListView listView = (ListView) findViewById(R.id.displayOrderList);
         listView.setAdapter(customAdapterNoButtons);

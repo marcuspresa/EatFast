@@ -11,53 +11,59 @@ public class Order extends AppCompatActivity implements Serializable {
     String status;
 
     ArrayList<FoodItem> list = new ArrayList<>();
-    ArrayList<FirebaseOrder> list2 = new ArrayList<>();
+    ArrayList<FirebaseOrder> firebaseList = new ArrayList<>();
 
-    public Order(){
+    public Order() {
     }
 
-    public Order(String id, ArrayList<FoodItem> list){
+    public Order(String id, ArrayList<FoodItem> list) {
         this.id = id;
         this.list = list;
     }
 
-    public Order(ArrayList<FirebaseOrder> list, String id){
+    public Order(ArrayList<FirebaseOrder> list, String id) {
         this.id = id;
-        this.list2 = list;
+        this.firebaseList = list;
     }
 
-    public Order(String userId, ArrayList<FirebaseOrder> list, String status){
-        list2 = list;
+    public Order(String userId, ArrayList<FirebaseOrder> list, String status) {
+        this.firebaseList = list;
         this.status = status;
-        id = userId;
+        this.id = userId;
     }
 
-    public Order(ArrayList<FoodItem> list){
+    public Order(ArrayList<FoodItem> list) {
         this.list = list;
     }
 
-    public ArrayList<FoodItem> getOrderList(){
+    public ArrayList<FoodItem> getOrderList() {
         return list;
     }
 
-    public ArrayList<FirebaseOrder> getFireBaseList(){
-        return list2;
+    public ArrayList<FirebaseOrder> getFireBaseList() {
+        return firebaseList;
     }
 
-    public String getId(){
+    public String getId() {
         return id;
     }
 
-    public void setStatus(String status){this.status = status;}
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-    public void setId(String id){this.id = id;}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public void setOrderList(ArrayList<FoodItem> list){this.list = list;}
+    public void setOrderList(ArrayList<FoodItem> list) {
+        this.list = list;
+    }
 
-    public String getTotalPrice(){
+    public String getTotalPrice() {
 
         int intTotal = 0;
-        for(int i = 0; i<list.size(); i++){
+        for (int i = 0; i < list.size(); i++) {
             FoodItem o = list.get(i);
             intTotal += Integer.parseInt(o.getPrice());
         }

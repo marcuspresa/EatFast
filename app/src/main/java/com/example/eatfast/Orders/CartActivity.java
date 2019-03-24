@@ -89,17 +89,16 @@ public class CartActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void retrieveCart(){
+    public void retrieveCart() {
         ListView listView = (ListView) findViewById(R.id.cartList);
         db = new Database(this);
         Cursor data = db.fetchData();
         mCartItemCount = 0;
         foodItemDetail.clear();
-        if(data.getCount() == 0){
+        if (data.getCount() == 0) {
             Toast.makeText(CartActivity.this, "Your cart is empty", Toast.LENGTH_LONG).show();
-        }
-        else{
-            while(data.moveToNext()){
+        } else {
+            while (data.moveToNext()) {
                 FoodItem o = new FoodItem(data.getInt(0), data.getString(1), data.getString(2));
                 foodItemDetail.add(o);
                 mCartItemCount += 1;
@@ -112,39 +111,38 @@ public class CartActivity extends AppCompatActivity {
         }
     }
 
-    public void sendOrder(final String amount){
+    public void sendOrder(final String amount) {
         FloatingActionButton order = (FloatingActionButton) findViewById(R.id.sendOrder);
-            order.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(products.size() == 0){
-                        Toast.makeText(CartActivity.this, "Your cart is empty!" +
-                                "", Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        SharedPreferences preferences = getSharedPreferences("user", MODE_PRIVATE);
-                        String uid = preferences.getString("user", null);
-                        User user = new User(uid);
-                        Log.d(TAG, user.toString());
-                        Map pushedOrders = new HashMap();
+        order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (products.size() == 0) {
+                    Toast.makeText(CartActivity.this, "Your cart is empty!" +
+                            "", Toast.LENGTH_LONG).show();
+                } else {
+                    SharedPreferences preferences = getSharedPreferences("user", MODE_PRIVATE);
+                    String uid = preferences.getString("user", null);
+                    User user = new User(uid);
+                    Log.d(TAG, user.toString());
+                    Map pushedOrders = new HashMap();
 
-                        pushedOrders.put("amount", amount);
-                        pushedOrders.put("user", user.getUserId());
-                        pushedOrders.put("foods", customAdapterTwoButtons.getUpdatedList());
-                        pushedOrders.put("status", "Cooking");
-                        ordersRef.push().setValue(pushedOrders);
+                    pushedOrders.put("amount", amount);
+                    pushedOrders.put("user", user.getUserId());
+                    pushedOrders.put("foods", customAdapterTwoButtons.getUpdatedList());
+                    pushedOrders.put("status", "Cooking");
+                    ordersRef.push().setValue(pushedOrders);
 
-                        Intent intent = new Intent(CartActivity.this, paymentActivity.class);
-                        Order o = new Order(foodItemDetail);
-                        intent.putExtra("KEY", o);
-                        startActivity(intent);
-                        finish();
-                    }
+                    Intent intent = new Intent(CartActivity.this, paymentActivity.class);
+                    Order o = new Order(foodItemDetail);
+                    intent.putExtra("KEY", o);
+                    startActivity(intent);
+                    finish();
                 }
-            });
-        }
+            }
+        });
+    }
 
-    public void badgeSetup(int iconNumber){
+    public void badgeSetup(int iconNumber) {
 
         if (textCartItemCount != null) {
             if (mCartItemCount == 0) {

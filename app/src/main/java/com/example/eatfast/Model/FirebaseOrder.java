@@ -13,7 +13,7 @@ public class FirebaseOrder implements Serializable {
     private ArrayList<String> slist = new ArrayList<>();
 
 
-    public FirebaseOrder(){
+    public FirebaseOrder() {
 
     }
 
@@ -33,9 +33,13 @@ public class FirebaseOrder implements Serializable {
         this.list = list;
     }
 
-    public FirebaseOrder(ArrayList<String> list){this.slist = list;}
+    public FirebaseOrder(ArrayList<String> list) {
+        this.slist = list;
+    }
 
-    public ArrayList<FoodItem> getOrders(){return this.list;}
+    public ArrayList<FoodItem> getOrders() {
+        return this.list;
+    }
 
     public String getUser() {
         return user;
@@ -69,7 +73,9 @@ public class FirebaseOrder implements Serializable {
         this.orderID = orderID;
     }
 
-    public void addOrder(FoodItem o) { list.add(o);}
+    public void addOrder(FoodItem o) {
+        list.add(o);
+    }
 
     public void setOrders(ArrayList<FoodItem> list) {
         this.list = list;

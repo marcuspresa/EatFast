@@ -60,7 +60,6 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
     }
 
 
-
     private View addRemoveView(LayoutInflater inflater) {
 
         removeFloatingWidgetView = inflater.inflate(R.layout.remove_floating_widget, null);
@@ -84,7 +83,6 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
         mWindowManager.addView(removeFloatingWidgetView, paramRemove);
         return remove_image_view;
     }
-
 
 
     private void addFloatingWidgetView(LayoutInflater inflater) {
@@ -116,7 +114,7 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
         expandedView = mFloatingWidgetView.findViewById(R.id.expanded_container);
     }
 
-        private void getWindowManagerDefaultDisplay() {
+    private void getWindowManagerDefaultDisplay() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
             mWindowManager.getDefaultDisplay().getSize(szWindow);
         else {
@@ -125,7 +123,6 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
             szWindow.set(w, h);
         }
     }
-
 
 
     private void implementTouchListenerToFloatingWidgetView() {
@@ -194,7 +191,6 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
                             inBounded = false;
                             break;
                         }
-
 
 
                         int x_diff = x_cord - x_init_cord;
@@ -346,7 +342,6 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
     }
 
 
-
     private void moveToLeft(final int current_x_cord) {
         final int x = szWindow.x - current_x_cord;
 
@@ -404,17 +399,14 @@ public class FloatingWidgetService extends Service implements View.OnClickListen
     }
 
 
-
     private boolean isViewCollapsed() {
         return mFloatingWidgetView == null || mFloatingWidgetView.findViewById(R.id.collapse_view).getVisibility() == View.VISIBLE;
     }
 
 
-
     private int getStatusBarHeight() {
         return (int) Math.ceil(25 * getApplicationContext().getResources().getDisplayMetrics().density);
     }
-
 
 
     @Override

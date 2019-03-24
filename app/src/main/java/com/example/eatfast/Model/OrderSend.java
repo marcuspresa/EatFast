@@ -7,7 +7,6 @@ public class OrderSend {
     private List<String> Foods;
 
 
-
     public OrderSend(int total, List<String> foods) {
         Total = total;
         Foods = foods;

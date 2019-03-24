@@ -28,15 +28,9 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class FragDoneOrders extends ListFragment {
 
-    ArrayList<FoodItem> li = new ArrayList<>();
     ArrayList<Order> orderList = new ArrayList<>();
-    ArrayList<FoodItem> foodItemList = new ArrayList<>();
     ArrayList<Order> intentList = new ArrayList<>();
-
-    String orderNr;
-    ArrayList<String> orders = new ArrayList<>();
     ArrayList<FirebaseOrder> FirebaseOrders = new ArrayList<FirebaseOrder>();
-    FirebaseOrder FirebaseOrder;
 
     @Override
     public View onCreateView(final LayoutInflater inflater, ViewGroup container,
@@ -51,7 +45,6 @@ public class FragDoneOrders extends ListFragment {
         final DatabaseReference ref = database.getInstance().getReference("Orders");
 
 
-
         final CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(orderList, getActivity());
         setListAdapter(customFragmentAdapter);
 
@@ -60,7 +53,7 @@ public class FragDoneOrders extends ListFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot datas: dataSnapshot.getChildren()) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     final FirebaseOrder FirebaseOrder = datas.getValue(FirebaseOrder.class);
 
                     if (FirebaseOrder.getStatus().equals("Done")) {
@@ -101,6 +94,7 @@ public class FragDoneOrders extends ListFragment {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }

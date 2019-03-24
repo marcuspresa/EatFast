@@ -20,16 +20,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MenuFragment extends Fragment {
 
 
-
     public MenuFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -38,17 +33,17 @@ public class MenuFragment extends Fragment {
 
         int position = getArguments().getInt("position");
         String category = new String();
-        if(position == 0){
+        if (position == 0) {
             category = "Nuggets";
         }
-        if(position == 1){
+        if (position == 1) {
             category = "Burgers";
         }
-        if(position == 2){
+        if (position == 2) {
             category = "Other";
         }
 
-        View view =  inflater.inflate(R.layout.fragment_menu, container, false);
+        View view = inflater.inflate(R.layout.fragment_menu, container, false);
         final ListView listView = view.findViewById(R.id.fragmentList);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = database.getReference("Category").child(category);
@@ -57,9 +52,8 @@ public class MenuFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<FoodItem> FoodItems = new ArrayList<>();
-                for(DataSnapshot uniqueKeySnapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot uniqueKeySnapshot : dataSnapshot.getChildren()) {
                     FoodItem FoodItem = uniqueKeySnapshot.getValue(FoodItem.class);
-                    System.out.println("TESTING" + FoodItem.getCalories());
                     FoodItems.add(FoodItem);
                 }
                 CustomAdapter adapter = new CustomAdapter(FoodItems, getActivity());

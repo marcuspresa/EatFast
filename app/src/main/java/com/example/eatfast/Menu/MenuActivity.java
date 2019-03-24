@@ -33,7 +33,7 @@ public class MenuActivity extends AppCompatActivity {
     private ViewPager viewPager;
     private TabLayout tabLayout;
 
-    protected void onCreate(@Nullable Bundle savedInstanceState){
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
         viewPager = findViewById(R.id.pagers);
@@ -44,7 +44,7 @@ public class MenuActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.menuTabs);
         tabLayout.setupWithViewPager(viewPager);
 
-        spinner = (ProgressBar)findViewById(R.id.progressBar1);
+        spinner = (ProgressBar) findViewById(R.id.progressBar1);
 
     }
 
@@ -56,7 +56,6 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
 
         final MenuItem menuItem = menu.findItem(R.id.action_cart);
@@ -76,14 +75,13 @@ public class MenuActivity extends AppCompatActivity {
         return true;
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) { //varukorg
+    public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.action_cart) {
             Intent intent = new Intent(this, CartActivity.class);
             startActivity(intent);
-        }
-        else if (id == R.id.menu_orders) {
+        } else if (id == R.id.menu_orders) {
             Intent intent = new Intent(this, OrderActivity.class);
             startActivity(intent);
         }
@@ -91,17 +89,17 @@ public class MenuActivity extends AppCompatActivity {
     }
 
 
-    public void countCart(){
+    public void countCart() {
         mCartItemCount = 0;
         db = new Database(this);
         Cursor data = db.fetchData();
 
-        while(data.moveToNext()){
-           mCartItemCount++;
+        while (data.moveToNext()) {
+            mCartItemCount++;
         }
     }
 
-    public void badgeSetup(){
+    public void badgeSetup() {
 
         if (textCartItemCount != null) {
             if (mCartItemCount == 0) {

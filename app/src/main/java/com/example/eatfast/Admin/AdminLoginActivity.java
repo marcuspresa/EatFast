@@ -34,13 +34,13 @@ public class AdminLoginActivity extends AppCompatActivity {
             }
         });
 
-        if(loggedIn == true){
+        if (loggedIn == true) {
             loggedIn();
         }
     }
 
-    private void validate(String userName, String userPassword){
-        if((userName.equals("Admin")) && (userPassword.equals("1234"))){
+    private void validate(String userName, String userPassword) {
+        if ((userName.equals("Admin")) && (userPassword.equals("1234"))) {
             Intent intent = new Intent(this, AdminOrdersActivity.class);
             Toast.makeText(AdminLoginActivity.this, "Successfully logged in", Toast.LENGTH_LONG).show();
             loggedIn = true;
@@ -48,7 +48,8 @@ public class AdminLoginActivity extends AppCompatActivity {
             finish();
         }
     }
-    private void loggedIn(){
+
+    private void loggedIn() {
         Intent intent = new Intent(this, AdminOrdersActivity.class);
         startActivity(intent);
         finish();

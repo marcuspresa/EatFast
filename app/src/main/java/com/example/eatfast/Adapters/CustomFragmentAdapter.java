@@ -22,24 +22,24 @@ public class CustomFragmentAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<Order> list = new ArrayList<Order>();
     private Context context;
 
-    public CustomFragmentAdapter(ArrayList<Order> list, Context context){
+    public CustomFragmentAdapter(ArrayList<Order> list, Context context) {
         db = new Database(context);
         this.list = list;
         this.context = context;
     }
 
     @Override
-    public int getCount(){
+    public int getCount() {
         return list.size();
     }
 
     @Override
-    public Order getItem(int pos){
+    public Order getItem(int pos) {
         return list.get(pos);
     }
 
     @Override
-    public long getItemId(int pos){
+    public long getItemId(int pos) {
         return 0;
     }
 
@@ -52,12 +52,12 @@ public class CustomFragmentAdapter extends BaseAdapter implements ListAdapter {
             view = inflater.inflate(R.layout.frag_order_layout, null);
         }
 
-        TextView listItemText = (TextView)view.findViewById(R.id.FoodItem);
-        ListView listView = (ListView)view.findViewById(R.id.listV);
+        TextView listItemText = (TextView) view.findViewById(R.id.FoodItem);
+        ListView listView = (ListView) view.findViewById(R.id.listV);
 
         Order order = list.get(position);
 
-        listItemText.setText("ORDER NR: "+ order.getId());
+        listItemText.setText("ORDER NR: " + order.getId());
 
         return view;
     }

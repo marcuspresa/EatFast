@@ -13,15 +13,16 @@ public class FoodItem implements Serializable {
     private String calories;
     private int intId;
 
-public FoodItem(){
+    public FoodItem() {
 
-}
+    }
+
     public FoodItem(String productName, String price) {
         this.productName = productName;
         this.price = price;
     }
 
-    public FoodItem(String productName, String price, String foodInfo, String calories){
+    public FoodItem(String productName, String price, String foodInfo, String calories) {
         this.productName = productName;
         this.price = price;
         this.foodInfo = foodInfo;
@@ -41,16 +42,21 @@ public FoodItem(){
     }
 
 
-
-    public String getId(){
+    public String getId() {
         return this.stringId;
     }
 
-    public String getFoodInfo(){return this.foodInfo;}
+    public String getFoodInfo() {
+        return this.foodInfo;
+    }
 
-    public String getCalories(){return this.calories;}
+    public String getCalories() {
+        return this.calories;
+    }
 
-    public int getIntId(){ return this.intId;}
+    public int getIntId() {
+        return this.intId;
+    }
 
     public String getProductName() {
         return productName;

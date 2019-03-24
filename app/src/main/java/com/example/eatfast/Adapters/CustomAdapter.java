@@ -28,11 +28,11 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     private ArrayList<FoodItem> list = new ArrayList<FoodItem>();
     private Context context;
 
-    public CustomAdapter(){
+    public CustomAdapter() {
 
     }
 
-    public CustomAdapter(ArrayList<FoodItem> list, Context context){
+    public CustomAdapter(ArrayList<FoodItem> list, Context context) {
         db = new Database(context);
         this.list = list;
         this.context = context;
@@ -57,17 +57,17 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
     }
 
     @Override
-    public int getCount(){
+    public int getCount() {
         return list.size();
     }
 
     @Override
-    public FoodItem getItem(int pos){
+    public FoodItem getItem(int pos) {
         return list.get(pos);
     }
 
     @Override
-    public long getItemId(int pos){
+    public long getItemId(int pos) {
         return 0;
     }
 
@@ -79,13 +79,12 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.activity_categorydetail, null);
         }
-        TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
+        TextView listItemText = (TextView) view.findViewById(R.id.orderItem);
         FoodItem text = list.get(position);
-        listItemText.setText(text.getProductName() +" "+  text.getPrice()+":-");
+        listItemText.setText(text.getProductName() + " " + text.getPrice() + ":-");
 
-        Button addBtn = (Button)view.findViewById(R.id.addBtn);
-        Button infoBtn = (Button)view.findViewById(R.id.infoBtn);
-
+        Button addBtn = (Button) view.findViewById(R.id.addBtn);
+        Button infoBtn = (Button) view.findViewById(R.id.infoBtn);
 
 
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -103,7 +102,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
             public void onClick(View v) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(v.getContext());
                 final FoodItem o = getItem(position);
-                alertDialog.setMessage(o.getProductName() + " " + o.getPrice() + " :-" + "\n\n"  + o.getFoodInfo() + "\n\n" + o.getCalories() + " Calories");
+                alertDialog.setMessage(o.getProductName() + " " + o.getPrice() + " :-" + "\n\n" + o.getFoodInfo() + "\n\n" + o.getCalories() + " Calories");
 
 
                 alertDialog.setPositiveButton(
@@ -122,7 +121,7 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
         return view;
     }
 
-    public void addToCart(int pos){
+    public void addToCart(int pos) {
 
         FoodItem testFoodItem = getItem(pos);
         db.insertData(testFoodItem.getProductName(), testFoodItem.getPrice());
@@ -131,7 +130,6 @@ public class CustomAdapter extends BaseAdapter implements ListAdapter {
         counter(MenuActivity.mCartItemCount);
 
     }
-
 
 
 }

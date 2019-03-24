@@ -22,7 +22,7 @@ public class AdminOrdersActivity extends AppCompatActivity {
     private SectionsPageAdapter mSectionsPageAdapter;
     private ViewPager mViewPager;
 
-    protected void onCreate(@Nullable Bundle savedInstanceState){
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
@@ -33,10 +33,9 @@ public class AdminOrdersActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
 
-
     }
 
-    private void setupViewPager(ViewPager viewPager){
+    private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new AdminFragOrders(), "Pending orders");
         adapter.addFragment(new AdminFragDoneOrders(), "Completed orders");
@@ -64,11 +63,6 @@ public class AdminOrdersActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void signOutbtn(View view){
-        Intent intent = new Intent(AdminOrdersActivity.this, MainActivity.class);
-        startActivity(intent);
     }
 
 }

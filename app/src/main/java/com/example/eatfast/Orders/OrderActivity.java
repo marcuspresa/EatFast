@@ -23,19 +23,19 @@ public class OrderActivity extends AppCompatActivity {
 
 
     private static final int DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE = 1222;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            //If the draw over permission is not available open the settings screen
-            //to grant the permission.
+
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:" + getPackageName()));
             startActivityForResult(intent, DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
         } else {
-            //If permission is granted start floating widget service
+
             startFloatingWidgetService();
         }
         mSectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
@@ -45,24 +45,22 @@ public class OrderActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
     }
+
     public void createFloatingWidget(View view) {
-        //Check if the application has draw over other apps permission or not?
-        //This permission is by default available for API<23. But for API > 23
-        //you have to ask for the permission in runtime.
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(this)) {
-            //If the draw over permission is not available open the settings screen
-            //to grant the permission.
+
             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                     Uri.parse("package:" + getPackageName()));
             startActivityForResult(intent, DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE);
         } else {
-            //If permission is granted start floating widget service
+
             startFloatingWidgetService();
         }
 
     }
 
-    /*  Start Floating widget service and finish current activity */
+
     private void startFloatingWidgetService() {
         startService(new Intent(OrderActivity.this, FloatingWidgetService.class));
     }
@@ -70,12 +68,12 @@ public class OrderActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == DRAW_OVER_OTHER_APP_PERMISSION_REQUEST_CODE) {
-            //Check if the permission is granted or not.
+
             if (resultCode == RESULT_OK)
-                //If permission granted start floating widget service
+
                 startFloatingWidgetService();
             else
-                //Permission is not available then display toast
+
                 Toast.makeText(this,
                         getResources().getString(R.string.draw_other_app_permission_denied),
                         Toast.LENGTH_SHORT).show();
@@ -86,16 +84,11 @@ public class OrderActivity extends AppCompatActivity {
     }
 
 
-    private void setupViewPager(ViewPager viewPager){
+    private void setupViewPager(ViewPager viewPager) {
         SectionsPageAdapter adapter = new SectionsPageAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragOrders(), "Pending orders");
         adapter.addFragment(new FragDoneOrders(), "Done orders");
         viewPager.setAdapter(adapter);
-    }
-
-    public void signOutbtn(View view){
-        Intent intent = new Intent(OrderActivity.this, MainActivity.class);
-        startActivity(intent);
     }
 
 

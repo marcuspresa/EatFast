@@ -18,27 +18,27 @@ public class CustomAdapterOrders extends BaseAdapter implements ListAdapter {
     private ArrayList<String> list = new ArrayList<String>();
     private Context context;
 
-    public CustomAdapterOrders(){
+    public CustomAdapterOrders() {
 
     }
 
-    public CustomAdapterOrders(ArrayList<String> list, Context context){
+    public CustomAdapterOrders(ArrayList<String> list, Context context) {
         this.list = list;
         this.context = context;
     }
 
     @Override
-    public int getCount(){
+    public int getCount() {
         return list.size();
     }
 
     @Override
-    public String getItem(int pos){
+    public String getItem(int pos) {
         return list.get(pos);
     }
 
     @Override
-    public long getItemId(int pos){
+    public long getItemId(int pos) {
         return 0;
 
     }
@@ -51,7 +51,7 @@ public class CustomAdapterOrders extends BaseAdapter implements ListAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.frag_order_layout, null);
         }
-        TextView listItemText = (TextView)view.findViewById(R.id.FoodItem);
+        TextView listItemText = (TextView) view.findViewById(R.id.FoodItem);
         String text = list.get(position);
         listItemText.setText(text);
 

@@ -22,28 +22,28 @@ public class CustomAdapterNoButtons extends BaseAdapter implements ListAdapter {
     private ArrayList<FoodItem> list = new ArrayList<FoodItem>();
     private Context context;
 
-    public CustomAdapterNoButtons(){
+    public CustomAdapterNoButtons() {
 
     }
 
-    public CustomAdapterNoButtons(ArrayList<FoodItem> list, Context context){
+    public CustomAdapterNoButtons(ArrayList<FoodItem> list, Context context) {
         db = new Database(context);
         this.list = list;
         this.context = context;
     }
 
     @Override
-    public int getCount(){
+    public int getCount() {
         return list.size();
     }
 
     @Override
-    public FoodItem getItem(int pos){
+    public FoodItem getItem(int pos) {
         return list.get(pos);
     }
 
     @Override
-    public long getItemId(int pos){
+    public long getItemId(int pos) {
         return 0;
 
     }
@@ -56,9 +56,9 @@ public class CustomAdapterNoButtons extends BaseAdapter implements ListAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.activity_display_order, null);
         }
-        TextView listItemText = (TextView)view.findViewById(R.id.orderItem);
+        TextView listItemText = (TextView) view.findViewById(R.id.orderItem);
         FoodItem text = list.get(position);
-        listItemText.setText(text.getProductName() + " " + text.getPrice() +" :-");
+        listItemText.setText(text.getProductName() + " " + text.getPrice() + " :-");
 
         return view;
     }

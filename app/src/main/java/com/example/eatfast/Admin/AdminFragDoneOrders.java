@@ -54,7 +54,7 @@ public class AdminFragDoneOrders extends ListFragment {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    getFireBase();
+                getFireBase();
             }
 
             @Override
@@ -77,72 +77,72 @@ public class AdminFragDoneOrders extends ListFragment {
 
     }
 
-        public void getFireBase(){
+    public void getFireBase() {
 
-            foodItemList.clear();
-            orderList.clear();
-            FirebaseOrders.clear();
-            intentList.clear();
+        foodItemList.clear();
+        orderList.clear();
+        FirebaseOrders.clear();
+        intentList.clear();
 
-            final FirebaseDatabase database = FirebaseDatabase.getInstance();
-            final DatabaseReference ref = database.getInstance().getReference("Orders");
-
-
-            final CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(orderList, getActivity());
-            setListAdapter(customFragmentAdapter);
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference ref = database.getInstance().getReference("Orders");
 
 
-            ref.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    for(DataSnapshot datas: dataSnapshot.getChildren()) {
-                        final FirebaseOrder FirebaseOrder = datas.getValue(FirebaseOrder.class);
-
-                        if (FirebaseOrder.getStatus().equals("Done")) {
-
-                            FirebaseOrder.setOrderID(datas.getKey());
-                            String orderNr = datas.getKey();
-
-                            DatabaseReference foodRef = ref.child(orderNr);
-                            DatabaseReference foods = foodRef.child("foods");
-
-                            foods.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    ArrayList<FoodItem> foodItemList = new ArrayList<>();
-                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                        FoodItem FoodItem = snapshot.getValue(FoodItem.class);
-                                        System.out.println("TESTING FIRE" + FoodItem.getProductName());
-                                        foodItemList.add(FoodItem);
-                                    }
-
-                                    Order intentOrder = new Order(FirebaseOrder.getOrderID(), foodItemList);
-                                    intentList.add(intentOrder);
-
-                                    FirebaseOrder.setOrders(foodItemList);
-                                    FirebaseOrders.add(FirebaseOrder);
-                                    Order order = new Order(FirebaseOrders, FirebaseOrder.getOrderID());
-                                    orderList.add(order);
+        final CustomFragmentAdapter customFragmentAdapter = new CustomFragmentAdapter(orderList, getActivity());
+        setListAdapter(customFragmentAdapter);
 
 
-                                    customFragmentAdapter.notifyDataSetChanged();
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
+                    final FirebaseOrder FirebaseOrder = datas.getValue(FirebaseOrder.class);
+
+                    if (FirebaseOrder.getStatus().equals("Done")) {
+
+                        FirebaseOrder.setOrderID(datas.getKey());
+                        String orderNr = datas.getKey();
+
+                        DatabaseReference foodRef = ref.child(orderNr);
+                        DatabaseReference foods = foodRef.child("foods");
+
+                        foods.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                ArrayList<FoodItem> foodItemList = new ArrayList<>();
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    FoodItem FoodItem = snapshot.getValue(FoodItem.class);
+                                    foodItemList.add(FoodItem);
                                 }
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                }
-                            });
-                        }
+                                Order intentOrder = new Order(FirebaseOrder.getOrderID(), foodItemList);
+                                intentList.add(intentOrder);
+
+                                FirebaseOrder.setOrders(foodItemList);
+                                FirebaseOrders.add(FirebaseOrder);
+                                Order order = new Order(FirebaseOrders, FirebaseOrder.getOrderID());
+                                orderList.add(order);
+
+
+                                customFragmentAdapter.notifyDataSetChanged();
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                            }
+                        });
                     }
                 }
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
-            });
+            }
 
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+    }
 
     @Override
     public void onListItemClick(ListView l, View v, int pos, long id) {

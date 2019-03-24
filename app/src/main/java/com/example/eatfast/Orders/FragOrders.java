@@ -30,12 +30,8 @@ import static android.content.Context.MODE_PRIVATE;
 public class FragOrders extends ListFragment {
 
     ArrayList<Order> orderList = new ArrayList<>();
-
     ArrayList<Order> intentList = new ArrayList<>();
     ArrayList<FirebaseOrder> FirebaseOrders = new ArrayList<>();
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,12 +49,11 @@ public class FragOrders extends ListFragment {
         setListAdapter(customFragmentAdapter);
 
 
-
         ref.orderByChild("user").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot datas: dataSnapshot.getChildren()) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     final FirebaseOrder FirebaseOrder = datas.getValue(FirebaseOrder.class);
 
                     if (FirebaseOrder.getStatus().equals("Cooking")) {
@@ -99,6 +94,7 @@ public class FragOrders extends ListFragment {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }

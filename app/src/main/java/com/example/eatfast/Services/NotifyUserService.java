@@ -46,14 +46,14 @@ public class NotifyUserService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        //startMyOwnForeground();
+        startMyOwnForeground();
         Notify();
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void startMyOwnForeground(){
+    private void startMyOwnForeground() {
         String channelName = "My Background Service";
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel chan = new NotificationChannel(CHANNEL_ID, channelName, NotificationManager.IMPORTANCE_HIGH);
             chan.setLightColor(Color.BLUE);
             chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
@@ -61,6 +61,7 @@ public class NotifyUserService extends Service {
             assert manager != null;
             manager.createNotificationChannel(chan);
         }
+        /*
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
         Notification notification = notificationBuilder.setOngoing(true)
                 .setSmallIcon(R.drawable.badge_background)
@@ -70,6 +71,7 @@ public class NotifyUserService extends Service {
                 .build();
 
         startForeground(10, notification);
+        */
     }
 
     public void Notify() {
@@ -115,6 +117,7 @@ public class NotifyUserService extends Service {
 
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -123,17 +126,17 @@ public class NotifyUserService extends Service {
     }
 
 
-    private void showNotification(){
+    private void showNotification() {
         Intent notificationIntent = new Intent(this, OrderActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,notificationIntent,0);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent, 0);
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this, CHANNEL_ID)
                         .setSmallIcon(R.drawable.badge_background)
                         .setContentTitle("EatFast")
                         .setContentText("Your order is ready")
-                        .setVibrate(new long[] { 1000, 1000, 1000, 1000, 1000 })
-                        .setContentIntent(pendingIntent );
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                        .setVibrate(new long[]{1000, 1000, 1000, 1000, 1000})
+                        .setContentIntent(pendingIntent);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, mBuilder.build());
 
 

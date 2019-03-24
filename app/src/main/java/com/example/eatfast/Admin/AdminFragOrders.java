@@ -30,7 +30,6 @@ import static android.content.Context.MODE_PRIVATE;
 public class AdminFragOrders extends ListFragment {
 
 
-
     ArrayList<Order> orderList = new ArrayList<>();
     ArrayList<Order> intentList = new ArrayList<>();
     ArrayList<FoodItem> foodItemList = new ArrayList<>();
@@ -55,7 +54,7 @@ public class AdminFragOrders extends ListFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                for(DataSnapshot datas: dataSnapshot.getChildren()) {
+                for (DataSnapshot datas : dataSnapshot.getChildren()) {
                     final FirebaseOrder FirebaseOrder = datas.getValue(FirebaseOrder.class);
 
                     if (FirebaseOrder.getStatus().equals("Cooking")) {
@@ -72,7 +71,6 @@ public class AdminFragOrders extends ListFragment {
                                 ArrayList<FoodItem> foodItemList = new ArrayList<>();
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     FoodItem FoodItem = snapshot.getValue(FoodItem.class);
-                                    System.out.println("TESTING FIRE" + FoodItem.getProductName());
                                     foodItemList.add(FoodItem);
                                 }
 
@@ -96,6 +94,7 @@ public class AdminFragOrders extends ListFragment {
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
